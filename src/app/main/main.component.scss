@@ -1,0 +1,59 @@
+.example-container {
+
+
+}
+.example-toolbar{
+  height: 40px;
+  background: rgba($color: #ffffff, $alpha: .09);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+.hamburger{
+  border: 0;
+    box-shadow: 3px -1px 4px 3px rgb(218 217 217 / 20%);
+    border-radius: 6px;
+
+}
+
+@keyframes colorBG{
+  0%{
+    background: linear-gradient(
+0deg
+, #fbbaba, #c5bfae, #eacece, #5a8e9ac9);
+    background-size: 200%;
+  }
+
+  100%{
+    background: linear-gradient(
+360deg
+, #fbbaba, #c5bfae, #eacece, #5a8e9ac9);
+    background-size: 200%;
+  }
+}
+
+
+
+.main-content{
+  min-width: 100%;
+  min-height: 90vh;
+}
+
+#container{
+  min-height: 90vh;
+  min-width: 100%;
+}
+
+.hideOverflow{
+  overflow-x: clip !important;
+
+}

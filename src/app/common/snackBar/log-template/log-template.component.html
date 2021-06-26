@@ -1,0 +1,17 @@
+<div class="alert">
+<h1 class="font-cursive">
+  [Logging Service]
+</h1>
+<h3 class="font-serif">
+  Something went wrong
+  <strong class="errorText font-sans">{{logItem["error"]?  logItem["error"] :''}}</strong>
+</h3>
+<h5>
+  Submitting information to logging service with incident Id: <br/>
+<strong class="issueIdText font-sans">{{logItem["id"]}}</strong>
+</h5>
+
+<p class="font-sans logData">
+ {{logItem | json | uppercase}}
+</p>
+</div>

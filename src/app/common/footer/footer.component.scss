@@ -1,0 +1,42 @@
+.contactInfo, .contactInfo .mat-icon{
+  font-size: 14px;
+  padding: 0px;
+  margin:0;
+  font-weight: 100;
+  color: #b1b1b1;
+}
+
+.contactInfo li mat-icon{
+  height:auto;
+  width: auto;
+  border-radius: 50%;
+  background: #fafafa;
+  color:rgb(51, 49, 47);
+  padding:2px;
+}
+
+.contactInfo li{
+  list-style: none;
+  line-height: .8;
+
+}
+
+.contactUl{
+  padding:0;
+}
+
+footer, footer mat-toolbar{
+  margin-top: 8px;
+  background: white;
+  min-height: 140px;
+  display: flex;
+  align-items:center;
+  justify-content: space-evenly;
+}
+
+.contactLinks{
+  text-decoration: none;
+  color: #b1b1b1;
+    font-variant: all-small-caps;
+
+}
