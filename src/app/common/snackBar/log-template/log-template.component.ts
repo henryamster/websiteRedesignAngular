@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { ILogItem } from 'src/app/generics/log-item';
+import { EEventType } from 'src/app/generics/log-item';
 
 @Component({
   selector: 'app-log-template',
@@ -8,8 +9,11 @@ import { ILogItem } from 'src/app/generics/log-item';
   styleUrls: ['./log-template.component.scss']
 })
 export class LogTemplateComponent implements OnInit {
-
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public logItem: ILogItem) { }
+  public get eventType() {
+    return EEventType;
+  };
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public logItem: ILogItem,
+  ) { }
   LogItem: ILogItem
 
   ngOnInit(): void {

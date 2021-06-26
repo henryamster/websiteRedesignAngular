@@ -51,6 +51,7 @@ export class LoggerService {
       duration: 4000,
       verticalPosition:'bottom',
       horizontalPosition:'right',
+      panelClass:['snackbarBG'],
     })
 
   }

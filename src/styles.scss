@@ -41,6 +41,47 @@ $hfnyz-theme: mat-light-theme((
 html, body { height: 100%; }
 body { margin: 0; font-family: "Red Hat Display", "Helvetica Neue", sans-serif; }
 
-.font-serif{font-family: 'Cinzel', serif;}
-.font-cursive {font-family: 'Italianno', cursive;}
-.font-sans {font-family: 'Red Hat Display', sans-serif;}
+.font-serif{font-family: 'Cinzel', serif !important;}
+.font-cursive {font-family: 'Italianno', cursive !important;}
+.font-sans {font-family: 'Red Hat Display', sans-serif !important;}
+
+.snackbarBG{
+  background: radial-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.9));
+  animation: dissapear 4s forwards;
+  border-radius: 23px !important;
+  backdrop-filter: blur(3px);
+
+}
+@keyframes dissapear{
+  80%{
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  100%{
+    opacity: 0;
+    transform: translateY(800px);
+  }
+}
+
+@keyframes loadIn{
+  0%{
+ color:black;
+ background:#fafafa;
+ transform:  scale(1.9);
+ border-radius: 50%;
+  }
+  10%{
+    border-radius: 0;
+color:#fafafa;
+background: #333;
+  }
+  100%{
+    color:black;
+    background:#fafafa;
+  }
+}
+
+.componentLoadInAnimation{
+  animation: loadIn 1.4s forwards;
+}

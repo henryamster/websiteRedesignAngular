@@ -52,5 +52,6 @@ export class LogErrorItem implements ILogItem {
 export enum EEventType{
   Error= "ERROR",
   Landing = "LANDING",
+  Auth = "AUTH",
   Other = "OTHER"
 }

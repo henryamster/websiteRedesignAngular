@@ -46,6 +46,7 @@
 .main-content{
   min-width: 100%;
   min-height: 90vh;
+  overflow:hidden
 }
 
 #container{
@@ -56,4 +57,7 @@
 .hideOverflow{
   overflow-x: clip !important;
 
+}
+.mat-drawer-content{
+  overflow: hidden;
 }

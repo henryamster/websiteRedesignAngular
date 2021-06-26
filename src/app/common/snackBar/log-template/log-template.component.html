@@ -1,17 +1,40 @@
 <div class="alert">
-<h1 class="font-cursive">
-  [Logging Service]
+<h1 class="font-sans">
+  <mat-icon>save_alt</mat-icon> Logging Service
 </h1>
-<h3 class="font-serif">
-  Something went wrong
-  <strong class="errorText font-sans">{{logItem["error"]?  logItem["error"] :''}}</strong>
-</h3>
-<h5>
-  Submitting information to logging service with incident Id: <br/>
-<strong class="issueIdText font-sans">{{logItem["id"]}}</strong>
-</h5>
+<!-- Error Template -->
+<div *ngIf='logItem["eventType"]=== eventType["Error"]||
+            logItem["eventType"]=== eventType["Landing"]' class="error">
+  <p class=" logDataHeader">
+    <mat-icon>report</mat-icon> Something went wrong
+    <strong class="redText font-sans">{{logItem["error"]?  logItem["error"] :''}}</strong>
+  </p>
+  <p class=" logDataHeader">
+    Submitting information to logging service with incident Id: <br/>
+  <strong class="blueText font-sans">{{logItem["id"]}}</strong>
+  </p>
+  <p class=" logData">
+   {{logItem | json | uppercase}}
+  </p>
+</div>
+<!-- Auth Template-->
+<div *ngIf='logItem["eventType"]=== eventType["Auth"]' class="auth">
+  <p class="logDataHeader">
+   Authentication Event: <br/>
+    <strong class=" redText font-sans">{{logItem["authEvent"]}}</strong>
+  </p>
+  <p class=" logDataHeader">
+    Submitting information to logging service with incident Id: <br/>
+  <strong class="blueText font-sans">{{logItem["id"]}}</strong>
+  </p>
+</div>
 
-<p class="font-sans logData">
- {{logItem | json | uppercase}}
-</p>
+<div class="attachedId">
+  {{logItem["id"]}}
+</div>
+
+
+
+
+
 </div>
