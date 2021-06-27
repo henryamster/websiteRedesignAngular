@@ -1,0 +1,9 @@
+<button class="noPad" mat-button [matMenuTriggerFor]="menu">
+  <mat-icon *ngIf="!userProfileImage" class="spinners" >sensors</mat-icon>
+  <img *ngIf="userProfileImage" [src]="userProfileImage" width="26px" height="26px" class="circle">
+
+</button>
+<mat-menu #menu="matMenu">
+<button *ngIf="loggedIn" mat-menu-item (click)="logOut()">Log Out</button>
+<button *ngIf="!loggedIn" mat-menu-item routerLink="/login"> Log In </button>
+</mat-menu>

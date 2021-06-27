@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
+import { LoggerService } from 'src/app/generic/logger.service';
+import { EEventType } from 'src/app/generics/log-item';
 import { LoginForm, ILogin } from 'src/app/generics/login';
 import { AuthService } from '../auth.service';
 
@@ -14,24 +16,30 @@ export class LoginFormComponent implements OnInit {
 
   loginForm: FormGroup;
   formValues$: Subscription;
-  _loginValues: LoginForm;
+  _loginValues: LoginForm = { email: '', password: '' };
 
   constructor(private _formBuilder: FormBuilder,
-    public auth: AuthService) {
+    public auth: AuthService, private logger: LoggerService) {
 
   }
+
 
   ngOnInit(): void {
     this.generateLoginForm()
     this.watchLoginForm()
   }
 
-  public attemptLogin(cred?: ILogin): void {
-    this.login(cred).pipe(
-      tap(profile =>
-        console.log(profile["user"])
-      )
-    )
+  public attemptLogin(): void {
+    if (!this["loginForm"]["valid"]){
+      this["loginForm"]["markAllAsTouched"]()
+      return
+    }
+    const cred = {
+      email: this["loginForm"]["get"]("email")["value"],
+      password: this["loginForm"]["get"]("password")["value"]
+    }
+
+    this.login(cred)
   }
 
   public clearLoginForm() {
@@ -41,9 +49,13 @@ export class LoginFormComponent implements OnInit {
     })
   }
 
+  public popOutLogin() {
+    this["auth"]["popOutLogin"]()
+  }
+
   private generateLoginForm() {
     this.loginForm = this._formBuilder.group({
-      email: ['', Validators.required, Validators.email, Validators.minLength(3)],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(3)]],
       password: ['', Validators.minLength(8)]
     });
   }
@@ -62,7 +74,8 @@ export class LoginFormComponent implements OnInit {
 
   private login(cred: ILogin) {
     return this.auth.login(
-      cred ?? this._loginValues
-    );
+      cred
+    )
   }
+
 }

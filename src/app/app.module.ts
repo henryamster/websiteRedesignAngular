@@ -53,7 +53,13 @@ import { LoginComponent } from './pages/login/login.component';
 /** Firebase Services */
 import { PERSISTENCE } from '@angular/fire/auth';
 import { BugReportComponent } from './common/dialog/bug-report/bug-report.component';
+import { ProfileMenuComponent } from './common/profile-menu/profile-menu.component';
 
+/** Emulator Providers */
+import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
+import { USE_EMULATOR as USE_DATABASE_EMULATOR } from '@angular/fire/database';
+import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
+import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/functions';
 
 
 
@@ -70,6 +76,7 @@ import { BugReportComponent } from './common/dialog/bug-report/bug-report.compon
     LoginComponent,
     LogTemplateComponent,
     BugReportComponent,
+    ProfileMenuComponent,
 
   ],
   imports: [
@@ -98,7 +105,13 @@ import { BugReportComponent } from './common/dialog/bug-report/bug-report.compon
   ],
   providers: [ResponsiveService,
 
-    { provide: PERSISTENCE, useValue: 'session' }
+    { provide: PERSISTENCE, useValue: 'session' },
+    // { provide: USE_STORAGE_EMULATOR, useValue: environment.useEmulators? ['localhost', ]},
+
+    { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },
+    { provide: USE_DATABASE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9000] : undefined },
+    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 8080] : undefined },
+    { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 5001] : undefined },
   ],
   bootstrap: [AppComponent]
 })

@@ -3,7 +3,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LogTemplateComponent } from '../common/snackBar/log-template/log-template.component';
-import { ILogItem, LogErrorItem } from '../generics/log-item';
+import { EEventType, ILogItem, LogAuthItem, LogErrorItem, LogLandingItem } from '../generics/log-item';
+import { User } from '@firebase/auth-types';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,8 +22,20 @@ export class LoggerService {
 
   }
 
-  public logError(err: Error) {
-    const logItem = new LogErrorItem(err)
+  public logError(err: Error, user?: User, type=EEventType.Error) {
+    let logItem;
+    switch (type){
+      case EEventType.Auth:
+        logItem = new LogAuthItem(err, user?? null)
+        break;
+      case EEventType.Landing:
+        logItem = new LogLandingItem(user?user:null)
+        break;
+      default:
+        logItem = new LogErrorItem(err, user?? null)
+        break;
+    }
+
     this["logItems"]["push"](logItem)
     this["consLog"](logItem)
     this["displaySnackbar"](logItem)

@@ -13,13 +13,6 @@
 
   </div>
 
-  <button class="noPad" mat-button *ngIf="size.width>700" [matMenuTriggerFor]="menu">
-    <mat-icon class="spinners" >sensors</mat-icon>
-  </button>
-<mat-menu #menu="matMenu">
-  <button mat-menu-item >Party Mode</button>
-</mat-menu>
-
-
+  <app-profile-menu *ngIf="size.width>700"> </app-profile-menu>
 </mat-toolbar>
 </header>

@@ -5,6 +5,7 @@ import { from, interval } from 'rxjs';
 import { map, pluck, reduce, take, timeout } from 'rxjs/operators';
 import { LoggerService } from 'src/app/generic/logger.service';
 import { RouterService } from 'src/app/generic/router.service';
+import { EEventType } from 'src/app/generics/log-item';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -32,8 +33,7 @@ export class NotFoundComponent implements OnInit {
     )
 
     this["logger"]["logError"](new Error(`
-    Invalid URL attempt: ${this.stringUrl}`)
-    )
+    Invalid URL attempt: ${this.stringUrl}`), null, EEventType.Landing)
 
 
   }

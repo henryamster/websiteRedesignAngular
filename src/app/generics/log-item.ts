@@ -1,5 +1,5 @@
-import { from, pipe } from 'rxjs';
 import {v4 as uuidv4} from 'uuid';
+import { User } from '@firebase/auth-types';
 
 export interface ILogItem {
   timestamp?: Date;
@@ -13,27 +13,10 @@ export interface ILogItem {
   error?: Error;
   id?: number;
   eventType?: EEventType;
+  user?: User;
 }
-export class LogErrorItem implements ILogItem {
-  constructor(error: Error) {
-    window["navigator"]["geolocation"]["getCurrentPosition"](
-      (loc) => this["geoLocation"] =loc
-    );
-    this["timestamp"] = new Date();
-    this["userAgent"] = window["navigator"]["userAgent"];
-    this["vendor"] = window.navigator["vendor"];
-    this["appCache"] = window["applicationCache"];
-    this["clientInformation"] = window["clientInformation"];
-    this["history"] = window["history"];
-    this["location"] = window["location"];
-    this["error"] = error;
-    this["eventType"] = EEventType.Error;
-    this["id"] = uuidv4();
-  }
-}
-
-  export class LogLandingItem implements ILogItem {
-    constructor(){
+export class LogItem implements ILogItem{
+  constructor(user:User=null){
     window["navigator"]["geolocation"]["getCurrentPosition"](
         (loc) => this["geoLocation"] =loc
       );
@@ -45,7 +28,30 @@ export class LogErrorItem implements ILogItem {
     this["history"] = window["history"];
     this["location"] = window["location"];
     this["id"] = uuidv4();
-    this["eventType"] = EEventType.Landing;
+    this["user"] = user;
+  }
+}
+
+export class LogErrorItem extends LogItem {
+  constructor(error: Error, user:User=null) {
+    super()
+    this["error"] = error
+    this["eventType"] = EEventType.Error
+  }
+}
+
+  export class LogLandingItem extends LogItem {
+    constructor(user:User=null){
+    super()
+    this["eventType"] = EEventType.Landing
+  }
+
+}
+export class LogAuthItem extends LogItem {
+  constructor(error: Error, user:User=null){
+    super()
+    this["error"] = error
+    this["eventType"] = EEventType.Auth
   }
 }
 

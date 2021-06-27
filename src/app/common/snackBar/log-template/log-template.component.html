@@ -2,12 +2,26 @@
 <h1 class="font-sans">
   <mat-icon>save_alt</mat-icon> Logging Service
 </h1>
+<mat-divider
+  [vertical]="true">
+</mat-divider>
+
+
 <!-- Error Template -->
 <div *ngIf='logItem["eventType"]=== eventType["Error"]||
-            logItem["eventType"]=== eventType["Landing"]' class="error">
+            logItem["eventType"]=== eventType["Landing"]||
+            logItem["eventType"]=== eventType["Auth"]' class="error">
   <p class=" logDataHeader">
     <mat-icon>report</mat-icon> Something went wrong
-    <strong class="redText font-sans">{{logItem["error"]?  logItem["error"] :''}}</strong>
+    <strong class="redText font-sans"
+    *ngIf='logItem["eventType"]=== eventType["Error"]||
+            logItem["eventType"]=== eventType["Auth"]'
+    >{{logItem["error"]?  logItem["error"] :''}}</strong>
+
+    <strong class="redText font-sans"
+    *ngIf="logItem['eventType'] === eventType['Landing']">
+      You've visited a url that doesn't exist.
+    </strong>
   </p>
   <mat-divider
   [inset]="true">
@@ -30,7 +44,7 @@
 
 
 </div>
-<!-- Auth Template-->
+<!-- Auth Template
 <div *ngIf='logItem["eventType"]=== eventType["Auth"]' class="auth">
   <p class="logDataHeader">
    Authentication Event: <br/>
@@ -44,7 +58,7 @@
 
 <div class="attachedId">
   {{logItem["id"]}}
-</div>
+</div> -->
 
 
 

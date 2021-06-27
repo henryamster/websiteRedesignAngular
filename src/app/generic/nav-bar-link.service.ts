@@ -61,7 +61,7 @@ export class NavBarLinkService {
       CONTACT,
       BLOG,
       GALLERY,
-      LOGIN,
+      // LOGIN,
       LOGOUT,
       POST,
       DASHBOARD

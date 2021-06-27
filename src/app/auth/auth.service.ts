@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { from, Observable, pipe, Subject, throwError } from 'rxjs';
+import { from, Observable, pipe, Subject, Subscription, throwError } from 'rxjs';
 import { ILogin } from '../generics/login';
 import { IdTokenResult, User, UserCredential } from '@firebase/auth-types'
 import { catchError, map, tap } from 'rxjs/operators';
+import firebase from 'firebase/app';
+import { LoggerService } from '../generic/logger.service';
+import { EEventType } from '../generics/log-item';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +14,14 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class AuthService {
 
 
-  private _user: User
+  private _user: User | null
   private _isAdmin: boolean = false
   public authEvent: Subject<boolean>
   private _claims: IdTokenResult["claims"][]
 
-  constructor(private auth: AngularFireAuth) {
+
+  constructor(private auth: AngularFireAuth,
+    private logger:LoggerService,) {
     this["authEvent"] = new Subject();
     this["getCurrentUser"](auth)
       ["pipe"](
@@ -37,12 +42,14 @@ export class AuthService {
 
 
 
-  public login(cred: ILogin): Observable<UserCredential> {
-    this["triggerAuthEvent"](true)
-    return from(
-      this["auth"]["signInWithEmailAndPassword"](
-        cred["email"], cred["password"]
-      )
+  public login(cred: ILogin) {
+    this["attemptLogin"](cred)
+  }
+
+  private attemptLogin(cred: ILogin) {
+    return from(this["auth"]["signInWithEmailAndPassword"](cred["email"], cred["password"])).subscribe(
+      userCred=> {  this["triggerAuthEvent"](true); return userCred},
+      err=> this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
     )
   }
 
@@ -53,16 +60,52 @@ export class AuthService {
     )
   }
 
+  public popOutLogin(provider = 'google'){
+    this["logger"]["logError"](new Error('Third Party Authentitcation has not yet been enabled.'), this._user, EEventType.Auth);
+
+    const WHEN_IMPLEMENTED=false;
+
+    if (WHEN_IMPLEMENTED){
+      this["triggerAuthEvent"](true)
+      if (provider=="google"){
+        return from(this["auth"]["signInWithPopup"](new firebase.auth.GoogleAuthProvider()))
+      }
+      if (provider=="facebook"){
+        return from(this["auth"]["signInWithPopup"](new firebase.auth.FacebookAuthProvider()))
+      }
+      if (provider=="twitter"){
+        return from(this["auth"]["signInWithPopup"](new firebase.auth.TwitterAuthProvider()))
+      }
+      if (provider=="github"){
+      return from(this["auth"]["signInWithPopup"](new firebase.auth.GithubAuthProvider()))
+      }
+
+
+      if (provider="phone"){
+        return from(this["auth"]["signInWithPopup"](new firebase.auth.PhoneAuthProvider()))
+      }
+    }
+    return from([])
+  }
+
   public claims(): IdTokenResult["claims"][] {
     return this["_claims"]
   }
 
   public user(): User {
-    return this["_user"]
+    return this["_user"] ?? null
   }
 
   public IS_ADMIN(): boolean{
     return this["_isAdmin"]
+  }
+
+  makeAdmin(){
+    this["auth"]
+    this["getUserTokenResult"](this._user).subscribe(
+      token=> token.claims
+    )
+
   }
 
   private gatherClaims(user: User) {
