@@ -57,12 +57,16 @@ export class LoggerService {
   }
 
   private writeToLocalStorage(logItem: ILogItem) {
-    let rehydratedLogItems: ILogItem[];
-    const errorLog = localStorage["getItem"]("errorLogs_");
+    const MAX_SAVED_LOCALSTORAGE_LOGS = 10
+    let rehydratedLogItems: ILogItem[]
+    const errorLog = localStorage["getItem"]("errorLogs_")
     try { rehydratedLogItems = JSON.parse(errorLog)
           rehydratedLogItems.push(logItem)}
     // Fail gracefully
     catch (error) { rehydratedLogItems = [] }
+    if (rehydratedLogItems.length>MAX_SAVED_LOCALSTORAGE_LOGS){
+      rehydratedLogItems = rehydratedLogItems.slice(0,MAX_SAVED_LOCALSTORAGE_LOGS)
+    }
     localStorage["setItem"]("errorLogs_", JSON["stringify"](rehydratedLogItems, null, 4))
   }
 

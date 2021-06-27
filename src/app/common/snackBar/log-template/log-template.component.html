@@ -9,6 +9,9 @@
     <mat-icon>report</mat-icon> Something went wrong
     <strong class="redText font-sans">{{logItem["error"]?  logItem["error"] :''}}</strong>
   </p>
+  <mat-divider
+  [inset]="true">
+</mat-divider>
   <p class=" logDataHeader">
     Submitting information to logging service with incident Id: <br/>
   <strong class="blueText font-sans">{{logItem["id"]}}</strong>
@@ -18,6 +21,7 @@
     <button mat-raised-button (click)="openBugReport()">Report this as a bug</button>
   </div>
 
+ <br/>
   <p class=" logData">
    {{logItem | json | uppercase}}
   </p>

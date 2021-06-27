@@ -4,7 +4,16 @@
   <app-brand-logo routerLink="/"></app-brand-logo>
 
   <div class="links" *ngIf="size.width>600">
-    <button *ngFor="let nav of navList" mat-button class="navLinks" [routerLink]='"/"+nav["link"]'>{{nav["link"]}}</button>
+    <span class="wrapBtn" *ngFor="let nav of navList" >
+      <button mat-button class="navLinks" [routerLink]='"/"+nav["link"]'>{{nav["link"]}}</button>
+      <mat-divider
+        [vertical]="true"
+      >
+      </mat-divider>
+      <mat-divider
+        [inset]="true">
+      </mat-divider>
+    </span>
 
   </div>
 

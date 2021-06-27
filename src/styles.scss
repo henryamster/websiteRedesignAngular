@@ -61,9 +61,44 @@ Custom
   backdrop-filter: blur(3px);
 }
 
+.mat-dialog-container{
+  background: radial-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.9));
+  border-radius: 23px !important;
+  backdrop-filter: blur(3px);
+  padding: 10px !important;
+  overflow: hidden;
+}
+
+
+
+
+
+.logData{
+  color:rgb(92, 88, 88);
+  text-align: justify;
+  font-family: monospace;
+  font-size: .4em;
+  line-height: .8;
+  background: rgb(231, 231, 231);
+  padding: 8px;
+  border-radius: 8px;
+  margin:2em;
+}
+
 /**
 Utility globals
 */
+
+.textCenter{
+  text-align: center;
+}
+
+.blueText{
+  color: rgb(35, 35, 70)
+}
+.redText{
+  color:rgb(105, 74, 70)
+}
 
 .noOverflow{
   overflow: hidden;
@@ -81,9 +116,45 @@ Utility globals
   animation: glassB 5s infinite;
 }
 
+.fade{
+  animation: fade 1s forwards;
+}
+
 /**
 Animations
 */
+
+@keyframes fade{
+  0%{
+    color: #fafafa;
+    background: #333;
+
+    opacity: 1;
+  }
+  100%{
+    color: #333;
+    background: #fafafa;
+    opacity: 1;
+    transform: scale(.02) translate(50%, 50%);
+
+  }
+}
+
+@keyframes jump {
+  0%{
+    box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.3);
+  }
+  50%{
+    box-shadow: 13px 13px 24px 11px rgba(241, 241, 241, 0.3);
+    opacity: 1;
+    z-index: 300;
+  }
+  90%{
+    z-index: -220;
+    opacity: 0;
+    box-shadow: 3px 3px 4px 1px rgba(0,0,0,0.3);
+  }
+}
 
 @keyframes dissapear{
   80%{

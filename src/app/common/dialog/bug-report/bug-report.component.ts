@@ -23,7 +23,7 @@ export class BugReportComponent implements OnInit {
   close(){
     of(true).pipe(
       tap(_=> this["notClosing"] =!_),
-      delay(2000),
+      delay(1600),
       tap(_=>this["dialogRef"]["close"]())
     )["subscribe"]()
 
