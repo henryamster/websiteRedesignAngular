@@ -15,17 +15,17 @@
 }
 .navLinks{
   color: #333;
+  font-weight: 900;
+  font-size: .8em;
     border: 0;
     margin: 0px 4px;
     background: rgba(255, 255, 255, 0.185);
     backdrop-filter: blur(3px);
     border-radius: 12px;
     &:hover{
-animation: hov 1s ease-in forwards;
+animation: hov .2s ease-in forwards;
     }
-    &:active {
-      animation: hov 1s ease-out 0 1 backwards;
-    }
+
 }
 
 
@@ -44,11 +44,13 @@ animation: hov 1s ease-in forwards;
     background-color: rgba(255, 255, 255, 0.116);
     color:black;
     border:0px solid white;
+    text-shadow: 2px 2px 10px rgb(0, 0, 0);
   }
 
   100%{
-    border:6px solid rgba(255, 255, 255, 0.151);
-    background-color: rgba(0, 0, 0, 0.562);
+
+
+    background-color: rgba(47, 48, 36, 0.562);
     color:white;
     box-shadow: 2px 2px 5px 2px rgb(180, 180, 180) ;
   }

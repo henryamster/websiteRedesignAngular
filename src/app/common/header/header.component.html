@@ -1,12 +1,12 @@
 <header>
 <mat-toolbar  class="example-toolbar">
-  <button mat-button *ngIf="size.width<=600" (click)="sideNavToggle.emit()" class="hamburger"><mat-icon>menu</mat-icon></button>
+  <button mat-button *ngIf="size.width<=800" (click)="sideNavToggle.emit()" class="hamburger"><mat-icon>menu</mat-icon></button>
   <app-brand-logo routerLink="/"></app-brand-logo>
 
 
-  <div class="links" *ngIf="size.width>600">
+  <div class="links" *ngIf="size.width>800">
     <div class="wrapBtn" *ngFor="let nav of navList; index as index" >
-      <button mat-button class="navLinks " [routerLink]='"/"+nav["link"]'>{{nav["link"]}}</button>
+      <button mat-button class="navLinks font-sans"  [routerLink]='"/"+nav["link"]'>{{nav["link"] | uppercase}}</button>
 
 
     </div>
