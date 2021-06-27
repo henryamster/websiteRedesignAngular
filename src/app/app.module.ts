@@ -22,6 +22,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card/';
 import { MatSnackBarModule, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatMenuModule} from '@angular/material/menu';
 
 /* Libraries */
 import { AngularFireModule } from '@angular/fire';
@@ -92,7 +93,8 @@ import { BugReportComponent } from './common/dialog/bug-report/bug-report.compon
     MatFormFieldModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMenuModule
   ],
   providers: [ResponsiveService,
 

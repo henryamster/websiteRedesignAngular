@@ -89,6 +89,14 @@ Custom
 Utility globals
 */
 
+.noPad{
+  padding: 0 !important;
+}
+
+.noMarg{
+  margin: 0 !important;
+}
+
 .textCenter{
   text-align: center;
 }
@@ -113,16 +121,42 @@ Utility globals
 }
 
 .glassBlur{
-  animation: glassB 5s infinite;
+  animation: glassB 16s infinite;
 }
 
 .fade{
   animation: fade 1s forwards;
 }
 
+.spinners{
+  animation: spin 3s infinite linear;
+padding: 8px;
+border: 1px solid rgb(0, 0, 0);
+border-radius: 50%;
+margin: 8px;
+font-size: 24px;
+color: black;
+}
+
 /**
 Animations
 */
+
+
+
+
+@keyframes spin{
+  0%{
+    transform: rotateZ(0deg);
+  }
+  50%{
+
+  }
+  100%{
+    transform:  rotateZ(360deg)
+
+  }
+}
 
 @keyframes fade{
   0%{

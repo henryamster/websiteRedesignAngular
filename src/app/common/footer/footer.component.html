@@ -1,6 +1,15 @@
 <footer >
 <mat-toolbar [style.flexWrap]=" size.width<=500? 'wrap':'nowrap'">
-  <span><app-brand-logo ></app-brand-logo></span>
+
+  <div class="underContstruction" *ngIf="size.width>950">
+    <mat-icon class="spinners" >settings</mat-icon>
+    <small>UNDER CONSTRUCTION</small>
+    <mat-icon class="spinners" >settings</mat-icon>
+  </div>
+  <div><app-brand-logo ></app-brand-logo>
+
+
+</div>
 
     <div class="column contactInfo">
       <ul class="contactUl">

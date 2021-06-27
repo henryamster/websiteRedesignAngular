@@ -11,28 +11,6 @@ import { environment } from 'src/environments/environment';
   selector: 'app-not-found',
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss'],
-  animations:[
-    trigger('notFound', [
-      state('start',
-        style({
-          // marginLeft: '900px',
-          opacity: 0,
-          color:'red',
-        })
-      ),
-      state('end',
-      style(
-        {
-          // marginLeft: '0px',
-          opacity:1
-        }
-      )),
-      transition('start => end',[
-        animate('1.5s')
-      ])
-
-    ])
-  ]
 })
 export class NotFoundComponent implements OnInit {
   constructor(private router: RouterService,

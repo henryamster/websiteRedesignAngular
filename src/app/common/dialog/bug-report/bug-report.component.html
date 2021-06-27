@@ -1,4 +1,4 @@
-<mat-card  class="font-sans" [ngClass]="!notClosing? 'disappear' :''" >
+<mat-card  class="font-sans padding2em" [ngClass]="!notClosing? 'disappear' :''" >
   <mat-card-header  *ngIf="notClosing">
     <mat-card-title> <mat-icon>bug_report</mat-icon> Bug Report</mat-card-title>
     <mat-card-subtitle *ngIf="notClosing"  class="blueText"> [ISSUE: {{logItem["id"]}}]</mat-card-subtitle>
@@ -23,7 +23,7 @@
     <mat-divider
     [inset]="true">
   </mat-divider>
-    <p class="textCenter">Debug Information</p>
+    <p class="textCenter blueText">Debug Information</p>
     <p class="debugInfo">
       {{ logItem | json}}
     </p>
@@ -32,12 +32,12 @@
 
   <mat-card-content *ngIf="!notClosing" >
 
-    <h1>Sorry to bug you!</h1>
-    <mat-icon>sentiment_dissatisfied</mat-icon>
+    <h1><mat-icon>sentiment_dissatisfied</mat-icon>Sorry to bug you!</h1>
+    <br/>
     <p>Thanks anyway!</p>
   </mat-card-content>
-  <mat-card-actions *ngIf="notClosing">
-    <button mat-raised-button>Submit</button>
-    <button mat-raised-button (click)="close()">Cancel</button>
+  <mat-card-actions *ngIf="notClosing" align="center">
+    <button mat-raised-button> <mat-icon>check</mat-icon> Submit</button>
+    <button mat-raised-button (click)="close()"> <mat-icon>cancel</mat-icon> Cancel</button>
   </mat-card-actions>
 </mat-card>

@@ -5,4 +5,16 @@
   text-align: center;
 }
 
+.slowTextFadeIn{
+  animation: fadeinslow 6s forwards;
+}
+@keyframes fadeinslow {
+  0%{
+    opacity: 0;
+    margin-top: 100%;
+  }
+  100%{
+    opacity: 1;
+  }
 
+}

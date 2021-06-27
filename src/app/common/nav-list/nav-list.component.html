@@ -1,5 +1,14 @@
 <mat-nav-list  >
+  <button class=" noPad" mat-button [matMenuTriggerFor]="menu">
+    <mat-icon class="spinners" >sensors</mat-icon>
+  </button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item >Party Mode</button>
+</mat-menu>
     <a *ngFor="let nav of navList" mat-list-item class="navLinks" [routerLink]="nav['link']">{{ nav["link"] }}</a>
+
+
+
     <footer class="navList">
       <app-brand-logo > </app-brand-logo>
     </footer>

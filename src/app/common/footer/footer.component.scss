@@ -40,3 +40,14 @@ footer, footer mat-toolbar{
     font-variant: all-small-caps;
 
 }
+
+.underContstruction{
+  color:#eee;
+  padding: 8px;
+  margin:12px;
+  border-radius: 40px;
+  font-size: 2em;
+  border: 3px solid #333;
+
+  transform: scale(.9);
+}

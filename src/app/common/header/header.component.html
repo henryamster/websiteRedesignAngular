@@ -3,19 +3,23 @@
   <button mat-button *ngIf="size.width<=600" (click)="sideNavToggle.emit()" class="hamburger"><mat-icon>menu</mat-icon></button>
   <app-brand-logo routerLink="/"></app-brand-logo>
 
+
   <div class="links" *ngIf="size.width>600">
-    <span class="wrapBtn" *ngFor="let nav of navList" >
-      <button mat-button class="navLinks" [routerLink]='"/"+nav["link"]'>{{nav["link"]}}</button>
-      <mat-divider
-        [vertical]="true"
-      >
-      </mat-divider>
-      <mat-divider
-        [inset]="true">
-      </mat-divider>
-    </span>
+    <div class="wrapBtn" *ngFor="let nav of navList; index as index" >
+      <button mat-button class="navLinks " [routerLink]='"/"+nav["link"]'>{{nav["link"]}}</button>
+
+
+    </div>
 
   </div>
+
+  <button class="noPad" mat-button *ngIf="size.width>700" [matMenuTriggerFor]="menu">
+    <mat-icon class="spinners" >sensors</mat-icon>
+  </button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item >Party Mode</button>
+</mat-menu>
+
 
 </mat-toolbar>
 </header>
