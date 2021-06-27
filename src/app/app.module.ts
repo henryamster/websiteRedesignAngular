@@ -20,7 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card/';
-import { MatSnackBarModule, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar'
+import { MatSnackBarModule, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 /* Libraries */
 import { AngularFireModule } from '@angular/fire';
@@ -50,6 +51,7 @@ import { LoginComponent } from './pages/login/login.component';
 
 /** Firebase Services */
 import { PERSISTENCE } from '@angular/fire/auth';
+import { BugReportComponent } from './common/dialog/bug-report/bug-report.component';
 
 
 
@@ -66,6 +68,7 @@ import { PERSISTENCE } from '@angular/fire/auth';
     NotFoundComponent,
     LoginComponent,
     LogTemplateComponent,
+    BugReportComponent,
 
   ],
   imports: [
@@ -88,7 +91,8 @@ import { PERSISTENCE } from '@angular/fire/auth';
     MatButtonModule,
     MatFormFieldModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [ResponsiveService,
 

@@ -25,7 +25,8 @@ $hfnyz-theme: mat-light-theme((
     primary: $hfnyz-primary,
     accent: $hfnyz-accent,
     warn: $hfnyz-warn,
-  )
+  ),
+
 ));
 
 // Include theme styles for core and each component used in your app.
@@ -35,23 +36,55 @@ $hfnyz-theme: mat-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
+
+
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Italianno&family=Red+Hat+Display&display=swap');
 
 
 html, body { height: 100%; }
 body { margin: 0; font-family: "Red Hat Display", "Helvetica Neue", sans-serif; }
 
+/**
+Typography
+*/
 .font-serif{font-family: 'Cinzel', serif !important;}
 .font-cursive {font-family: 'Italianno', cursive !important;}
 .font-sans {font-family: 'Red Hat Display', sans-serif !important;}
 
+/**
+Custom
+*/
 .snackbarBG{
   background: radial-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.9));
   animation: dissapear 4s forwards;
   border-radius: 23px !important;
   backdrop-filter: blur(3px);
-
 }
+
+/**
+Utility globals
+*/
+
+.noOverflow{
+  overflow: hidden;
+}
+
+.disappear{
+  animation: dissapear 2s forwards ease-in;
+}
+
+.componentLoadInAnimation{
+  animation: loadIn 1.4s forwards;
+}
+
+.glassBlur{
+  animation: glassB 5s infinite;
+}
+
+/**
+Animations
+*/
+
 @keyframes dissapear{
   80%{
     opacity: 1;
@@ -82,6 +115,23 @@ background: #333;
   }
 }
 
-.componentLoadInAnimation{
-  animation: loadIn 1.4s forwards;
+@keyframes glassB{
+  0%{
+    background: rgba(132, 220, 255, 0.5);
+    backdrop-filter: blur(1px);
+  }
+  25%{
+    background: rgba(255, 52, 52, 0.671);
+    backdrop-filter: blur(4px);
+  }
+  75%{
+    background: rgba(255, 206, 46, 0.637);
+    backdrop-filter: blur(2.5px);
+
+  }
+  100%{
+    background: rgba(132, 220, 255, 0.5);
+    backdrop-filter: blur(1px);
+  }
 }
+

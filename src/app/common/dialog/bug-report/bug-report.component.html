@@ -1,0 +1,32 @@
+<mat-card  class="font-sans" [ngClass]="!notClosing? 'disappear' :''" >
+  <mat-card-header>
+    <mat-card-title> <mat-icon>bug_report</mat-icon> Bug Report</mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="notClosing" >
+
+    <h4 class="font-sans">Thank you for taking the time to submit this bug report!</h4>
+
+    <p>If you wouldn't mind, please describe what you were doing when the issue occured:</p>
+    <mat-form-field class="full-width">
+
+        <textarea matInput placeholder="Description" ></textarea>
+
+    </mat-form-field>
+
+    <h4>Debug Information</h4>
+    <p class="debugInfo">
+      {{ logItem | json}}
+    </p>
+
+  </mat-card-content>
+
+  <mat-card-content *ngIf="!notClosing" >
+    <h1>Sorry to bug you!</h1>
+    <mat-icon>sentiment_dissatisfied</mat-icon>
+    <p>Thanks anyway!</p>
+  </mat-card-content>
+  <mat-card-actions *ngIf="notClosing">
+    <button mat-raised-button>Submit</button>
+    <button mat-raised-button (click)="close()">Cancel</button>
+  </mat-card-actions>
+</mat-card>

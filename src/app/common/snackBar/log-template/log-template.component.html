@@ -13,9 +13,18 @@
     Submitting information to logging service with incident Id: <br/>
   <strong class="blueText font-sans">{{logItem["id"]}}</strong>
   </p>
+
+  <div class="actionItems">
+    <button mat-raised-button (click)="openBugReport()">Report this as a bug</button>
+  </div>
+
   <p class=" logData">
    {{logItem | json | uppercase}}
   </p>
+
+
+
+
 </div>
 <!-- Auth Template-->
 <div *ngIf='logItem["eventType"]=== eventType["Auth"]' class="auth">
@@ -32,6 +41,7 @@
 <div class="attachedId">
   {{logItem["id"]}}
 </div>
+
 
 
 
