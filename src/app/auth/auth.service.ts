@@ -42,11 +42,11 @@ export class AuthService {
 
 
 
-  public login(cred: ILogin) {
+  public login(cred: ILogin): void {
     this["attemptLogin"](cred)
   }
 
-  private attemptLogin(cred: ILogin) {
+  private attemptLogin(cred: ILogin) : Subscription {
     return from(this["auth"]["signInWithEmailAndPassword"](cred["email"], cred["password"])).subscribe(
       userCred=> {  this["triggerAuthEvent"](true); return userCred},
       err=> this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
@@ -136,6 +136,7 @@ export class AuthService {
 
   private triggerAuthEvent(loggedIn: boolean): void  {
     this["authEvent"]["next"](loggedIn);
+    console.log(this._user);
   }
 
   private getCurrentUser(auth: AngularFireAuth): Observable<User> {
