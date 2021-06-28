@@ -61,6 +61,8 @@ import { USE_EMULATOR as USE_DATABASE_EMULATOR } from '@angular/fire/database';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
 import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/functions';
 
+/** Quill Import */
+import { QuillModule } from 'ngx-quill';
 
 
 @NgModule({
@@ -101,7 +103,10 @@ import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/functions'
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+
+    //Quill
+    QuillModule.forRoot()
   ],
   providers: [ResponsiveService,
 

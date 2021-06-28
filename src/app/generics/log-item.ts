@@ -34,7 +34,7 @@ export class LogItem implements ILogItem{
 
 export class LogErrorItem extends LogItem {
   constructor(error: Error, user:User=null) {
-    super()
+    super(user)
     this["error"] = error
     this["eventType"] = EEventType.Error
   }
@@ -42,14 +42,14 @@ export class LogErrorItem extends LogItem {
 
   export class LogLandingItem extends LogItem {
     constructor(user:User=null){
-    super()
+    super(user)
     this["eventType"] = EEventType.Landing
   }
 
 }
 export class LogAuthItem extends LogItem {
   constructor(error: Error, user:User=null){
-    super()
+    super(user)
     this["error"] = error
     this["eventType"] = EEventType.Auth
   }

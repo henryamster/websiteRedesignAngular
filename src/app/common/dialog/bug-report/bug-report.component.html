@@ -15,11 +15,19 @@
     <h4 class="font-sans textCenter">Thank you for taking the time to submit this bug report!</h4>
 
     <p>If you wouldn't mind, please describe what you were doing when the issue occured:</p>
-    <mat-form-field class="full-width">
+    <form class="bugReportForm" [formGroup]="bugReportForm">
+       <quill-editor
+        #bugReportText
+          formControlName="bugReportText"
+          placeholder="Type your text here..."
+          required
+        ></quill-editor>
+        <mat-error *ngIf="bugReportForm.get('bugReportText').hasError('required')">
+          A description is <strong>required</strong>
+        </mat-error>
 
-        <textarea matInput placeholder="Description" ></textarea>
+    </form>
 
-    </mat-form-field>
     <mat-divider
     [inset]="true">
   </mat-divider>
