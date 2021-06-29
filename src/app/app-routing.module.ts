@@ -10,6 +10,7 @@ import { AngularFireAuthGuard, hasCustomClaim, redirectUnauthorizedTo, redirectL
 import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NavListComponent } from './common/nav-list/nav-list.component';
+import { AboutComponent } from './pages/about/about.component';
 
 const unauthorizedRedirect = () => redirectUnauthorizedTo(['login'])
 const adminAccess = () => hasCustomClaim('admin')
@@ -27,6 +28,10 @@ const routes: Routes = [
   {path:'admin', component: NavListComponent,
   canActivate: [AngularFireAuthGuard],
   data: {authGuardPipe: adminAccess && unauthorizedRedirect}
+  },
+  {
+    path:'about', component:AboutComponent
+
   },
   {path:'**', component: NotFoundComponent},
 

@@ -63,6 +63,7 @@ import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/functions'
 
 /** Quill Import */
 import { QuillModule } from 'ngx-quill';
+import { AboutComponent } from './pages/about/about.component';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { QuillModule } from 'ngx-quill';
     LogTemplateComponent,
     BugReportComponent,
     ProfileMenuComponent,
+    AboutComponent,
 
   ],
   imports: [

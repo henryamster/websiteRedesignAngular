@@ -1,9 +1,9 @@
 <mat-nav-list  >
 
-  <app-profile-menu class="displayGrid"> </app-profile-menu>
+
 
     <a *ngFor="let nav of navList" mat-list-item class="navLinks" [routerLink]="nav['link']">{{ nav["link"] }}</a>
-
+    <app-profile-menu class="displayGrid"> </app-profile-menu>
 
 
     <footer class="navList">

@@ -1,0 +1,66 @@
+
+.attachPhoto{
+  margin-top: 8em;
+  max-height: 300px;
+  max-width: 300px;
+  border-radius: 50%;
+  animation: morph 22s infinite;
+  background: repeating-radial-gradient(#11113552, #0c0c0c 50px);
+  background-size: 400%;
+  box-shadow: 15px 2px 14px 3px #3c403c61, 15px 20px 9px 7px #69525266, -2px 16px 5px 3px #6db6ff4d;
+  border: 40px double rgba(250, 235, 215, 0.377) ;
+  align-self: center;
+}
+.emptyBlock{
+  width: 400px;
+  height: 400px;
+  display: grid;
+  place-content: center;
+}
+.aboutHeaderBlock{
+display: flex;
+   flex-direction: column;
+   flex-wrap:wrap;
+    place-content: center;
+    justify-content: space-evenly;
+}
+.aside{
+  min-width: 14em;
+    max-width: 40em;
+    margin-top: 8em;
+    text-shadow: -2px 2px 2px #ffffff;
+}
+
+@keyframes morph {
+  0%{
+
+background-size: 500%;
+    transform: rotate(-3deg)
+    ;
+  }
+  20%{
+background-position: 70% 20%;
+    background-size: 300%;
+    transform: rotateY(1deg);
+  }
+  40%{
+
+    background-size: 120%;
+    transform: scale(.9);
+  }
+  60%{
+    transform: rotate(3deg);
+    transform: rotateZ(1deg);
+   background-position: 30% 80%;
+  }
+  80%{
+    transform: scale(1.1) rotateX(4deg);
+    background-size: 240%;
+
+  }
+  100%{
+
+    transform: rotate(-3deg);
+    background-size: 500%;
+  }
+}

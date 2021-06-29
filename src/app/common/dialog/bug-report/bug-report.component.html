@@ -1,4 +1,4 @@
-<mat-card  class="font-sans padding2em" [ngClass]="!notClosing? 'disappear' :''" >
+<mat-card  class="font-sans padding2em " [ngClass]="!notClosing? 'disappear' :''" >
   <mat-card-header  *ngIf="notClosing">
     <mat-card-title> <mat-icon>bug_report</mat-icon> Bug Report</mat-card-title>
     <mat-card-subtitle *ngIf="notClosing"  class="blueText"> [ISSUE: {{logItem["id"]}}]</mat-card-subtitle>

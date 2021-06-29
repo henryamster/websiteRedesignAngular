@@ -76,9 +76,6 @@ Custom
 }
 
 
-
-
-
 .logData{
   color:rgb(92, 88, 88);
   text-align: justify;
@@ -89,6 +86,13 @@ Custom
   padding: 8px;
   border-radius: 8px;
   margin:2em;
+}
+
+.glass{
+  background: radial-gradient(#ffffff2b,#f0fff085);
+  backdrop-filter: blur(7px);
+  box-shadow: 4px 2px 6px 1px #c0cec0, -8px 1px 14px 0px #c0cec0 inset, 2px 6px 8px 1px #616161 !important;
+
 }
 
 /**
@@ -151,12 +155,70 @@ margin: 8px;
 font-size: 24px;
 color: black;
 }
+.animatedContainer{
+  background-image: url('./assets/fesafe2f3.jpg');
+  min-width: 100vw;
+  min-height:100vh;
+  animation: slowZoom 60s infinite ease-in-out;
+}
+
+.animatedContainerContent{
+
+  width: 100vw;
+  min-height: 100vh;
+  background: radial-gradient(#ffdfdf2e, #ebebeb75, #ffffffd9, white);
+    animation: subtleBlur 10s infinite ease-in-out;
+}
 
 /**
 Animations
 */
 
-
+@keyframes slowZoom {
+  0%{
+background-size: 200%;
+background-position: 0% 0%;
+transform: rotate3d(23deg, 1deg);
+  }
+  25%{
+    background-size: 400%;
+    background-position: 25% 45%;
+  }
+  50%{
+    background-size: 200%;
+    background-position: 100% 100%;
+  }
+  75%{
+    background-size: 120%;
+    background-position:  100% 0%;
+    transform: rotate3d(65deg, -31deg);
+  }
+  100%{
+    background-size: 200%;
+    background-position: 0% 0%;
+transform: rotate3d(23deg, 1deg);
+  }
+}
+@keyframes subtleBlur{
+  0%{
+    backdrop-filter: blur(2px);
+  }
+  20%{
+    backdrop-filter: blur(0px);
+  }
+  40%{
+    backdrop-filter: blur(3px);
+  }
+  60%{
+    backdrop-filter: blur(2px);
+  }
+  80%{
+    backdrop-filter: blur(1px);
+  }
+  100%{
+    backdrop-filter: blur(2px);
+  }
+}
 
 
 @keyframes spin{
