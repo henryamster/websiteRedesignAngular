@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import firebase from 'firebase/app';
 import { LoggerService } from '../generic/logger.service';
 import { EEventType } from '../generics/log-item';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class AuthService {
 
 
   constructor(private auth: AngularFireAuth,
-    private logger:LoggerService,) {
+    private logger:LoggerService,
+    private router:Router) {
     this["authEvent"] = new Subject();
     this["getCurrentUser"](auth)
       ["pipe"](
@@ -47,17 +49,27 @@ export class AuthService {
   }
 
   private attemptLogin(cred: ILogin) : Subscription {
+
     return from(this["auth"]["signInWithEmailAndPassword"](cred["email"], cred["password"])).subscribe(
-      userCred=> {  this["triggerAuthEvent"](true); return userCred},
+      userCred=> {
+      this["_user"]=userCred.user;
+      this["gatherClaims"](this["_user"])
+      this["triggerAuthEvent"](true);
+      this["router"]["navigateByUrl"]('/about');
+      return userCred},
       err=> this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
     )
   }
 
   public logout(): Observable<void> {
-    this["triggerAuthEvent"](false)
     return from(
       this["auth"]["signOut"]()
-    )
+    )["pipe"](tap( _=> {
+      this["triggerAuthEvent"](false)
+      this["vacateUser"]()
+                       }
+                 )
+             )
   }
 
   public popOutLogin(provider = 'google'){
@@ -159,5 +171,8 @@ export class AuthService {
     return [token["claims"]]
   }
 
-
+  private vacateUser(){
+    [this["IS_ADMIN"], this["_user"], this["_claims"]] =
+    [()=>false, null, null]
+  }
 }

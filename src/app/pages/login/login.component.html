@@ -1,9 +1,20 @@
-<div class="container componentLoadInAnimation">
+<div  *ngIf="!loggedIn()" class="container componentLoadInAnimation">
   <div class="animatedContainer">
     <div class="animatedContainerContent">
   <p class="font-sans header">Log In</p>
 
 <app-login-form></app-login-form>
     </div></div>
+</div>
+
+<div *ngIf="loggedIn()" class="container componentLoadInAnimation">
+  <div >
+    <h1>
+      You are already logged in,
+      {{this["user"]["displayName"] |titlecase}}
+    </h1>
+
+    <h3>Taking you to the dashboard page in {{countdown}} seconds.</h3>
+  </div>
 </div>
 

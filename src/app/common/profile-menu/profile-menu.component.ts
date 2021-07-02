@@ -15,22 +15,36 @@ export class ProfileMenuComponent implements OnInit {
   constructor(private resize: ResponsiveService,
               private auth: AuthService) {
 
-               }
+              }
+
+
   size:IWindowSize;
   resize$: Subscription
   userProfileImage: string | boolean;
   authEvents$: Subscription
   loggedIn:boolean;
+  name: string;
 
 
   ngOnInit(): void {
     this["setResponsiveBehavior"]()
-    this["setProfileImage"]()
     this["watchAuthEvents"]()
+    this["setUserInfo"]()
+    this["setProfileImage"]()
+
+
 
   }
   private setProfileImage() {
-    this["userProfileImage"] = (this["auth"]["user"]()?.["photoURL"] != undefined) ? this["auth"]["user"]()?.["photoURL"] : false;
+    this["userProfileImage"] = (this.retrieveUser()?.["photoURL"] != undefined) ? this["auth"]["user"]()?.["photoURL"] : false;
+  }
+
+  private retrieveUser() {
+    return this["auth"]["user"]();
+  }
+
+  private setUserInfo(){
+    this["user"]= this["retrieveUser"]()
   }
 
   private setResponsiveBehavior() {
@@ -42,8 +56,14 @@ export class ProfileMenuComponent implements OnInit {
   }
 
   private watchAuthEvents(){
+
     this["authEvents$"] = this["auth"]["authEvent"]["pipe"](
-      tap( event => this["loggedIn"] = this["auth"]["user"]() == undefined? false : true )
+      tap( event => {
+      const USER_IS_LOGGED_IN = this["auth"]["user"]() == undefined? false : true;
+      this["setProfileImage"]();
+      this["setUserInfo"]();
+      this["loggedIn"]= USER_IS_LOGGED_IN
+    }),
     )["subscribe"]()
 
   }
@@ -51,6 +71,7 @@ export class ProfileMenuComponent implements OnInit {
 
   public logOut(){
     this["auth"]["logout"]()["subscribe"]()
+    this["userProfileImage"]=null
 
   }
 

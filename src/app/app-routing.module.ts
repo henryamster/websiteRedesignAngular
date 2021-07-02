@@ -14,7 +14,7 @@ import { AboutComponent } from './pages/about/about.component';
 
 const unauthorizedRedirect = () => redirectUnauthorizedTo(['login'])
 const adminAccess = () => hasCustomClaim('admin')
-const loginRedirect = () => redirectLoggedInTo(['dashboard']);
+// const loginRedirect = () => redirectLoggedInTo(['about']);
 
 
 const routes: Routes = [
@@ -23,8 +23,9 @@ const routes: Routes = [
 },
   {path:'login',
   component: LoginComponent,
-  canActivate:[AngularFireAuthGuard],
-  data: {authGuardPipe: loginRedirect}},
+  // canActivate:[AngularFireAuthGuard],
+  // data: {authGuardPipe: loginRedirect}
+},
   {path:'admin', component: NavListComponent,
   canActivate: [AngularFireAuthGuard],
   data: {authGuardPipe: adminAccess && unauthorizedRedirect}
