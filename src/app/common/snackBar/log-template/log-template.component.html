@@ -10,12 +10,14 @@
 <!-- Error Template -->
 <div *ngIf='logItem["eventType"]=== eventType["Error"]||
             logItem["eventType"]=== eventType["Landing"]||
-            logItem["eventType"]=== eventType["Auth"]' class="error">
+            logItem["eventType"]=== eventType["Auth"]||
+            logItem["eventType"]=== eventType["Server"]' class="error">
   <p class=" logDataHeader">
     <mat-icon>report</mat-icon> Something went wrong
     <strong class="redText font-sans"
     *ngIf='logItem["eventType"]=== eventType["Error"]||
-            logItem["eventType"]=== eventType["Auth"]'
+            logItem["eventType"]=== eventType["Auth"]||
+            logItem["eventType"]=== eventType["Server"]'
     >{{logItem["error"]?  logItem["error"] :''}}</strong>
 
     <strong class="redText font-sans"
@@ -39,30 +41,5 @@
   <p class=" logData">
    {{logItem | json | uppercase}}
   </p>
-
-
-
-
 </div>
-<!-- Auth Template
-<div *ngIf='logItem["eventType"]=== eventType["Auth"]' class="auth">
-  <p class="logDataHeader">
-   Authentication Event: <br/>
-    <strong class=" redText font-sans">{{logItem["authEvent"]}}</strong>
-  </p>
-  <p class=" logDataHeader">
-    Submitting information to logging service with incident Id: <br/>
-  <strong class="blueText font-sans">{{logItem["id"]}}</strong>
-  </p>
-</div>
-
-<div class="attachedId">
-  {{logItem["id"]}}
-</div> -->
-
-
-
-
-
-
 </div>

@@ -22,23 +22,23 @@ export class AuthService {
 
 
   constructor(private auth: AngularFireAuth,
-    private logger:LoggerService,
-    private router:Router) {
+    private logger: LoggerService,
+    private router: Router) {
     this["authEvent"] = new Subject();
     this["getCurrentUser"](auth)
-      ["pipe"](
-        tap((user: User) => {
-          <Observable<IdTokenResult>>this["gatherClaims"](user)
-        }
-        ),
-        catchError(err => {
-          throw 'Could not retrieve user.' + err;
-        }),
-      )
-      ["subscribe"]()
+    ["pipe"](
+      tap((user: User) => {
+        <Observable<IdTokenResult>>this["gatherClaims"](user)
+      }
+      ),
+      catchError(err => {
+        throw 'Could not retrieve user.' + err;
+      }),
+    )
+    ["subscribe"]()
 
-    this["auth"]["authState"]["pipe"](tap( user=> <void>this["triggerAuthEvent"](!user?.["email"]===null)))
-    .subscribe()
+    this["auth"]["authState"]["pipe"](tap(user => <void>this["triggerAuthEvent"](!user?.["email"] === null)))
+      .subscribe()
     this["watchAuthEvents"](auth);
   }
 
@@ -48,52 +48,45 @@ export class AuthService {
     this["attemptLogin"](cred)
   }
 
-  private attemptLogin(cred: ILogin) : Subscription {
 
-    return from(this["auth"]["signInWithEmailAndPassword"](cred["email"], cred["password"])).subscribe(
-      userCred=> {
-      this["_user"]=userCred.user;
-      this["gatherClaims"](this["_user"])
-      this["triggerAuthEvent"](true);
-      this["router"]["navigateByUrl"]('/about');
-      return userCred},
-      err=> this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
-    )
-  }
+
+
 
   public logout(): Observable<void> {
     return from(
       this["auth"]["signOut"]()
-    )["pipe"](tap( _=> {
+    )["pipe"](tap(_ => {
       this["triggerAuthEvent"](false)
       this["vacateUser"]()
-                       }
-                 )
-             )
+      this["redirectToLogin"]()
+    }
+    )
+    )
   }
 
-  public popOutLogin(provider = 'google'){
+
+  public popOutLogin(provider = 'google') {
     this["logger"]["logError"](new Error('Third Party Authentitcation has not yet been enabled.'), this._user, EEventType.Auth);
 
-    const WHEN_IMPLEMENTED=false;
+    const WHEN_IMPLEMENTED = false;
 
-    if (WHEN_IMPLEMENTED){
+    if (WHEN_IMPLEMENTED) {
       this["triggerAuthEvent"](true)
-      if (provider=="google"){
+      if (provider == "google") {
         return from(this["auth"]["signInWithPopup"](new firebase.auth.GoogleAuthProvider()))
       }
-      if (provider=="facebook"){
+      if (provider == "facebook") {
         return from(this["auth"]["signInWithPopup"](new firebase.auth.FacebookAuthProvider()))
       }
-      if (provider=="twitter"){
+      if (provider == "twitter") {
         return from(this["auth"]["signInWithPopup"](new firebase.auth.TwitterAuthProvider()))
       }
-      if (provider=="github"){
-      return from(this["auth"]["signInWithPopup"](new firebase.auth.GithubAuthProvider()))
+      if (provider == "github") {
+        return from(this["auth"]["signInWithPopup"](new firebase.auth.GithubAuthProvider()))
       }
 
 
-      if (provider="phone"){
+      if (provider = "phone") {
         return from(this["auth"]["signInWithPopup"](new firebase.auth.PhoneAuthProvider()))
       }
     }
@@ -108,22 +101,47 @@ export class AuthService {
     return this["_user"] ?? null
   }
 
-  public IS_ADMIN(): boolean{
+  public IS_ADMIN(): boolean {
     return this["_isAdmin"]
   }
 
-  makeAdmin(){
+  private makeAdmin() {
     this["auth"]
     this["getUserTokenResult"](this._user).subscribe(
-      token=> token.claims
+      token => token.claims
     )
 
   }
+
+  private redirectToDashboard() {
+    this["router"]["navigateByUrl"]('/dashboard');
+  }
+
+  private redirectToLogin() {
+    this["router"]["navigateByUrl"]('/login');
+  }
+
+
+  private attemptLogin(cred: ILogin): Subscription {
+
+    return from(this["auth"]["signInWithEmailAndPassword"](cred["email"], cred["password"])).subscribe(
+      userCred => {
+        this["_user"] = userCred.user;
+        this["gatherClaims"](this["_user"])
+        this["triggerAuthEvent"](true)
+        this["redirectToDashboard"]()
+        return userCred
+      },
+      err => this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
+    )
+  }
+
 
   private gatherClaims(user: User) {
     return this["getUserTokenResult"](user)
       .pipe(
         tap(token => {
+          console.log(this["checkAdminRoleInClaims"](token))
           this["_isAdmin"] = this["checkAdminRoleInClaims"](token)
           this["_claims"] = this["getClaims"](token)
           this["_user"] = user
@@ -146,7 +164,7 @@ export class AuthService {
     );
   }
 
-  private triggerAuthEvent(loggedIn: boolean): void  {
+  private triggerAuthEvent(loggedIn: boolean): void {
     this["authEvent"]["next"](loggedIn);
     console.log(this._user);
   }
@@ -156,7 +174,7 @@ export class AuthService {
   }
 
   private getUserTokenResult(user: User): Observable<IdTokenResult> {
-    return !!user? from(user.getIdTokenResult()):from([]);
+    return !!user ? from(user.getIdTokenResult()) : from([]);
   }
 
   private checkAdminRoleInClaims(token: IdTokenResult): boolean {
@@ -171,8 +189,8 @@ export class AuthService {
     return [token["claims"]]
   }
 
-  private vacateUser(){
+  private vacateUser() {
     [this["IS_ADMIN"], this["_user"], this["_claims"]] =
-    [()=>false, null, null]
+      [() => false, null, null]
   }
 }

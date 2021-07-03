@@ -20,6 +20,7 @@
         #bugReportText
           formControlName="bugReportText"
           placeholder="Type your text here..."
+          ngAcceptInputType_required="true"
           required
         ></quill-editor>
         <mat-error *ngIf="bugReportForm.get('bugReportText').hasError('required')">
@@ -45,7 +46,7 @@
     <p>Thanks anyway!</p>
   </mat-card-content>
   <mat-card-actions *ngIf="notClosing" align="center">
-    <button mat-raised-button> <mat-icon>check</mat-icon> Submit</button>
+    <button mat-raised-button (click)="submitBugReport()"> <mat-icon>check</mat-icon> Submit</button>
     <button mat-raised-button (click)="close()"> <mat-icon>cancel</mat-icon> Cancel</button>
   </mat-card-actions>
 </mat-card>

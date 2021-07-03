@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Route } from '@angular/compiler/src/core';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { from, interval, noop } from 'rxjs';
+import { from, interval, noop, Subscription } from 'rxjs';
 import { map, pluck, reduce, startWith, take, tap, timeout } from 'rxjs/operators';
 import { LoggerService } from 'src/app/generic/logger.service';
 import { RouterService } from 'src/app/generic/router.service';
@@ -29,6 +29,7 @@ export class NotFoundComponent implements OnInit {
   loaded: boolean = false;
   COUNTDOWN_SECONDS = 5;
   countdown: number;
+  redirectCountdown$: Subscription = null;
 
   secondsTimer$ = interval(1000)["pipe"](
     take(this["COUNTDOWN_SECONDS"]),
@@ -41,17 +42,23 @@ export class NotFoundComponent implements OnInit {
       this.loaded=true
     )
 
-    this["secondsTimer$"]["pipe"](
+    this["redirectCountdown$"] = this["secondsTimer$"]["pipe"](
       startWith(this["COUNTDOWN_SECONDS"]),
-     tap(count => (count == 0) ? this.router.navigateByUrl('/about'): noop)
+      tap(count => (count == 0) ? this.router.navigateByUrl('/dashboard') : noop)
     )["subscribe"](
       secondsRemaining => this.countdown = secondsRemaining
-    )
+    );
+
 
     this["logger"]["logError"](new Error(`
     Invalid URL attempt: ${this.stringUrl}`), null, EEventType.Landing)
 
 
+  }
+
+
+  ngOnDestroy(): void {
+    this["redirectCountdown$"]["unsubscribe"]()
   }
 
 

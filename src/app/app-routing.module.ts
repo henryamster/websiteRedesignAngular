@@ -11,6 +11,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NavListComponent } from './common/nav-list/nav-list.component';
 import { AboutComponent } from './pages/about/about.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
 
 const unauthorizedRedirect = () => redirectUnauthorizedTo(['login'])
 const adminAccess = () => hasCustomClaim('admin')
@@ -33,6 +34,9 @@ const routes: Routes = [
   {
     path:'about', component:AboutComponent
 
+  },
+  {
+    path:'dashboard', component: DashboardComponent
   },
   {path:'**', component: NotFoundComponent},
 

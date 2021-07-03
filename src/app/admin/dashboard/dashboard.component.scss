@@ -1,0 +1,29 @@
+.container{
+  min-height: 80vh;
+  background: linear-gradient(antiquewhite, turquoise);
+}
+
+.wavyAnimation{
+  background: linear-gradient(
+    45deg
+    , rgba(250, 235, 215, 0.493),rgba(255, 166, 0, 0.596), rgba(64, 224, 208, 0.377));
+        background-size: 3%;
+
+        background-repeat: unset;
+        animation: wavy 12s infinite;
+}
+
+@keyframes wavy{
+  0%{
+    background-position: center;
+    background-size:3%;
+  }
+  50%{
+    background-size: 6%;
+    background-position: 100% 50%;
+  }
+  100%{
+    background-size: 3%;
+    background-position: center;
+  }
+}

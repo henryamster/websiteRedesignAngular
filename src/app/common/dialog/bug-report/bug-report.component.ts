@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuillEditorComponent,} from 'ngx-quill';
 import { of } from 'rxjs';
 import { delay, tap, timeout } from 'rxjs/operators';
+import { BugReportService } from 'src/app/api/bug-report.service';
 import { ILogItem } from 'src/app/generics/log-item';
 import { MatQuill } from 'src/app/mat-quill/mat-quill';
 
@@ -17,7 +18,8 @@ export class BugReportComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data:ILogItem,
     public dialogRef: MatDialogRef<BugReportComponent>,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private bugReportService: BugReportService
   ) { }
   notClosing:boolean = true;
   logItem: ILogItem
@@ -46,6 +48,13 @@ export class BugReportComponent implements OnInit {
     )["subscribe"]()
 
 
+
+  }
+
+  submitBugReport(){
+    this.bugReportService.submitBugReport(
+      this.bugReportForm.get('bugReportText').value
+    );
 
   }
 

@@ -2,40 +2,49 @@ import {NavBarLink} from './../generics/nav-bar-link';
 export const ABOUT = new NavBarLink(
   `about`,
   false,
-  true
+  true,
+  false
 );
 export const CONTACT = new NavBarLink(
   `contact`,
   false,
-  true
+  true,
+  false
 );
 export const BLOG = new NavBarLink(
   `blog`,
   false,
-  true
+  true,
+  false
 );
 export const GALLERY = new NavBarLink(
   'gallery',
   false,
-  true
+  true,
+  false
 );
 export const LOGIN = new NavBarLink(
   `login`,
   false,
-  true
+  true,
+  false
 );
 export const LOGOUT = new NavBarLink(
   `logout`,
   false,
-  false
+  false,
+  true
 );
 export const POST = new NavBarLink(
   `post`,
   true,
-  false
+  false,
+  true
 );
 export const DASHBOARD = new NavBarLink(
-  'admin',
-  true,
-  false
+  'dashboard',
+  false,
+  false,
+  true
 );
+

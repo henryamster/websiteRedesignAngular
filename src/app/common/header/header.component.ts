@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 import { NavBarLinkService } from 'src/app/generic/nav-bar-link.service';
 import { ResponsiveService } from 'src/app/generic/responsive.service';
 import { NavBarLink } from 'src/app/generics/nav-bar-link';
@@ -18,7 +19,7 @@ import { IWindowSize } from 'src/app/generics/window-size';
 export class HeaderComponent implements OnInit {
 
   constructor(private resize: ResponsiveService,
-    private navbar:NavBarLinkService) { }
+    private navbar:NavBarLinkService, private auth:AuthService) { }
   @Output() sideNavToggle:EventEmitter<boolean> = new EventEmitter();
   resize$: Subscription
   size:IWindowSize;
@@ -48,7 +49,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private watchAuthEvents() {
-    this["navbar"]["authEvent"]["pipe"](
+    this["auth"]["authEvent"]["pipe"](
       tap(_ => this["refreshNavList"])
     )
     ["subscribe"]()

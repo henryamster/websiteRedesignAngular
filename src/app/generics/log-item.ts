@@ -14,6 +14,7 @@ export interface ILogItem {
   id?: number;
   eventType?: EEventType;
   user?: User;
+  serverMessage?: string;
 }
 export class LogItem implements ILogItem{
   constructor(user:User=null){
@@ -55,9 +56,19 @@ export class LogAuthItem extends LogItem {
   }
 }
 
+export class LogServerItem extends LogItem {
+  constructor(error?: Error, user:User=null, serverMessage?: string){
+  super(user)
+  this["error"]=error
+  this["serverMessage"]=serverMessage
+  this["eventType"] = EEventType.Server
+  }
+}
+
 export enum EEventType{
   Error= "ERROR",
   Landing = "LANDING",
   Auth = "AUTH",
-  Other = "OTHER"
+  Other = "OTHER",
+  Server = "SERVER"
 }

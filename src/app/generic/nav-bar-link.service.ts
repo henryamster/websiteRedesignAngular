@@ -10,7 +10,7 @@ import { ABOUT, CONTACT, BLOG, GALLERY, LOGIN, LOGOUT, POST, DASHBOARD } from '.
   providedIn: 'root'
 })
 export class NavBarLinkService {
-  private _user: (User | null)
+  private _user: User | null
   private _isAdmin: boolean = false;
   authEvent: Observable<boolean>
   availableLinks: NavBarLink[]
@@ -18,7 +18,7 @@ export class NavBarLinkService {
 
 
   constructor(private auth: AuthService, private logger: LoggerService) {
-    this["authEvent"] = this["auth"]["authEvent"]["asObservable"]()
+    // this["authEvent"] = this["auth"]["authEvent"]["asObservable"]()
     this["_isAdmin"] = this["auth"]["IS_ADMIN"]()
     this["watchAuthEvents"]();
   }
@@ -34,21 +34,33 @@ export class NavBarLinkService {
   }
 
   getAvailableLinks(): void {
+    this["getLocalUser"]();
     this["_shadowLinks"] = this["navBarLinks"]
+    //|| this["_user"]?.["isAnonymous"]
+    this["conditionallyFilterLinks"](this["_user"]==null, 'anonymousAccess', false)
 
+    //no admin implementation yet
+    this["conditionallyFilterLinks"](true, 'adminOnly', false)
 
-    this["conditionallyFilterLinks"]((this["_user"]==null|| this["_user"]?.["isAnonymous"]), 'anonymousAccess', true)
-    this["conditionallyFilterLinks"](this["_isAdmin"], 'adminOnly', false)
+   // this["conditionallyFilterLinks"](this["_user"]?.["uid"]!=null, 'adminOnly', false)
+  }
+
+  private getLocalUser() {
+    this["_user"] = this["auth"]["user"]();
   }
 
   private watchAuthEvents(): void {
-    this["authEvent"]["pipe"](tap(_loggedIn => {
-      [this["_user"], this["_isAdmin"]] =
-        [this["auth"]["user"](), this["auth"]["IS_ADMIN"]()]
+    this["auth"]["authEvent"]["pipe"](tap(_loggedIn => {
+      this["setLocalUserAndAdmin"]();
       this["getAvailableLinks"]()
     }))
     ["subscribe"]();
 
+  }
+
+  private setLocalUserAndAdmin() {
+    [this["_user"], this["_isAdmin"]] =
+      [this["auth"]["user"](), this["auth"]["IS_ADMIN"]()];
   }
 
   private conditionallyFilterLinks(condition: boolean, prop: string, value: boolean): void {
@@ -62,7 +74,7 @@ export class NavBarLinkService {
       BLOG,
       GALLERY,
       // LOGIN,
-      LOGOUT,
+      // LOGOUT,
       POST,
       DASHBOARD
     ]

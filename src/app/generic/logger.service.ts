@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LogTemplateComponent } from '../common/snackBar/log-template/log-template.component';
-import { EEventType, ILogItem, LogAuthItem, LogErrorItem, LogLandingItem } from '../generics/log-item';
+import { EEventType, ILogItem, LogAuthItem, LogErrorItem, LogLandingItem, LogServerItem } from '../generics/log-item';
 import { User } from '@firebase/auth-types';
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class LoggerService {
 
   }
 
-  public logError(err: Error, user?: User, type=EEventType.Error) {
+  public logError(err: Error, user?: User, type=EEventType.Error, ...additionalParams) {
     let logItem;
     switch (type){
       case EEventType.Auth:
@@ -30,6 +30,9 @@ export class LoggerService {
         break;
       case EEventType.Landing:
         logItem = new LogLandingItem(user?user:null)
+        break;
+      case EEventType.Server:
+        logItem = new LogServerItem(err, user ?? null, additionalParams["serverMessage"])
         break;
       default:
         logItem = new LogErrorItem(err, user?? null)

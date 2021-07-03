@@ -13,16 +13,16 @@ import { IWindowSize } from 'src/app/generics/window-size';
 export class ProfileMenuComponent implements OnInit {
 
   constructor(private resize: ResponsiveService,
-              private auth: AuthService) {
+    private auth: AuthService) {
 
-              }
+  }
 
 
-  size:IWindowSize;
+  size: IWindowSize;
   resize$: Subscription
   userProfileImage: string | boolean;
   authEvents$: Subscription
-  loggedIn:boolean;
+  loggedIn: boolean;
   name: string;
 
 
@@ -43,8 +43,8 @@ export class ProfileMenuComponent implements OnInit {
     return this["auth"]["user"]();
   }
 
-  private setUserInfo(){
-    this["user"]= this["retrieveUser"]()
+  private setUserInfo() {
+    this["user"] = this["retrieveUser"]()
   }
 
   private setResponsiveBehavior() {
@@ -55,23 +55,23 @@ export class ProfileMenuComponent implements OnInit {
       });
   }
 
-  private watchAuthEvents(){
+  private watchAuthEvents() {
 
     this["authEvents$"] = this["auth"]["authEvent"]["pipe"](
-      tap( event => {
-      const USER_IS_LOGGED_IN = this["auth"]["user"]() == undefined? false : true;
-      this["setProfileImage"]();
-      this["setUserInfo"]();
-      this["loggedIn"]= USER_IS_LOGGED_IN
-    }),
+      tap(event => {
+        const USER_IS_LOGGED_IN = this["auth"]["user"]() == undefined ? false : true;
+        this["setProfileImage"]();
+        this["setUserInfo"]();
+        this["loggedIn"] = USER_IS_LOGGED_IN
+      }),
     )["subscribe"]()
 
   }
 
 
-  public logOut(){
+  public logOut() {
     this["auth"]["logout"]()["subscribe"]()
-    this["userProfileImage"]=null
+    this["userProfileImage"] = null
 
   }
 

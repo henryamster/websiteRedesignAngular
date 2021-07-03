@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 import { NavBarLinkService } from 'src/app/generic/nav-bar-link.service';
 import {  NavBarLink } from 'src/app/generics/nav-bar-link';
 
@@ -10,7 +11,7 @@ import {  NavBarLink } from 'src/app/generics/nav-bar-link';
 })
 export class NavListComponent implements OnInit {
 
-  constructor(private navbar:NavBarLinkService) {
+  constructor(private navbar:NavBarLinkService, private auth: AuthService) {
 
   }
   navList: NavBarLink[] = [];
@@ -25,7 +26,7 @@ export class NavListComponent implements OnInit {
   }
 
   private watchAuthEvents() {
-    this["navbar"]["authEvent"]["pipe"](
+    this["auth"]["authEvent"]["pipe"](
       tap(_ => this["refreshNavList"])
     )
     ["subscribe"]()
