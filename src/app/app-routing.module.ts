@@ -12,6 +12,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NavListComponent } from './common/nav-list/nav-list.component';
 import { AboutComponent } from './pages/about/about.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 const unauthorizedRedirect = () => redirectUnauthorizedTo(['login'])
 const adminAccess = () => hasCustomClaim('admin')
@@ -37,6 +38,9 @@ const routes: Routes = [
   },
   {
     path:'dashboard', component: DashboardComponent
+  },
+  {
+    path:'contact', component: ContactComponent
   },
   {path:'**', component: NotFoundComponent},
 

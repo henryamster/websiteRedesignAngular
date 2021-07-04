@@ -1,0 +1,87 @@
+<div class="componentLoadInAnimation">
+ <div class="longAnimationBg">
+
+  <div class="contactFormWrapper">
+    <mat-card class="contactForm font-sans">
+      <mat-card-header>
+        <mat-card-title
+        class="font-cursive"
+        >Let's Get In Touch!
+
+      </mat-card-title>
+      <mat-card-subtitle>
+        <p class="redText popIn" *ngIf="!personDetailsGroup.valid && !personDetailsGroup.pristine"
+        ><mat-icon  >warning</mat-icon> You have missing or invalid information in the Personal Details Section </p>
+        <p class="redText popIn" *ngIf="!contactDetailsGroup.valid && !contactDetailsGroup.pristine"
+        ><mat-icon  >warning</mat-icon> You have missing or invalid information in the Inquiry Details Section </p>
+        <p class="redText popIn" *ngIf="!messageDetailsGroup.valid && !messageDetailsGroup.pristine"
+        ><mat-icon  >warning</mat-icon> You have missing or invalid information in the Message Details Section </p>
+
+
+      </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-vertical-stepper >
+          <mat-step [formGroup]="personDetailsGroup" label="Tell me about yourself (Personal Details)">
+            <mat-form-field class="full-width">
+              <input id='name' #name matInput placeholder="What's your name?" formControlName="name">
+            <mat-error>
+              Name is required.
+            </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input id='email' #email matInput placeholder="What is your email address" formControlName="email">
+            <mat-error>
+              Email is required and must be a valid email address?
+            </mat-error>
+            </mat-form-field>
+
+
+          </mat-step>
+          <mat-step [formGroup]="contactDetailsGroup" label="The nature of your inquiry (Inquiry Type Details)">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Select inquiry type" formControlName="contactType" name="contactType">
+              <mat-option *ngFor="let type of contactTypes" [value]="type.val">
+                {{type.text}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error >
+             Inquiry type is required.
+            </mat-error>
+
+            </mat-form-field>
+              <mat-slide-toggle #follow formControlName="followUp"
+             >
+              Requires Follow-up?
+            </mat-slide-toggle>
+
+
+          </mat-step>
+
+          <mat-step
+          [formGroup]="messageDetailsGroup" label="What have you got to say? (Message Details)"
+          >
+          <quill-editor
+          #message
+            formControlName="message"
+            placeholder="Type your message here..."
+          ></quill-editor>
+          <mat-error *ngIf="!messageDetailsGroup.get('message').valid">
+           Your message must be <strong>at least 25 characters</strong>
+          </mat-error>
+
+        </mat-step>
+        </mat-vertical-stepper>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="submit()">Submit</button>
+        <button mat-button (click)="clear()">Clear</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+
+ </div>
+</div>

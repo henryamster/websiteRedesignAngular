@@ -54,7 +54,7 @@ export class BugReportComponent implements OnInit {
   submitBugReport(){
     debugger
     this["bugReportService"]["submitBugReport"](
-      this["bugReportForm"]["get"]('bugReportText').value
+      [JSON.stringify(this["logItem"]), this["bugReportForm"]["get"]('bugReportText').value].join('\n -- MESSAGE -- \n')
     )
     ["pipe"](
       tap(

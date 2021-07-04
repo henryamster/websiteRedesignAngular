@@ -25,6 +25,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 /* Libraries */
 import { AngularFireModule } from '@angular/fire';
@@ -67,6 +70,7 @@ import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/functions'
 import { QuillModule } from 'ngx-quill';
 import { AboutComponent } from './pages/about/about.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 
 @NgModule({
@@ -85,6 +89,7 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
     ProfileMenuComponent,
     AboutComponent,
     DashboardComponent,
+    ContactComponent,
 
   ],
   imports: [
@@ -112,6 +117,9 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
     MatMenuModule,
     MatChipsModule,
     MatExpansionModule,
+    MatStepperModule,
+    MatSelectModule,
+    MatSlideToggleModule,
 
     //Quill
     QuillModule.forRoot()

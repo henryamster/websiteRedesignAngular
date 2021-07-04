@@ -1,0 +1,62 @@
+.longAnimationBg{
+  // background-image: url('./../../../assets/long.jpg');
+  background-size: cover;
+  animation: shake 40s infinite;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  min-height: 90vh;
+
+}
+@keyframes shake{
+  0%{
+    background-image: url('./../../../assets/renderBgs/2240020.png');
+    background-position: top left;
+  }
+  25%{
+    background-image: url('./../../../assets/renderBgs/2240021.png');
+   background-size: 100%;
+  }
+  50%{
+    background-image: url('./../../../assets/renderBgs/2240076.png');
+    background-position: bottom right;
+    background-size: 100%;
+
+  }
+  75%{
+    background-image: url('./../../../assets/renderBgs/2240244.png');
+    background-size: 100%;
+  }
+  100%{
+    background-image: url('./../../../assets/renderBgs/2240020.png');
+    background-position: top left;
+  }
+}
+
+.contactForm{
+  max-width: 450px;
+}
+
+.contactFormWrapper{
+  padding:  10vh 0 0 0 ;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  min-height: 80%;
+}
+
+.popIn{
+  animation: popIn 2s forwards;
+  border-radius:5px;
+  margin: 22px;
+}
+@keyframes popIn {
+  0%{
+    box-shadow: inset 4px 4px 3px 2px;
+    transform: scale(1.2) translate(center, center) ;
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+.full-width{
+  width:100%;
+}

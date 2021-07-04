@@ -34,7 +34,7 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
           .send(new FunctionResponse(
               false,
               "Empty body for bug report",
-              req.body,
+              req?.body ?? undefined,
               new Error("No body")
           )).end();
 
@@ -42,39 +42,40 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
     }
 
     // Select the bugReports collection
-    const collectionRef = admin.firestore().collection("bugReports");
+    try {
+      const collectionRef = admin.firestore().collection("bugReports");
+
+
+      // Add request body to as new document
+      const promise= collectionRef.add(
+          req.body
+      );
+
+      // Send 200 and log succesful request
+      promise.then((writeResult) => {
+        res.status(200)
+            .send(new FunctionResponse(
+                true,
+                "Bug report successfully submitted!",
+                writeResult
+            )).end();
+        logRequest(req, "Bug report submission succesful.");
+      });
+    }
 
     // Check if bugReports collection is undefined,
     // If so, return 400
-    if (collectionRef ==undefined) {
+    catch {
       res.status(400)
           .send(new FunctionResponse(
               false,
               "Could not retrieve collection bugReports",
-              req.body,
+              req?.body?? undefined,
               new Error("Invalid collectionReference")
           )).end();
     }
-
-    // Add request body to as new document
-    const promise= collectionRef.add(
-        req.body
-    );
-
-    // Send 200 and log succesful request
-    promise.then((writeResult) => {
-      res.status(200)
-          .send(new FunctionResponse(
-              true,
-              "Bug report successfully submitted!",
-              writeResult
-          )).end();
-      logRequest(req, "Bug report submission succesful.");
-    });
   });
 });
-
-
 
 
 /**
@@ -108,7 +109,7 @@ export class FunctionResponse {
 
   // eslint-disable-next-line require-jsdoc
   constructor(success: boolean, message?: string, data?: any, error?: Error) {
-    [this.success, this.message, this.data.this.error] =
+    [this.success, this.message, this.data, this.error] =
       [success, message ?? undefined, data ?? undefined, error ?? undefined];
   }
 }

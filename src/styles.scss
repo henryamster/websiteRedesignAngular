@@ -170,9 +170,43 @@ color: black;
     animation: subtleBlur 10s infinite ease-in-out;
 }
 
+.natureBg{
+  min-height: 80vh;
+  animation: upAndDown 30s infinite;
+}
+
 /**
 Animations
 */
+
+@keyframes upAndDown{
+  0%{
+    background-position: top left;
+    background-image: url("./assets/photos/photo2.jpg");
+  }
+
+  25%{
+    background-position: bottom right;
+    background-image: url("./assets/photos/photo1.jpg");
+
+  }
+
+  50%{
+    background-position: bottom left;
+    background-image: url("./assets/photos/photo3.jpg");
+  }
+
+  75%{
+    background-position: top right;
+    background-image: url("./assets/photos/photo1.jpg");
+
+  }
+
+  100%{
+    background-position: top left;
+    background-image: url("./assets/photos/photo2.jpg");
+  }
+}
 
 @keyframes slowZoom {
   0%{
