@@ -40,10 +40,9 @@ export class BugReportService {
 
 
   private checkForSuccessFromServer(result: any): void {
-    if (!result["success"]) {
-
-
-      this["showErrorSnackbar"](result["message"]);
+    debugger
+    if (!result["_path"]["segments"]) {
+      this["showErrorSnackbar"](`Something went wrong.`);
       return;
     }
     this["showSuccessSnackbar"]()

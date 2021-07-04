@@ -8,7 +8,7 @@
     <app-brand-logo class="leftAuto"></app-brand-logo>
 
   </mat-card-header>
-  <mat-card-content *ngIf="notClosing || !submitted" >
+  <mat-card-content *ngIf="notClosing && !submitted" >
     <mat-divider
     [inset]="true">
   </mat-divider>
@@ -56,7 +56,7 @@
 
 
 
-  <mat-card-actions *ngIf="notClosing" align="center">
+  <mat-card-actions *ngIf="notClosing && !submitted" align="center">
     <button mat-raised-button (click)="submitBugReport()"> <mat-icon>check</mat-icon> Submit</button>
     <button mat-raised-button (click)="close()"> <mat-icon>cancel</mat-icon> Cancel</button>
   </mat-card-actions>

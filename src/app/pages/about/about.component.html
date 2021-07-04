@@ -1,15 +1,206 @@
 <div class="componentLoadInAnimation">
   <div class="animatedContainer">
-    <div class="animatedContainerContent">
+      <div class="animatedContainerContent">
 
-    <div class="aboutHeaderBlock">
-      <img src="./../../../assets/me-sm.png" class="attachPhoto">
-     <div class="aside">
-       <h1>Hey!</h1>
-       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi similique dolorum error dolore perferendis itaque. Quisquam velit accusantium nemo debitis tempore perspiciatis nam officia! Dolores, iure? Debitis recusandae aperiam labore.</p>
-     </div>
+        <div class="aboutHeaderBlock">
+        <img src="./../../../assets/me-sm.png" class="attachPhoto">
+        <div class="aside font-sans">
+
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title><h1><span class="firstLetter font-cursive">W</span>elcome!</h1></mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="bio aside font-sans">
+
+              <p>
+                <span class="firstLetter font-cursive">M</span>y name is Henry Fritz. I'm a Senior Programmer/Analyst at the EKU Training Resource Center.
+                I enjoy spending time writing, playing, and recording music, creating 3d motion graphics,
+                and hacking together scripts for automating repetitive tasks or finding out how to get around a paywall.
+              </p>
+              <p><span class="firstLetter font-cursive">T</span>his first section should cover the professional (stuff you'll find on a resume), but I would
+                also like to talk a little about myself personally, so you'll find that below. <mat-icon>arrow_downward</mat-icon>
+                </p>
+            </mat-card-content>
+
+          </mat-card>
+
+          </div>
+      </div>
+
+      <div class="aboutHeaderBlock">
+       <div class="work aside">
+        <h2><span class="firstLetter font-cursive">W</span>ork Experience</h2>
+
+
+
+
+        <div class="experience  " *ngFor="let experience of workExperiences">
+          <mat-expansion-panel hideToggle class="  panels">
+            <mat-expansion-panel-header class="headerPad">
+              <mat-panel-title>
+               <img *ngIf="!!experience['logo']" [src]="experience['logo']"class="orgLogo">
+                <h3 class="organization font-sans">{{experience["organization"]}}</h3>
+
+
+              </mat-panel-title>
+
+              <mat-panel-description class="noFlexGrow">
+                <h4 class="position">{{experience["positions"][0]}}</h4>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <em class="positions"> <strong>Positions held: </strong>{{experience["positions"].join(', ')}}</em>
+                <p class="durations"> <strong>Employed through: </strong>{{experience["employmentDurations"].join(', ')}}</p>
+
+                <mat-card  class="">
+              <mat-card-title>
+                <h4 class="semiHeader">Responsibilities</h4>
+              </mat-card-title>
+              <mat-chip-list>
+                <mat-chip class="  extraPad" *ngFor="let responsibility of experience['responsibilities']">{{responsibility}}</mat-chip>
+              </mat-chip-list>
+            </mat-card>
+  <mat-card  class="">
+  <mat-card-title>
+
+                <h4 class="semiHeader">Tech Stack</h4>
+  </mat-card-title>
+              <mat-chip-list>
+                <mat-chip class="  extraPad" *ngFor="let tech of experience['techStack']">{{tech}}</mat-chip>
+              </mat-chip-list>
+  </mat-card>
+          </mat-expansion-panel>
+
+
+
+
+
+        </div>
+       </div>
+       <div class="education aside">
+         <h2><span class="firstLetter font-cursive">E</span>ducation</h2>
+         <mat-expansion-panel class="  panels">
+           <mat-expansion-panel-header class="headerPad">
+            <mat-panel-title>
+              <img src="./../../../assets/eku.png" alt="EKU Logo" class="orgLogo">
+              <h3 class="organization font-sans">Eastern Kentucky University</h3>
+
+
+            </mat-panel-title>
+            <mat-panel-description class="noFlexGrow">
+              <h4 class="position">B.B.A. in Computer Information Systems</h4>
+            </mat-panel-description>
+           </mat-expansion-panel-header>
+           <p class="degree"><strong>B.B.A.</strong> in <em>Computer Information Systems</em></p>
+           <p class="school"><strong>Eastern Kentucky University</strong></p>
+           <p class="graduationDate"><span class="small">Magna Cum Laude June, 2019</span></p>
+           <p class="graduationDate"><span class="small">C.I.S. Club, <strong>President; </strong>President's List; Dean's List;</span></p>
+
+           <mat-card  class="">
+            <mat-card-title>
+             <h4 class="semiHeader">Courses</h4>
+            </mat-card-title>
+            <mat-card-content>
+             <mat-chip-list>
+               <mat-chip class="  extraPad" *ngFor="let course of COURSE_LIST[0]">{{course}}</mat-chip>
+             </mat-chip-list>
+            </mat-card-content>
+
+          </mat-card>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="  panels">
+            <mat-expansion-panel-header class="headerPad">
+             <mat-panel-title>
+              <img src="./../../../assets/uk.png" alt="UK Logo" class="orgLogo">
+               <h3 class="organization font-sans">University of Kentucky</h3>
+
+
+             </mat-panel-title>
+             <mat-panel-description class="noFlexGrow">
+               <h4 class="position">Physics/ Geology/ Computer Science</h4>
+             </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p class="degree"><strong>No Degree Received</strong> </p>
+            <p class="school"><strong>University of Kentucky</strong></p>
+            <p class="graduationDate"><span class="small">2007-2009, 2011</span></p>
+            <p class="graduationDate"><span class="small">WRFL, <strong>Volunteer DJ;</strong> Pi Kappa Phi</span></p>
+
+            <mat-card  class="">
+             <mat-card-title>
+              <h4 class="semiHeader">Courses</h4>
+             </mat-card-title>
+             <mat-card-content>
+              <mat-chip-list>
+                <mat-chip class="  extraPad" *ngFor="let course of COURSE_LIST[1]">{{course}}</mat-chip>
+              </mat-chip-list>
+             </mat-card-content>
+
+           </mat-card>
+           </mat-expansion-panel>
+
+           <h2 class="padTop"><span class="firstLetter font-cursive">I</span>nterests</h2>
+           <mat-expansion-panel class="  panels">
+             <mat-expansion-panel-header class="headerPad">
+               Interests
+             </mat-expansion-panel-header>
+             <mat-chip-list>
+               <mat-chip class="  extraPad" *ngFor="let interest of INTERESTS">{{interest}}</mat-chip>
+             </mat-chip-list>
+           </mat-expansion-panel>
+
+
+       </div>
+
+      </div>
     </div>
-    </div>
-    </div>
+  </div>
+
+  <div class="personal fullSection">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <h1>Biography</h1>
+        </mat-card-title>
+      </mat-card-header>
+     <mat-card-content class="bio aside font-sans">
+      <p >
+        <span class="firstLetter font-cursive">I</span> grew up in Richmond, Kentucky, near the historic Fort Boonesboro State Park and attended Madison Central High School,
+        where I was an officer in the Junior Classical League (Latin Club), participated in the Academic Team all 4 years
+        and was a participant in the National Youth Leadership Foundation Conference for Technology in San Diego in 2004. I spent most of
+        my free time writing, playing, and recording music with friends, playing World of Warcraft, and trying to
+        impress girls with my myspace profile designs 😆
+      </p>
+      <p>
+        <span class="firstLetter font-cursive">A</span>fter graduating high school, I moved to Lexington, Kentucky, to attend the University of Kentucky, which I did on
+        and off over the next five years. I was a volunteer DJ at WRFL and played in a couple of different bands during this time.
+        I put my education on hold to take a management job at Meijer for financial security, where I had been working
+        while going to school, and eventually decided to step down from my management position to take a stab at a career in music. I moved to Louisville, Kentucky,
+        in 2014, but ended up deciding being a musician was not a very viable way to build up a retirement fund, and have stuck to it as a hobby ever since.
+      </p>
+      <p>
+        <span class="firstLetter font-cursive">I</span> moved back to Richmond, Kentucky, in 2016 and worked as an Amazon Distribution Facility Picker for one year, and
+        as a produce clerk at Meijer for the years in between moving back and finishing my degree at Eastern Kentucky University, where I enrolled in 2017.
+        I studied Computer Information Systems at Eastern, and after graduating, took an internship with Meijer in Grand Rapids, Michigan, where I worked with the Cloud Infrastructure team.
+      </p>
+      <p>
+        <span class="firstLetter font-cursive">A</span>fter declining an offer to work so far away from home, I ended up taking a position with EKU's Training Resource Center, where I was hired as a Javascript Developer,
+        but have since taken on many different and interesting responsibilities.
+      </p>
+      <p><span class="firstLetter font-cursive">I</span> am not married, I don't have any pets, but I do live with my entire family in a (somewhat) remote cabin in the woods. We're not preppers or anything! It's just so nice to not breathe in the city smog
+        and have to deal with ambulance sirens, noisy neighbors, et c. When I'm not working, making music or art, or otherwise working behind a computer, you can find me
+        shooting hoops out on the front lawn, trying to do pull-ups on my pull-up bar, absorbing sunlight on the back deck, going to friend's concerts, drawing, and watching Hulu, HBO, or YouTube videos.
+      </p>
+
+
+     </mat-card-content>
+
+    </mat-card>
+    <!-- <div class="photoContainer">
+      <img src="./../../../assets/photos/photo1.jpg" alt="" class="photos">
+      <img src="./../../../assets/photos/photo2.jpg" alt="" class="photos">
+      <img src="./../../../assets/photos/photo3.jpg" alt="" class="photos">
+    </div> -->
+  </div>
 </div>
 

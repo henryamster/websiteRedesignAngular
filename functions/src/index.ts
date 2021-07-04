@@ -5,22 +5,15 @@ const cors = require("cors")({origin: true});
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 
-
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
-
 admin.initializeApp();
 
 export const submitBugReport = functions.https.onRequest((req, res) => {
   logRequest(req,
       `Bug report submission attempted from ${req.ip ?? "unknown IP. "}.`);
 
-  // // handle cors
-  // res = handleCors(res);
-
   cors(req, res, () => {
+    // Check that method is POST,
+    // If not, return 400
     if (req["method"] != "POST") {
       res.status(400)
           .send(
@@ -34,7 +27,8 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
           ).end();
     }
 
-
+    // Check that the request body is not null
+    // If null, return 400
     if (req.body == null) {
       res.status(400)
           .send(new FunctionResponse(
@@ -47,8 +41,11 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
       logRequest(req, "Bug report submission failed: Empty body.");
     }
 
+    // Select the bugReports collection
     const collectionRef = admin.firestore().collection("bugReports");
 
+    // Check if bugReports collection is undefined,
+    // If so, return 400
     if (collectionRef ==undefined) {
       res.status(400)
           .send(new FunctionResponse(
@@ -59,10 +56,12 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
           )).end();
     }
 
+    // Add request body to as new document
     const promise= collectionRef.add(
         req.body
     );
 
+    // Send 200 and log succesful request
     promise.then((writeResult) => {
       res.status(200)
           .send(new FunctionResponse(
@@ -75,14 +74,8 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
   });
 });
 
-// /**
-//  * handleCors
-//  * @param {functions.Response} res Response object to append cors ACAO
-//  * @return {functions.Response}
-// */
-// function handleCors(res: functions.Response<any>): functions.Response {
-//   return res.set("Access-Control-Allow-Origin", "*");
-// }
+
+
 
 /**
  * logRequest
@@ -96,6 +89,7 @@ export function logRequest(req: functions.https.Request,
   functions.logger.log(`${message}
   ${JSON.stringify([req["ip"], req["header"], req["body"]], null, 4)}`);
 }
+
 
 /**
  * Function Response
@@ -114,11 +108,7 @@ export class FunctionResponse {
 
   // eslint-disable-next-line require-jsdoc
   constructor(success: boolean, message?: string, data?: any, error?: Error) {
-    this.success = success;
-    this.data = data ?? undefined;
-    this.message = message ?? undefined;
-    this.error = error ?? undefined;
-    // [this.success, this.message, this.data.this.error] =
-    //   [success, message, data, error];
+    [this.success, this.message, this.data.this.error] =
+      [success, message ?? undefined, data ?? undefined, error ?? undefined];
   }
 }

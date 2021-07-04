@@ -23,6 +23,8 @@ import { MatCardModule } from '@angular/material/card/';
 import { MatSnackBarModule, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 /* Libraries */
 import { AngularFireModule } from '@angular/fire';
@@ -108,6 +110,8 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
     MatSnackBarModule,
     MatDialogModule,
     MatMenuModule,
+    MatChipsModule,
+    MatExpansionModule,
 
     //Quill
     QuillModule.forRoot()

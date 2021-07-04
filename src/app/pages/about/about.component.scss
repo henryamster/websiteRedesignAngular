@@ -1,8 +1,8 @@
 
 .attachPhoto{
-  margin-top: 8em;
-  max-height: 300px;
-  max-width: 300px;
+  margin: 2em 0;
+  max-height: 70%;
+  max-width: 70%;
   border-radius: 50%;
   animation: morph 22s infinite;
   background: repeating-radial-gradient(#11113552, #0c0c0c 50px);
@@ -27,8 +27,13 @@ display: flex;
 .aside{
   min-width: 14em;
     max-width: 40em;
-    margin-top: 8em;
+    margin-top: .5em;
     text-shadow: -2px 2px 2px #ffffff;
+    padding: .5em;
+    font-size: 1.2em;
+    line-height: 1.5;
+    align-self: center;
+    justify-self: center;
 }
 
 @keyframes morph {
@@ -63,4 +68,99 @@ background-position: 70% 20%;
     transform: rotate(-3deg);
     background-size: 500%;
   }
+}
+
+.extraPad{
+  padding: 25px;
+  text-align: center;
+  background-color: #d3c1c111;
+}
+.experience{
+  // display: contents;
+  // margin: .4em;
+}
+.card{
+  background: radial-gradient(#a5d2e791, #f3f0c95c);
+  color: rgb(113 113 113 / 87%);
+}
+.position{
+  color: #333;
+  font-variant: all-petite-caps;
+  font-weight: 800;
+}
+.semiHeader{
+  text-align: center;
+    font-size: 2em;
+    font-variant: all-small-caps;
+}
+.panels{
+
+}
+.noFlexGrow{
+  flex-grow:0;
+}
+.headerPad{
+  padding: 7px 8px;
+}
+.padTop{
+  margin-top: 8px;
+}
+
+.fullSection{
+  display: flex;
+   flex-direction: row;
+   flex-wrap:wrap;
+    place-content: center;
+    justify-content: space-evenly;
+    min-height: 80vh;
+    width: 100%;
+}
+
+.personal{
+
+  backdrop-filter: blur(2px);
+ background-repeat: no-repeat;
+  background-size:200%;
+  background-position: center center;
+  background-color: #FFFFFF21;
+  animation: upAndDown 22s infinite;
+  padding:  2em 0;
+  perspective: 36pc 3em;
+}
+@keyframes upAndDown{
+  0%{
+    background-position: top left;
+    background-image: url("./../../../assets/photos/photo2.jpg");
+  }
+
+  25%{
+    background-position: bottom right;
+    background-image: url("./../../../assets/photos/photo1.jpg");
+
+  }
+
+  50%{
+    background-position: bottom left;
+    background-image: url("./../../../assets/photos/photo3.jpg");
+  }
+
+  75%{
+    background-position: top right;
+    background-image: url("./../../../assets/photos/photo1.jpg");
+
+  }
+
+  100%{
+    background-position: top left;
+    background-image: url("./../../../assets/photos/photo2.jpg");
+  }
+}
+
+.orgLogo{
+  max-width: 60px;
+  max-height: 30px;
+  margin: 10px 13px;
+}
+.firstLetter{
+  font-size: 42px;
 }

@@ -59,7 +59,7 @@ export class BugReportComponent implements OnInit {
     ["pipe"](
       tap(
       response => {
-        if (!!response["success"]){
+        if (!!response["_path"]["segments"]){
         this["submitted"]=true
         }
       }),
