@@ -7,7 +7,7 @@ import * as functions from "firebase-functions";
  * @fires functions.logger.log()
  */
 export function logRequest(req: functions.https.Request,
-  message = "Something went wrong."): void {
+    message = "Something went wrong."): void {
   functions.logger.log(`${message}
     ${JSON.stringify(req, null, 4)}`);
 }

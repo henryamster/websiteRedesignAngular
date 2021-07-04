@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { QuillEditorComponent,} from 'ngx-quill';
 import { of } from 'rxjs';
 import { delay, tap, timeout } from 'rxjs/operators';
 import { BugReportService } from 'src/app/api/bug-report.service';
@@ -22,6 +21,7 @@ export class BugReportComponent implements OnInit {
     private bugReportService: BugReportService
   ) { }
   notClosing:boolean = true;
+  submitted:boolean = false;
   logItem: ILogItem
   bugReportForm:FormGroup;
   @ViewChild('bugReportEditor', {
@@ -52,9 +52,21 @@ export class BugReportComponent implements OnInit {
   }
 
   submitBugReport(){
-    this.bugReportService.submitBugReport(
-      this.bugReportForm.get('bugReportText').value
-    );
+    debugger
+    this["bugReportService"]["submitBugReport"](
+      this["bugReportForm"]["get"]('bugReportText').value
+    )
+    ["pipe"](
+      tap(
+      response => {
+        if (!!response["success"]){
+        this["submitted"]=true
+        }
+      }),
+      delay(1600),
+      tap(_=>this["dialogRef"]["close"]()
+      )
+    )["subscribe"]();
 
   }
 

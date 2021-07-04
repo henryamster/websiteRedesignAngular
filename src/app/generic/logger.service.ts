@@ -61,6 +61,7 @@ export class LoggerService {
     )
   }
 
+
   private displaySnackbar(logItem: ILogItem) {
     this["snackBar"]["openFromComponent"](LogTemplateComponent, {
       data: logItem,
