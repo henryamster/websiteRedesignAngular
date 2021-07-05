@@ -7,6 +7,77 @@ import * as functions from "firebase-functions";
 
 admin.initializeApp();
 
+export const submitInquiry = functions.https.onRequest((req, res)=>{
+  logRequest(req,
+      `Bug report submission attempted from ${req.ip ?? "unknown IP. "}.`);
+
+  cors(req, res, () => {
+    // Check that method is POST,
+    // If not, return 400
+    if (req["method"] != "POST") {
+      res.status(400)
+          .send(
+              new FunctionResponse(
+                  false,
+                  "Wrong HTTP Method: Should be POST",
+                  null,
+                  new Error(`${req["method"]}
+                HTTP verb was used instead of POST`)
+              )
+          ).end();
+    }
+
+    if (req.body == null) {
+      res.status(400)
+          .send(new FunctionResponse(
+              false,
+              "Empty body for inquiry",
+              req?.body ?? undefined,
+              new Error("No body")
+          )).end();
+
+      logRequest(req,
+          "Inquiry? More like unquiry. Submission failed: Empty body.");
+    }
+
+
+    // Select the inquiries collection
+    try {
+      const collectionRef = admin.firestore().collection("inquiries");
+
+
+      // Add request body to as new document
+      const promise= collectionRef.add(
+          req.body
+      );
+
+      // Send 200 and log succesful request
+      promise.then((writeResult) => {
+        res.status(200)
+            .send(new FunctionResponse(
+                true,
+                "Inquiry successfully submitted!",
+                writeResult
+            )).end();
+        logRequest(req, "Inquiry submission succesful.");
+      })
+          .catch(
+              (err)=> logRequest(err, "Inquiry submission succesful.")
+          );
+    // Check if Inquiries collection is undefined,
+    // If so, return 400
+    } catch {
+      res.status(400)
+          .send(new FunctionResponse(
+              false,
+              "Could not retrieve collection Inquiries",
+              req?.body?? undefined,
+              new Error("Invalid collectionReference")
+          )).end();
+    }
+  });
+});
+
 export const submitBugReport = functions.https.onRequest((req, res) => {
   logRequest(req,
       `Bug report submission attempted from ${req.ip ?? "unknown IP. "}.`);
@@ -61,11 +132,9 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
             )).end();
         logRequest(req, "Bug report submission succesful.");
       });
-    }
-
     // Check if bugReports collection is undefined,
     // If so, return 400
-    catch {
+    } catch {
       res.status(400)
           .send(new FunctionResponse(
               false,

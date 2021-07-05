@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from '../auth/auth.service';
-import { LoggerService } from '../generic/logger.service';
-import { EEventType } from '../generics/log-item';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FunctionResponse } from './../../../functions/src/index';
-import { HttpHeaders } from '@angular/common/http';
-import { AngularFireModule } from '@angular/fire';
 
 
 @Injectable({

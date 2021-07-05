@@ -1,33 +1,51 @@
 .longAnimationBg{
   // background-image: url('./../../../assets/long.jpg');
-  background-size: cover;
+  background-size: 200%;
   animation: shake 40s infinite;
-  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation-timing-function:ease-in-out;
   min-height: 90vh;
+
+
 
 }
 @keyframes shake{
   0%{
     background-image: url('./../../../assets/renderBgs/2240020.png');
     background-position: top left;
+//     filter:  hue-rotate(
+// 0deg
+//  ) ;
   }
   25%{
     background-image: url('./../../../assets/renderBgs/2240021.png');
-   background-size: 100%;
+    background-position: top right;
+  }
+  34%{
+    background-position: center center;
+    background-image: url('./../../../assets/renderBgs/2240244.png');
   }
   50%{
     background-image: url('./../../../assets/renderBgs/2240076.png');
     background-position: bottom right;
-    background-size: 100%;
-
+    background-size: 400%;
+    // filter: hue-rotate(
+    //   359deg
+    //    );
   }
   75%{
     background-image: url('./../../../assets/renderBgs/2240244.png');
-    background-size: 100%;
+    background-position: bottom left;
+  }
+  87%{
+    background-position: center center;
+    background-image: url('./../../../assets/renderBgs/2240021.png');
   }
   100%{
     background-image: url('./../../../assets/renderBgs/2240020.png');
     background-position: top left;
+//     filter: hue-rotate(
+// 0deg
+//  );
   }
 }
 
@@ -47,6 +65,7 @@
   animation: popIn 2s forwards;
   border-radius:5px;
   margin: 22px;
+  filter: contrast(100);
 }
 @keyframes popIn {
   0%{

@@ -2,7 +2,7 @@
  <div class="longAnimationBg">
 
   <div class="contactFormWrapper">
-    <mat-card class="contactForm font-sans">
+    <mat-card *ngIf="!submitted" class="contactForm font-sans">
       <mat-card-header>
         <mat-card-title
         class="font-cursive"
@@ -10,11 +10,11 @@
 
       </mat-card-title>
       <mat-card-subtitle>
-        <p class="redText popIn" *ngIf="!personDetailsGroup.valid && !personDetailsGroup.pristine"
+        <p class="redText popIn" *ngIf="!personDetailsGroup.valid && !personDetailsGroup.untouched"
         ><mat-icon  >warning</mat-icon> You have missing or invalid information in the Personal Details Section </p>
-        <p class="redText popIn" *ngIf="!contactDetailsGroup.valid && !contactDetailsGroup.pristine"
+        <p class="redText popIn" *ngIf="!contactDetailsGroup.valid && !contactDetailsGroup.untouched"
         ><mat-icon  >warning</mat-icon> You have missing or invalid information in the Inquiry Details Section </p>
-        <p class="redText popIn" *ngIf="!messageDetailsGroup.valid && !messageDetailsGroup.pristine"
+        <p class="redText popIn" *ngIf="!messageDetailsGroup.valid && !messageDetailsGroup.untouched"
         ><mat-icon  >warning</mat-icon> You have missing or invalid information in the Message Details Section </p>
 
 
@@ -79,6 +79,22 @@
         <button mat-button (click)="submit()">Submit</button>
         <button mat-button (click)="clear()">Clear</button>
       </mat-card-actions>
+    </mat-card>
+
+    <mat-card *ngIf="submitted" class="contactForm font-sans">
+
+      <h1>
+        Thank you for your submission.
+      </h1>
+
+      <p>
+        If your inquiry requires a follow-up I hope to be in contact soon. Thank you!
+      </p>
+
+      <p class="popIn">
+        Now rerouting you to the dashboard ...
+      </p>
+
     </mat-card>
   </div>
 
