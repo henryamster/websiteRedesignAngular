@@ -16,16 +16,22 @@
 
     <p>If you wouldn't mind, please describe what you were doing when the issue occured:</p>
     <form class="bugReportForm" [formGroup]="bugReportForm">
-       <quill-editor
+       <!-- <quill-editor
         #bugReportText
           formControlName="bugReportText"
           placeholder="Type your text here..."
           ngAcceptInputType_required="true"
           required
-        ></quill-editor>
-        <mat-error *ngIf="bugReportForm.get('bugReportText').hasError('required')">
-          A description is <strong>required</strong>
+        ></quill-editor> -->
+        <mat-form-field class="full-width">
+          <textarea id='bugReportText' #bugReportText matInput placeholder="Type your text here..." formControlName="bugReportText">
+            </textarea>
+
+            <mat-error>
+              A description is <strong>required</strong>
         </mat-error>
+        </mat-form-field>
+
 
     </form>
 

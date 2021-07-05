@@ -31,11 +31,7 @@ export class InquiryService {
   private sendRequest(contact: IContactModel): Observable<FunctionResponse> {
     return this.functions
       .httpsCallable('submitInquiry')(
-        {
-          body: contact,
-          useEmulator: true,
-          region: 'us-central1'
-        }
+           contact
       );
   }
 

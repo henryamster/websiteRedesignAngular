@@ -25,11 +25,7 @@ export class BugReportService {
   private sendRequest(bugReportText: string): Observable<FunctionResponse> {
     return this.functions
       .httpsCallable('submitBugReport')(
-        {
-          body: bugReportText,
-          useEmulator: true,
-          region: 'us-central1'
-         }
+        bugReportText
       );
   }
 

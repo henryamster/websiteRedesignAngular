@@ -15,15 +15,15 @@ import { MatQuill } from 'src/app/mat-quill/mat-quill';
 export class BugReportComponent implements OnInit {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data:ILogItem,
+    @Inject(MAT_DIALOG_DATA) public data: ILogItem,
     public dialogRef: MatDialogRef<BugReportComponent>,
     private formBuilder: FormBuilder,
     private bugReportService: BugReportService
   ) { }
-  notClosing:boolean = true;
-  submitted:boolean = false;
+  notClosing: boolean = true;
+  submitted: boolean = false;
   logItem: ILogItem
-  bugReportForm:FormGroup;
+  bugReportForm: FormGroup;
   @ViewChild('bugReportEditor', {
     static: true
   }) bugtext: MatQuill
@@ -40,36 +40,39 @@ export class BugReportComponent implements OnInit {
     });
   }
 
-  close(){
+  close() {
     of(true).pipe(
-      tap(_=> this["notClosing"] =!_),
+      tap(_ => this["notClosing"] = !_),
       delay(1600),
-      tap(_=>this["dialogRef"]["close"]())
+      tap(_ => this["dialogRef"]["close"]())
     )["subscribe"]()
 
 
 
   }
 
-  submitBugReport(){
+  submitBugReport() {
     debugger
     this["bugReportService"]["submitBugReport"](
-      [JSON.stringify(this["logItem"]), this["bugReportForm"]["get"]('bugReportText').value].join('\n -- MESSAGE -- \n')
+      JSON.stringify(
+        {
+          logItem: (this["logItem"]),
+          bugReportText: this["bugReportForm"]["get"]('bugReportText').value
+        })
     )
     ["pipe"](
       tap(
-      response => {
-        if (!!response["_path"]["segments"]){
-        this["submitted"]=true
-        }
-      }),
+        response => {
+          if (!!response["_path"]["segments"]) {
+            this["submitted"] = true
+          }
+        }),
       delay(1600),
-      tap(_=>this["dialogRef"]["close"]()
+      tap(_ => this["dialogRef"]["close"]()
       )
     )["subscribe"]();
 
   }
 
 }
-
 

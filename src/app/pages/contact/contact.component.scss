@@ -4,6 +4,8 @@
   animation: shake 40s infinite;
   animation-timing-function:ease-in-out;
   min-height: 90vh;
+  perspective: none;
+  perspective-origin: center center;
 
 
 
@@ -19,15 +21,18 @@
   25%{
     background-image: url('./../../../assets/renderBgs/2240021.png');
     background-position: top right;
+    transform: rotateX(3deg) ;
   }
   34%{
     background-position: center center;
     background-image: url('./../../../assets/renderBgs/2240244.png');
+
   }
   50%{
     background-image: url('./../../../assets/renderBgs/2240076.png');
     background-position: bottom right;
     background-size: 400%;
+    transform: rotateX(0deg) ;
     // filter: hue-rotate(
     //   359deg
     //    );
@@ -39,6 +44,7 @@
   87%{
     background-position: center center;
     background-image: url('./../../../assets/renderBgs/2240021.png');
+    transform: rotateX(-3deg) ;
   }
   100%{
     background-image: url('./../../../assets/renderBgs/2240020.png');
@@ -49,8 +55,17 @@
   }
 }
 
+.huge{
+  display: grid;
+  width: 100%;
+  height:120px;
+  font-size: 3em;
+  place-content: center;
+  line-height: 1.5em;
+}
 .contactForm{
-  max-width: 450px;
+  min-width: 350px;
+  width:80%;
 }
 
 .contactFormWrapper{
@@ -69,10 +84,14 @@
 }
 @keyframes popIn {
   0%{
-    box-shadow: inset 4px 4px 3px 2px;
-    transform: scale(1.2) translate(center, center) ;
+   background: #111;
+    transform: scale(.1) translate(center, center) ;
+  }
+  20%{
+    transform: scale(.8);
   }
   100%{
+    background: rgba(0,0,0,0);
     transform: scale(1);
   }
 }
