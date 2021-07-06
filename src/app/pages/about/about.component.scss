@@ -34,40 +34,7 @@ display: flex;
     line-height: 1.5;
     align-self: center;
     justify-self: center;
-}
-
-@keyframes morph {
-  0%{
-
-background-size: 500%;
-    transform: rotate(-3deg)
-    ;
-  }
-  20%{
-background-position: 70% 20%;
-    background-size: 300%;
-    transform: rotateY(1deg);
-  }
-  40%{
-
-    background-size: 120%;
-    transform: scale(.9);
-  }
-  60%{
-    transform: rotate(3deg);
-    transform: rotateZ(1deg);
-   background-position: 30% 80%;
-  }
-  80%{
-    transform: scale(1.1) rotateX(4deg);
-    background-size: 240%;
-
-  }
-  100%{
-
-    transform: rotate(-3deg);
-    background-size: 500%;
-  }
+    margin-bottom: 3em;
 }
 
 .extraPad{
@@ -127,34 +94,6 @@ background-position: 70% 20%;
   padding:  2em 0;
   perspective: 36pc 3em;
 }
-@keyframes upAndDown{
-  0%{
-    background-position: top left;
-    background-image: url("./../../../assets/photos/photo2.jpg");
-  }
-
-  25%{
-    background-position: bottom right;
-    background-image: url("./../../../assets/photos/photo1.jpg");
-
-  }
-
-  50%{
-    background-position: bottom left;
-    background-image: url("./../../../assets/photos/photo3.jpg");
-  }
-
-  75%{
-    background-position: top right;
-    background-image: url("./../../../assets/photos/photo1.jpg");
-
-  }
-
-  100%{
-    background-position: top left;
-    background-image: url("./../../../assets/photos/photo2.jpg");
-  }
-}
 
 .orgLogo{
   max-width: 60px;
@@ -168,4 +107,23 @@ background-position: 70% 20%;
 }
 mat-divider{
   padding-top: 1em;
+}
+
+.smIcon{
+  max-width: 25px;
+
+}
+
+.fabBg{
+  background-color: rgba(255, 255, 255, 0.021);
+  margin:3em;
+}
+
+.tiny{
+  font-size: .6em;
+}
+
+.cardWidth{
+padding:1em;
+margin:1em
 }

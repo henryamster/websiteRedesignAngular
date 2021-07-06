@@ -63,7 +63,9 @@ export class ContactComponent implements OnInit {
         this["personDetailsGroup"]["get"]('email')["value"],
         this["contactDetailsGroup"]["get"]('contactType')["value"],
         this["contactDetailsGroup"]["get"]('followUp')["value"],
-        this["messageDetailsGroup"]["get"]('message')["value"]
+        this["messageDetailsGroup"]["get"]('message')["value"],
+        this["personDetailsGroup"]["get"]('phone')["value"]
+
       )
     );
   }
@@ -92,7 +94,8 @@ export class ContactComponent implements OnInit {
   private createForms() {
     this["personDetailsGroup"] = this.fb.group({
       name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required]]
     }
     );
 

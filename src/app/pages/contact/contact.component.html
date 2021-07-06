@@ -14,8 +14,8 @@
         ><mat-icon  >warning</mat-icon> You have missing or invalid information in the Personal Details Section </p>
         <p class="redText popIn" *ngIf="!contactDetailsGroup.valid && !contactDetailsGroup.untouched"
         ><mat-icon  >warning</mat-icon> You have missing or invalid information in the Inquiry Details Section </p>
-        <p class="redText popIn" *ngIf="!messageDetailsGroup.valid && !messageDetailsGroup.untouched"
-        ><mat-icon  >warning</mat-icon> You have missing or invalid information in the Message Details Section </p>
+        <p class="redText popIn" *ngIf="!messageDetailsGroup.valid "
+        ><mat-icon  >warning</mat-icon> You need to add your message in the Message Details Section </p>
 
 
       </mat-card-subtitle>
@@ -26,16 +26,24 @@
             <mat-form-field class="full-width">
               <input id='name' #name matInput placeholder="What's your name?" formControlName="name">
             <mat-error>
-              Name is required.
+              <em>Name </em>is <strong>required</strong>.
             </mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width">
-              <input id='email' #email matInput placeholder="What is your email address" formControlName="email">
+              <input id='email' #email matInput placeholder="What is your email address?" formControlName="email">
             <mat-error>
-              Email is required and must be a valid email address?
+              <em>Email </em>is <strong>required</strong> and <strong>must be a valid email address</strong>
             </mat-error>
             </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <input id='phone' #phone matInput placeholder="What is your phone number?" formControlName="phone">
+            <mat-error>
+              <em>Phone number</em> is <strong>required</strong>.
+            </mat-error>
+            </mat-form-field>
+
 
 
           </mat-step>
@@ -48,7 +56,7 @@
             </mat-select>
 
             <mat-error >
-             Inquiry type is required.
+             <em>Inquiry type</em> is <strong>required</strong>.
             </mat-error>
 
             </mat-form-field>

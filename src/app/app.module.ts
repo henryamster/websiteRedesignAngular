@@ -71,6 +71,8 @@ import { QuillModule } from 'ngx-quill';
 import { AboutComponent } from './pages/about/about.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { ScrobblerComponent } from './thirdParty/scrobbler/scrobbler/scrobbler.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -90,6 +92,7 @@ import { ContactComponent } from './pages/contact/contact.component';
     AboutComponent,
     DashboardComponent,
     ContactComponent,
+    ScrobblerComponent,
 
   ],
   imports: [
@@ -98,6 +101,7 @@ import { ContactComponent } from './pages/contact/contact.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     CommonModule,
+    HttpClientModule,
 
     //Firebase
     AngularFireModule.initializeApp(environment.firebase),

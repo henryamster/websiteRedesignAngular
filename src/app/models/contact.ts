@@ -6,6 +6,7 @@ export interface IContactModel{
   contactType?: ContactType;
   followUp?:boolean;
   message?: string;
+  phone?:string;
   }
 
   export class ContactModel implements IContactModel{
@@ -15,19 +16,22 @@ export interface IContactModel{
       contactType: ContactType,
       followUp:boolean,
       message: string,
+      phone:string=""
     ){
       [this["name"],
       this["email"],
       this["contactType"],
       this["followUp"],
-      this["message"]
+      this["message"],
+      this["phone"]
     ]=
     [
       name,
       email,
       contactType,
       followUp,
-      message
+      message,
+      phone
     ]
 
   }

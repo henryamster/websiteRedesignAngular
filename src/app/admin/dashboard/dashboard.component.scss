@@ -13,17 +13,4 @@
         animation: wavy 12s infinite;
 }
 
-@keyframes wavy{
-  0%{
-    background-position: center;
-    background-size:3%;
-  }
-  50%{
-    background-size: 6%;
-    background-position: 100% 50%;
-  }
-  100%{
-    background-size: 3%;
-    background-position: center;
-  }
-}
+

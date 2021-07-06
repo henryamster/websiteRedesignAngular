@@ -10,50 +10,7 @@
 
 
 }
-@keyframes shake{
-  0%{
-    background-image: url('./../../../assets/renderBgs/2240020.png');
-    background-position: top left;
-//     filter:  hue-rotate(
-// 0deg
-//  ) ;
-  }
-  25%{
-    background-image: url('./../../../assets/renderBgs/2240021.png');
-    background-position: top right;
-    transform: rotateX(3deg) ;
-  }
-  34%{
-    background-position: center center;
-    background-image: url('./../../../assets/renderBgs/2240244.png');
 
-  }
-  50%{
-    background-image: url('./../../../assets/renderBgs/2240076.png');
-    background-position: bottom right;
-    background-size: 400%;
-    transform: rotateX(0deg) ;
-    // filter: hue-rotate(
-    //   359deg
-    //    );
-  }
-  75%{
-    background-image: url('./../../../assets/renderBgs/2240244.png');
-    background-position: bottom left;
-  }
-  87%{
-    background-position: center center;
-    background-image: url('./../../../assets/renderBgs/2240021.png');
-    transform: rotateX(-3deg) ;
-  }
-  100%{
-    background-image: url('./../../../assets/renderBgs/2240020.png');
-    background-position: top left;
-//     filter: hue-rotate(
-// 0deg
-//  );
-  }
-}
 
 .huge{
   display: grid;
@@ -69,7 +26,7 @@
 }
 
 .contactFormWrapper{
-  padding:  10vh 0 0 0 ;
+  padding:  10vh 0 10vh 0 ;
   display: flex;
   align-content: center;
   justify-content: center;
@@ -81,19 +38,6 @@
   border-radius:5px;
   margin: 22px;
   filter: contrast(100);
-}
-@keyframes popIn {
-  0%{
-   background: #111;
-    transform: scale(.1) translate(center, center) ;
-  }
-  20%{
-    transform: scale(.8);
-  }
-  100%{
-    background: rgba(0,0,0,0);
-    transform: scale(1);
-  }
 }
 .full-width{
   width:100%;

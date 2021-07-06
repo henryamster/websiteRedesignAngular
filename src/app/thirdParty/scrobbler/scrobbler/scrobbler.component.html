@@ -1,0 +1,15 @@
+<div class="font-sans">
+
+  <mat-chip-list class="mat-chip-list-stacked">
+    <mat-chip class="chipTrack" *ngFor="let track of tracks">
+     <mat-icon class="nowPlaying" *ngIf="trackPlaying(track)" >play_circle_filled</mat-icon>
+
+      <strong>{{ track["artist"]["#text"].length<30 ?
+        track["artist"]["#text"] :
+        track["artist"]["#text"].substr(0,30) + '...' }} </strong> -
+      <em>{{ track["name"].length<30 ?
+        track["name"]:
+        track["name"].substr(0,30) + '...'}}</em>
+    </mat-chip>
+  </mat-chip-list>
+</div>

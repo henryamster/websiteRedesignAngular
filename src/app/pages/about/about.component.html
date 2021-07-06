@@ -157,7 +157,7 @@
   </div>
 
   <div class="personal fullSection">
-    <mat-card>
+    <mat-card class="cardWidth">
       <mat-card-header>
         <mat-card-title>
           <h1  class="font-serif">About Me</h1>
@@ -211,11 +211,44 @@
      </mat-card-content>
 
     </mat-card>
-    <!-- <div class="photoContainer">
-      <img src="./../../../assets/photos/photo1.jpg" alt="" class="photos">
-      <img src="./../../../assets/photos/photo2.jpg" alt="" class="photos">
-      <img src="./../../../assets/photos/photo3.jpg" alt="" class="photos">
-    </div> -->
+   <mat-card class="cardWidth">
+     <mat-card-header>
+       <mat-card-title>
+        <h1  class="font-serif">Social Media</h1>
+       </mat-card-title>
+     </mat-card-header>
+     <mat-card-content  class="bio aside font-sans">
+       <mat-divider>
+       </mat-divider>
+<div class="smIconGrid">
+  <a mat-fab class=" fabBg" href="https://instagram.com/henryamster">
+    <img src="./../../../assets/a2.png" alt="" class="smIcon" >
+  </a>
+  <a mat-fab class=" fabBg" href="https://codepen.io/henryamster/">
+    <img src="./../../../assets/a3.png" alt="" class="smIcon">
+  </a>
+  <a mat-fab class="fabBg" href="https://github.com/henryamster">
+    <img src="./../../../assets/a4.png" alt="" class="smIcon">
+  </a>
+  <a mat-fab class=" fabBg" href="https://www.linkedin.com/in/henryfritz/">
+    <img src="./../../../assets/a5.png" alt="" class="smIcon">
+  </a>
+  <mat-divider>
+  </mat-divider>
+<br/>
+  <h1  class="font-serif text-center padTop" >What I'm listening to: <br/>
+    <span class="tiny" >Powered by <a href="https://www.last.fm/api"> AudioScrobber</a> </span>
+
+  </h1>
+
+<app-scrobbler></app-scrobbler>
+
+
+</div>
+     </mat-card-content>
+   </mat-card>
+
+
   </div>
 </div>
 

@@ -176,8 +176,15 @@ color: black;
 }
 
 /**
-Animations
+TURNING ANIMATIONS OFF FOR DEVELOPMENT
+MY LAPTOP GETS TOO HOT TO TOUCH THE KEYBOARD WITH
+CURRENT GPU UTIL. I'LL NEED TO OPTIMIZE ANIMS
+AND IMAGES, AND SEE WHERE TO GO FROM THERE
 */
+
+/**
+Animations
+// */
 
 @keyframes upAndDown{
   0%{
@@ -350,3 +357,181 @@ background: #333;
   }
 }
 
+@keyframes wavy{
+  0%{
+    background-position: center;
+    background-size:3%;
+  }
+  50%{
+    background-size: 6%;
+    background-position: 100% 50%;
+  }
+  100%{
+    background-size: 3%;
+    background-position: center;
+  }
+}
+
+@keyframes hov {
+  0%{
+    // background-color: rgba(255, 255, 255, 0.116);
+    color:black;
+    border:0px solid white;
+    text-shadow: 2px 2px 10px rgb(0, 0, 0);
+
+  }
+
+  100%{
+
+
+    background-color: rgba(255, 255, 255, 0.562);
+    color:rgb(66, 77, 69);
+    box-shadow: 2px 2px 5px 2px rgb(180, 180, 180) ;
+  }
+}
+@keyframes colorBG{
+  0%{
+    background: linear-gradient(
+0deg
+, #fbbaba, #c5bfae, #eacece, #5a8e9ac9);
+    background-size: 200%;
+  }
+
+  100%{
+    background: linear-gradient(
+360deg
+, #fbbaba, #c5bfae, #eacece, #5a8e9ac9);
+    background-size: 200%;
+  }
+}
+
+
+@keyframes morph {
+  0%{
+
+background-size: 500%;
+    transform: rotate(-3deg)
+    ;
+  }
+  20%{
+background-position: 70% 20%;
+    background-size: 300%;
+    transform: rotateY(1deg);
+  }
+  40%{
+
+    background-size: 120%;
+    transform: scale(.9);
+  }
+  60%{
+    transform: rotate(3deg);
+    transform: rotateZ(1deg);
+   background-position: 30% 80%;
+  }
+  80%{
+    transform: scale(1.1) rotateX(4deg);
+    background-size: 240%;
+
+  }
+  100%{
+
+    transform: rotate(-3deg);
+    background-size: 500%;
+  }
+}
+
+@keyframes upAndDown{
+  0%{
+    background-position: top left;
+    background-image: url("./assets/photos/photo2.jpg");
+  }
+
+  25%{
+    background-position: bottom right;
+    background-image: url("./assets/photos/photo1.jpg");
+
+  }
+
+  50%{
+    background-position: bottom left;
+    background-image: url("./assets/photos/photo3.jpg");
+  }
+
+  75%{
+    background-position: top right;
+    background-image: url("./assets/photos/photo1.jpg");
+
+  }
+
+  100%{
+    background-position: top left;
+    background-image: url("./assets/photos/photo2.jpg");
+  }
+}
+@keyframes shake{
+  0%{
+    background-image: url('./assets/renderBgs/2240020.png');
+    background-position: top left;
+//     filter:  hue-rotate(
+// 0deg
+//  ) ;
+  }
+  25%{
+    background-image: url('./assets/renderBgs/2240021.png');
+    background-position: top right;
+    transform: rotateX(3deg) ;
+  }
+  34%{
+    background-position: center center;
+    background-image: url('./assets/renderBgs/2240244.png');
+
+  }
+  50%{
+    background-image: url('./assets/renderBgs/2240076.png');
+    background-position: bottom right;
+    background-size: 400%;
+    transform: rotateX(0deg) ;
+    // filter: hue-rotate(
+    //   359deg
+    //    );
+  }
+  75%{
+    background-image: url('./assets/renderBgs/2240244.png');
+    background-position: bottom left;
+  }
+  87%{
+    background-position: center center;
+    background-image: url('./assets/renderBgs/2240021.png');
+    transform: rotateX(-3deg) ;
+  }
+  100%{
+    background-image: url('./assets/renderBgs/2240020.png');
+    background-position: top left;
+//     filter: hue-rotate(
+// 0deg
+//  );
+  }
+}
+
+@keyframes popIn {
+  0%{
+   background: #111;
+    transform: scale(.1) translate(center, center) ;
+  }
+  20%{
+    transform: scale(.8);
+  }
+  100%{
+    background: rgba(0,0,0,0);
+    transform: scale(1);
+  }
+}
+@keyframes fadeinslow {
+  0%{
+    opacity: 0;
+    margin-top: 100%;
+  }
+  100%{
+    opacity: 1;
+  }
+}
