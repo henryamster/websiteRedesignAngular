@@ -73,6 +73,7 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ScrobblerComponent } from './thirdParty/scrobbler/scrobbler/scrobbler.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BlogComponent } from './pages/blog/blog.component';
 
 
 @NgModule({
@@ -93,6 +94,7 @@ import { HttpClientModule } from '@angular/common/http';
     DashboardComponent,
     ContactComponent,
     ScrobblerComponent,
+    BlogComponent,
 
   ],
   imports: [
