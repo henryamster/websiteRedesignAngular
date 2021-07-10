@@ -45,7 +45,7 @@ export class ContactComponent implements OnInit {
     ["pipe"](
       tap(
       response => {
-        if (!!response["_path"]["segments"]){
+        if (!!response["success"]){
         this["submitted"]=true
         }
       }),

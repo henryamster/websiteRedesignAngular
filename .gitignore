@@ -10,6 +10,11 @@
 # dev env file
 src/environments/environment.ts
 
+# dev emulator data
+functions/auth_export/
+functions/firestore_export/
+functions/storage_export/
+
 # dependencies
 /node_modules
 

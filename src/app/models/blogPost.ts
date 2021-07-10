@@ -1,4 +1,4 @@
-interface IBlogPost {
+export interface IBlogPost {
   id: string;
   slug: string;
   timestamp?: Date;
@@ -14,7 +14,7 @@ interface IBlogPost {
   expiryDate?: Date | null;
 }
 
-class BlogPost implements IBlogPost {
+export class BlogPost implements IBlogPost {
   constructor(
     id: string,
     title: string,
@@ -75,7 +75,7 @@ class BlogPost implements IBlogPost {
   expiryDate?: Date | null;
 }
 
-class FullBlogPost extends BlogPost {
+export class FullBlogPost extends BlogPost {
   constructor(id,
     title,
     body,
@@ -102,7 +102,7 @@ class FullBlogPost extends BlogPost {
   }
 }
 
-class ShortBlogPost extends BlogPost {
+export class ShortBlogPost extends BlogPost {
   constructor(id,
     title,
     body,
@@ -129,7 +129,7 @@ class ShortBlogPost extends BlogPost {
   }
 }
 
-enum PostType {
+export enum PostType {
   FULL_BLOG_POST = "Blog",
   SHORT_POST = "Short",
   SOCIAL_MEDIA = "Social",

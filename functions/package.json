@@ -8,7 +8,7 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "go": "npm run build && firebase emulators:start"
+    "go": "npm run build && firebase emulators:start --import=./ --export-on-exit"
   },
   "engines": {
     "node": "14"

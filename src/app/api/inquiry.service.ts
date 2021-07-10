@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FunctionResponse } from 'functions/src';
+import { FunctionResponse } from 'functions/src/index';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/internal/operators/tap';
 import { AuthService } from '../auth/auth.service';
@@ -31,13 +31,12 @@ export class InquiryService {
   private sendRequest(contact: IContactModel): Observable<FunctionResponse> {
     return this.functions
       .httpsCallable('submitInquiry')(
-           contact
+        contact
       );
   }
 
   private checkForSuccessFromServer(result: any): void {
-    debugger
-    if (!result["_path"]["segments"]) {
+    if (!result["success"]) {
       this["throwServerError"](result);
       return;
     }
@@ -62,7 +61,7 @@ export class InquiryService {
       new Error('HTTP Error'),
       this["auth"]["user"](),
       EEventType.Server,
-      {serverMessage}
+      { serverMessage }
     )
 
   }

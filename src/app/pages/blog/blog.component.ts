@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {v4} from 'uuid';
+import { BlogService } from 'src/app/api/blog.service';
+//import {v4} from 'uuid';
+import {IBlogPost, BlogPost, PostType} from './../../models/blogPost';
 
 @Component({
   selector: 'app-blog',
@@ -8,27 +10,34 @@ import {v4} from 'uuid';
 })
 export class BlogComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private blogService: BlogService
+  ) { }
 
-  posts: IBlogPost[];
+  posts: IBlogPost[]=[];
 
   ngOnInit(): void {
 
-    this["posts"]["push"](
-      new BlogPost(
-        v4(),
-        `Hello`,
-        'lol ',
-        'test',
-        PostType.SHORT_POST,
-        new Date(),
-        'Henry Fritz (henryamsterfritz@gmail.com)',
-        [],
-        [],
-        [],
-        ['https://henryfritz.xyz']
-      )
+    this["blogService"]["getPaginatedBlogs"](6).subscribe(
+      blogPosts=>
+     this["posts"]=blogPosts
     )
+
+    // this["posts"]["push"](
+    //   new BlogPost(
+    //     v4(),
+    //     `Hello`,
+    //     'lol ',
+    //     '<p>test</p>',
+    //     PostType.SHORT_POST,
+    //     new Date(),
+    //     'Henry Fritz (henryamsterfritz@gmail.com)',
+    //     [],
+    //     [],
+    //     [],
+    //     ['https://henryfritz.xyz']
+    //   )
+    // )
 
   }
 

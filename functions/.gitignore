@@ -7,3 +7,8 @@ typings/
 
 # Node.js dependency directory
 node_modules/
+
+# Firebase dev
+auth_export/
+firestore_export/
+storage_export/

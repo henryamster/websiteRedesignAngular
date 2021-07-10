@@ -7,6 +7,13 @@
   <div class="links" *ngIf="size.width>800">
     <div class="wrapBtn" *ngFor="let nav of navList; index as index" >
       <button mat-button class="navLinks font-sans "  [routerLink]='"/"+nav["link"]'>{{nav["link"] | uppercase}}</button>
+      <span
+        [vertical]="true"
+        *ngIf="index<navList.length-1">
+
+        |
+        </span>
+
 
 
     </div>
