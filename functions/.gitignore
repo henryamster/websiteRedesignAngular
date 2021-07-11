@@ -12,3 +12,6 @@ node_modules/
 auth_export/
 firestore_export/
 storage_export/
+
+# LOGs
+*.log

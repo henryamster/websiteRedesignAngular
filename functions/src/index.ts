@@ -13,15 +13,12 @@ admin.initializeApp();
 
 export const getInstagramFeed = functions.https.onRequest((req, res) => {
   logRequest(req, "Retrieving instagram feed");
-  functions.logger.info(
-      `${req.body.data}&access_token=${environment.FB_ACCESS_TOKEN}`
-  );
 
   cors(req, res, () => {
     if (!req.body?.data) {
       res.status(400)
           .send(responseFactory(new FunctionResponse(
-              true,
+              false,
               "No url sent!",
               null
           ))).end();
@@ -43,11 +40,54 @@ export const getInstagramFeed = functions.https.onRequest((req, res) => {
                   err
               ))
               ).end();
-          functions.logger.debug(err);
+          functions.logger.error(err);
         }
         );
   });
 });
+
+// Looks like there's some xsrf stuff going on...
+
+// I'll have to come back to this
+
+
+// export const getScrobblerFeed = functions.https.onRequest((req, res) => {
+//   logRequest(req, "Retrieving audioscrobbler feed");
+//   functions.logger.info(
+//       `${req.body.data}&api_key=${environment["AUDIOSCROBBLER_API_KEY"]}`
+//   );
+
+//   cors(req, res, () => {
+//     if (!req.body?.data) {
+//       res.status(400)
+//           .send(responseFactory(new FunctionResponse(
+//               true,
+//               "No url sent!",
+//               null
+//           ))).end();
+//     }
+
+//     get(`${req.body.data}&access_token=${environment.FB_ACCESS_TOKEN}`)
+//         .then((response) => res.status(200)
+//             .send(responseFactory(new FunctionResponse(
+//                 true,
+//                 "Retrieved audioscrobbler feed data!",
+//                 response.data
+//             ))).end())
+//         .catch((err) => {
+//           res.status(400)
+//               .send(responseFactory(new FunctionResponse(
+//                   false,
+//                   "Something went wrong retrieving audioscrobbler data",
+//                   null,
+//                   err
+//               ))
+//               ).end();
+//           functions.logger.error(err);
+//         }
+//         );
+//   });
+// });
 
 export const submitInquiry = functions.https.onRequest((req, res) => {
   logRequest(req,

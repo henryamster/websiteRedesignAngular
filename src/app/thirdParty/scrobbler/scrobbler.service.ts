@@ -38,6 +38,17 @@ export class ScrobblerService {
       this["tracks$"]["next"](res["recenttracks"]["track"])
     })
     )
+
+    /**
+     * Holding onto this if I ever get XSRF figured out with AS
+     *   return this["functions"]["httpsCallable"](functionNames.GET_SCROBBLER_FEED)(this["SCROBBLER_URL"])
+    ["pipe"](map(
+      (data: {res: { recenttracks: { track: IScrobblerTrack[] } }}) => {
+      this["tracks$"]["next"](data["res"]["recenttracks"]["track"])
+    })
+    )
+    */
+
   }
 
   tracks(): Observable<IScrobblerTrack[]>{
