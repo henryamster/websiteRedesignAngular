@@ -1,4 +1,17 @@
-<p>blog works!</p>
+<div class="loading placeCenter huge" *ngIf="loading">
+  <h1 >Loading...</h1>
+<mat-progress-bar
+  mode="indeterminate">
+</mat-progress-bar>
+</div>
+
+<div class="noResults placeCenter huge" *ngIf="posts.length<1">
+  <h1>No blog posts</h1>
+  <p>Check back soon!</p>
+</div>
+
+<div class="postContainer">
+
 <mat-card *ngFor="let post of posts">
   <mat-card-header>
     <mat-card-title class="font-sans">{{post["title"]}}</mat-card-title>
@@ -16,3 +29,5 @@
 
   </mat-card-actions>
 </mat-card>
+
+</div>

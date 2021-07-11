@@ -21,6 +21,8 @@ export class AuthService {
   private _claims: IdTokenResult["claims"][]
 
 
+
+
   constructor(private auth: AngularFireAuth,
     private logger: LoggerService,
     private router: Router) {
@@ -65,19 +67,32 @@ export class AuthService {
   }
 
 
-  public popOutLogin(provider = 'google') {
-    // this["logger"]["logError"](new Error('Third Party Authentitcation has not yet been enabled.'), this._user, EEventType.Auth);
+  public popOutLogin(provider = AUTH_PROVIDERS.GOOGLE) {
 
-return from(this["auth"]["signInWithPopup"](provider == "google" ? new firebase.auth.GoogleAuthProvider() : new firebase.auth.FacebookAuthProvider()))
-    ["pipe"](tap(  userCred => {
+    const WHEN_IMPLEMENTED = false;
+
+    WHEN_IMPLEMENTED ? this.getThirdPartyUserCredential(provider) :
+     this["logger"]["logError"](
+       new Error('Third Party Authentication has not yet been enabled.'),
+       this._user, EEventType.Auth);
+  }
+
+  private getThirdPartyUserCredential(provider: AUTH_PROVIDERS) : Observable<UserCredential>{
+    return from(this["auth"]["signInWithPopup"](this.selectProvider(provider)))["pipe"](tap((userCred: UserCredential) => {
+      console.log(userCred);
       this["_user"] = userCred.user;
-      this["gatherClaims"](this["_user"])
-      this["triggerAuthEvent"](true)
-      this["redirectToDashboard"]()
-      return userCred
+      this["gatherClaims"](this["_user"]);
+      this["triggerAuthEvent"](true);
+      this["redirectToDashboard"]();
     },
-    err => this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
-  ))
+      err => this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
+    ));
+  }
+
+  private selectProvider(provider: AUTH_PROVIDERS): firebase.auth.AuthProvider {
+    return (provider == AUTH_PROVIDERS["GOOGLE"].toString()) ? new firebase.auth.GoogleAuthProvider() :
+      (provider == AUTH_PROVIDERS["FACEBOOK"].toString()) ? new firebase.auth.FacebookAuthProvider() :
+        new firebase.auth.TwitterAuthProvider();
   }
 
   public claims(): IdTokenResult["claims"][] {
@@ -180,4 +195,11 @@ return from(this["auth"]["signInWithPopup"](provider == "google" ? new firebase.
     [this["IS_ADMIN"], this["_user"], this["_claims"]] =
       [() => false, null, null]
   }
+}
+
+
+export enum AUTH_PROVIDERS{
+  FACEBOOK="facebook",
+  GOOGLE="google",
+  TWITTER="twitter"
 }

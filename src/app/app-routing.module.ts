@@ -30,7 +30,7 @@ const routes: Routes = [
   // canActivate:[AngularFireAuthGuard],
   // data: {authGuardPipe: loginRedirect}
 },
-  {path:'admin', component: NavListComponent,
+  {path:'admin', component: NotFoundComponent,
   canActivate: [AngularFireAuthGuard],
   data: {authGuardPipe: adminAccess && unauthorizedRedirect}
   },

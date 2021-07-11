@@ -13,31 +13,17 @@ export class BlogComponent implements OnInit {
   constructor(
     private blogService: BlogService
   ) { }
-
+loading:boolean=true;
   posts: IBlogPost[]=[];
 
   ngOnInit(): void {
 
     this["blogService"]["getPaginatedBlogs"](6).subscribe(
-      blogPosts=>
+      blogPosts=>{
      this["posts"]=blogPosts
+     this["loading"]=false;
+      }
     )
-
-    // this["posts"]["push"](
-    //   new BlogPost(
-    //     v4(),
-    //     `Hello`,
-    //     'lol ',
-    //     '<p>test</p>',
-    //     PostType.SHORT_POST,
-    //     new Date(),
-    //     'Henry Fritz (henryamsterfritz@gmail.com)',
-    //     [],
-    //     [],
-    //     [],
-    //     ['https://henryfritz.xyz']
-    //   )
-    // )
 
   }
 

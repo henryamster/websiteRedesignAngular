@@ -17,7 +17,14 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-button  (click)="attemptLogin()"> <mat-icon>login</mat-icon> Sign In</button>
-    <button mat-button (click)="popOutLogin()"> <mat-icon>badge</mat-icon> Sign In with another account (Google, Facebook, Twitter et c.)</button>
+    <button mat-button [matMenuTriggerFor]="menu"><mat-icon>badge</mat-icon>Sign In with another account (Google, Facebook, Twitter et c.)</button>
+    <mat-menu #menu="matMenu" class="glass">
+      <button mat-menu-item  (click)="popOutLogin(AUTH_PROVIDERS.GOOGLE)">Google</button>
+      <button mat-menu-item  (click)="popOutLogin(AUTH_PROVIDERS.FACEBOOK)">Facebook</button>
+      <button mat-menu-item  (click)="popOutLogin(AUTH_PROVIDERS.TWITTER)">Twitter</button>
+
+    </mat-menu>
+
   </mat-card-actions>
 
 

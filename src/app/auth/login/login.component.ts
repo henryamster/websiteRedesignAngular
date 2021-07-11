@@ -5,7 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { LoggerService } from 'src/app/generic/logger.service';
 import { EEventType } from 'src/app/generics/log-item';
 import { LoginForm, ILogin } from 'src/app/generics/login';
-import { AuthService } from '../auth.service';
+import { AuthService ,AUTH_PROVIDERS} from '../auth.service';
 
 @Component({
   selector: 'app-login-form',
@@ -17,6 +17,7 @@ export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   formValues$: Subscription;
   _loginValues: LoginForm = { email: '', password: '' };
+  AUTH_PROVIDERS=AUTH_PROVIDERS;
 
   constructor(private _formBuilder: FormBuilder,
     public auth: AuthService, private logger: LoggerService) {
@@ -49,10 +50,8 @@ export class LoginFormComponent implements OnInit {
     })
   }
 
-  public popOutLogin() {
-    this["auth"]["popOutLogin"]('facebook').subscribe(
-      userCred=> console.log(userCred)
-    )
+  public popOutLogin(provider:AUTH_PROVIDERS) {
+    this["auth"]["popOutLogin"](provider)
   }
 
   private generateLoginForm() {
