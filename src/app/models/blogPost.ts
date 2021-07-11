@@ -12,6 +12,7 @@ export interface IBlogPost {
   tags: string[];
   type?: PostType;
   expiryDate?: Date | null;
+  comments?: IBlogComment[];
 }
 
 export class BlogPost implements IBlogPost {
@@ -27,7 +28,8 @@ export class BlogPost implements IBlogPost {
     codepenSlugs?: string[],
     youtubeLinks?: string[],
     links?: string[],
-    expiryDate?: Date | null
+    expiryDate?: Date | null,
+    comments?:IBlogComment[]
   ) {
     [
       this["id"],
@@ -42,7 +44,7 @@ export class BlogPost implements IBlogPost {
       this["youtubeLinks"],
       this["links"],
       this["expiryDate"],
-
+      this["comments"]
     ]
       =
       [
@@ -58,6 +60,7 @@ export class BlogPost implements IBlogPost {
         youtubeLinks ?? [],
         links ?? [],
         expiryDate ?? null,
+        comments ?? []
       ]
   }
   tags: string[];
@@ -73,6 +76,7 @@ export class BlogPost implements IBlogPost {
   youtubeLinks?: string[];
   links?: string[];
   expiryDate?: Date | null;
+  comments: IBlogComment[];
 }
 
 export class FullBlogPost extends BlogPost {
@@ -86,6 +90,7 @@ export class FullBlogPost extends BlogPost {
     codepenSlugs,
     youtubeLinks,
     links,
+    comments?
   ) {
     super(id,
       title,
@@ -97,7 +102,8 @@ export class FullBlogPost extends BlogPost {
       imageLinks,
       codepenSlugs,
       youtubeLinks,
-      links)
+      links,
+      comments)
     {}
   }
 }
@@ -135,4 +141,32 @@ export enum PostType {
   SOCIAL_MEDIA = "Social",
   EXPIRING = "Expiry",
   UNCATEGORIZED = "Uncategorized"
+}
+
+export interface IBlogComment{
+  displayName: string;
+  email:string;
+  timestamp: Date;
+  commentBody: string;
+  approved:boolean
+}
+
+export class BlogComment implements IBlogComment{
+  displayName: string;
+  email: string;
+  timestamp: Date;
+  commentBody: string;
+  approved: boolean;
+  constructor(displayName: string,
+    email: string,
+    timestamp: Date,
+    commentBody: string,
+    approved: boolean){
+      this["displayName"]= displayName
+      this["email"]= email
+      this["timestamp"]= timestamp
+      this["commentBody"]= commentBody
+      this["approved"]= approved
+    }
+
 }

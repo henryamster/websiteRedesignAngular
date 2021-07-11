@@ -2,11 +2,52 @@
 // disabling the above to work with third party firebase stuff
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cors = require("cors")({origin: true});
+import get from "axios";
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 import {QUERY_PATHS} from "./../../src/app/api/api-helpers";
+import {environment} from "./../../src/environments/environment";
 
 admin.initializeApp();
+
+
+export const getInstagramFeed = functions.https.onRequest((req, res) => {
+  logRequest(req, "Retrieving instagram feed");
+  functions.logger.info(
+      `${req.body.data}&access_token=${environment.FB_ACCESS_TOKEN}`
+  );
+
+  cors(req, res, () => {
+    if (!req.body?.data) {
+      res.status(400)
+          .send(responseFactory(new FunctionResponse(
+              true,
+              "No url sent!",
+              null
+          ))).end();
+    }
+
+    get(`${req.body.data}&access_token=${environment.FB_ACCESS_TOKEN}`)
+        .then((response) => res.status(200)
+            .send(responseFactory(new FunctionResponse(
+                true,
+                "Retrieved instagram feed data!",
+                response.data
+            ))).end())
+        .catch((err) => {
+          res.status(400)
+              .send(responseFactory(new FunctionResponse(
+                  false,
+                  "Something went wrong retrieving instagram data",
+                  null,
+                  err
+              ))
+              ).end();
+          functions.logger.debug(err);
+        }
+        );
+  });
+});
 
 export const submitInquiry = functions.https.onRequest((req, res) => {
   logRequest(req,
@@ -45,7 +86,7 @@ export const submitInquiry = functions.https.onRequest((req, res) => {
     // Select the inquiries collection
     try {
       const collectionRef = admin.firestore()
-          .collection(QUERY_PATHS.BUG_REPORT);
+          .collection(QUERY_PATHS.INQUIRY);
 
 
       // Add request body to as new document
@@ -125,7 +166,7 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
     // Select the bugReports collection
     try {
       const collectionRef =
-      admin.firestore().collection(QUERY_PATHS.BUG_REPORT);
+        admin.firestore().collection(QUERY_PATHS.BUG_REPORT);
 
 
       // Add request body to as new document
@@ -157,6 +198,55 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
     }
   });
 });
+
+
+/**
+ * logRequest
+ * @description Write a request out to the log
+ * @param {functions.https.Request} req Request object to log
+ * @param {string} message Message to log
+ * @fires functions.logger.log()
+ */
+export function logRequest(req: functions.https.Request,
+    message = "Something went wrong."): void {
+  functions.logger.log(`${message}
+  ${JSON.stringify([req["ip"], req["header"], req["body"]], null, 4)}`);
+}
+
+
+/**
+ * Function Response
+ * @description HTTP Reponse class
+ * @constructor
+ * @param {boolean} success Was action succesful?
+ * @param {string | undefined} message? Response message
+ * @param {any | undefined} data? Data to return
+ * @param {Error | undefined} error? Error, if applicable.
+ * */
+export class FunctionResponse {
+  success: boolean;
+  message?: string | undefined;
+  data?: any | undefined;
+  error?: Error | undefined;
+
+  // eslint-disable-next-line require-jsdoc
+  constructor(success: boolean, message?: string, data?: any, error?: Error) {
+    [this.success, this.message, this.data, this.error] =
+      [success, message ?? undefined, data ?? undefined, error ?? undefined];
+  }
+}
+
+// eslint-disable-next-line valid-jsdoc
+/**
+ * Reponse Factory
+ * @param {FunctionResponse} resp Function response to wrap inside of data
+ * object
+ * @returns {data: FunctionResponse}
+ */
+export const responseFactory =
+  (resp: FunctionResponse): { data: FunctionResponse } => {
+    return {data: resp};
+  };
 
 // export const getBlogPosts = functions.https.onRequest((req, res)=>{
 //   logRequest(req,
@@ -212,54 +302,3 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
 //     }
 //   });
 // });
-
-
-/**
- * logRequest
- * @description Write a request out to the log
- * @param {functions.https.Request} req Request object to log
- * @param {string} message Message to log
- * @fires functions.logger.log()
- */
-export function logRequest(req: functions.https.Request,
-    message = "Something went wrong."): void {
-  functions.logger.log(`${message}
-  ${JSON.stringify([req["ip"], req["header"], req["body"]], null, 4)}`);
-}
-
-
-/**
- * Function Response
- * @description HTTP Reponse class
- * @constructor
- * @param {boolean} success Was action succesful?
- * @param {string | undefined} message? Response message
- * @param {any | undefined} data? Data to return
- * @param {Error | undefined} error? Error, if applicable.
- * */
-export class FunctionResponse {
-  success: boolean;
-  message?: string | undefined;
-  data?: any | undefined;
-  error?: Error | undefined;
-
-  // eslint-disable-next-line require-jsdoc
-  constructor(success: boolean, message?: string, data?: any, error?: Error) {
-    [this.success, this.message, this.data, this.error] =
-      [success, message ?? undefined, data ?? undefined, error ?? undefined];
-  }
-}
-
-// eslint-disable-next-line valid-jsdoc
-/**
- * Reponse Factory
- * @param {FunctionResponse} resp Function response to wrap inside of data
- * object
- * @returns {data: FunctionResponse}
- */
-export const responseFactory =
-  (resp: FunctionResponse) : {data:FunctionResponse} => {
-    return {data: resp};
-  };
-
-

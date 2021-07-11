@@ -1,6 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFireFunctions } from '@angular/fire/functions';
+import { FunctionResponse } from 'functions/src';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { functionNames } from 'src/app/api/api-helpers';
 import { environment } from 'src/environments/environment';
 
 
@@ -12,18 +16,19 @@ export class InstagramService {
   private readonly instagramId:string= environment.INSTAGRAM_ID
   private readonly prefix:string = "https://graph.instagram.com/"
   private readonly fields: string[] = ['id', 'caption', 'media_type','media_url','username','timestamp']
-  private readonly token: string = environment.FB_ACCESS_TOKEN;
 
 private assembleGetMediaEdgeURL(){
-  return `${this.prefix}${this.instagramId}/media?fields=${this.fields.join(',')}&access_token=${this.token}`
+  return `${this.prefix}${this.instagramId}/media?fields=${this.fields.join(',')}`
 }
   instagramFeed() : Observable<IInstagramRequest>{
-    return this.http.get(this.assembleGetMediaEdgeURL()) as Observable<IInstagramRequest>
+   const URL_WITHOUT_TOKEN = this.assembleGetMediaEdgeURL()
+    return  (this.afFunc.httpsCallable(functionNames.GET_INSTAGRAM_FEED)(URL_WITHOUT_TOKEN))
+     .pipe(map(
+       (resp:FunctionResponse)=> resp["data"] as IInstagramRequest
+     ))
   }
 
-
-
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private afFunc: AngularFireFunctions) {
 
    }
 }

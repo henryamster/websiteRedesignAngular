@@ -78,6 +78,11 @@ import { FacebookLikeComponent } from './thirdParty/facebook-like/facebook-like.
 import { FeedComponent } from './thirdParty/instagram/feed/feed.component';
 import { PostComponent } from './thirdParty/instagram/post/post.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
+import { BugReportListComponent } from './admin/bugReport/bug-report-list/bug-report-list.component';
+import { BugReportItemComponent } from './admin/bugReport/bug-report-item/bug-report-item.component';
+import { InquiryListComponent } from './admin/inquiry/inquiry-list/inquiry-list.component';
+import { InquiryItemComponent } from './admin/inquiry/inquiry-item/inquiry-item.component';
+import { PageHeaderComponent } from './common/page-header/page-header.component';
 
 
 @NgModule({
@@ -103,6 +108,11 @@ import { GalleryComponent } from './pages/gallery/gallery.component';
     FeedComponent,
     PostComponent,
     GalleryComponent,
+    BugReportListComponent,
+    BugReportItemComponent,
+    InquiryListComponent,
+    InquiryItemComponent,
+    PageHeaderComponent,
 
   ],
   imports: [
