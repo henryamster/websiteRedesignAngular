@@ -5,7 +5,7 @@
   <div class="video fullsc " *ngIf="post.media_type==INSTAGRAM_MEDIA_TYPES.VIDEO">
     <video class="wide" controls [src]='post["media_url"]'  alt="Instagram Post Video" ></video>
   </div>
-  <div class="caro" *ngIf="post.media_type==INSTAGRAM_MEDIA_TYPES.CAROUSEL_ALBUM">
+  <div class="caro fullsc " *ngIf="post.media_type==INSTAGRAM_MEDIA_TYPES.CAROUSEL_ALBUM">
     <img class="wide" [src]='post["media_url"]' alt="Instagram Post Image">
   </div>
 </div>
