@@ -74,6 +74,10 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { ScrobblerComponent } from './thirdParty/scrobbler/scrobbler/scrobbler.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BlogComponent } from './pages/blog/blog.component';
+import { FacebookLikeComponent } from './thirdParty/facebook-like/facebook-like.component';
+import { FeedComponent } from './thirdParty/instagram/feed/feed.component';
+import { PostComponent } from './thirdParty/instagram/post/post.component';
+import { GalleryComponent } from './pages/gallery/gallery.component';
 
 
 @NgModule({
@@ -95,6 +99,10 @@ import { BlogComponent } from './pages/blog/blog.component';
     ContactComponent,
     ScrobblerComponent,
     BlogComponent,
+    FacebookLikeComponent,
+    FeedComponent,
+    PostComponent,
+    GalleryComponent,
 
   ],
   imports: [

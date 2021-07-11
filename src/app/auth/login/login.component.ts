@@ -50,7 +50,9 @@ export class LoginFormComponent implements OnInit {
   }
 
   public popOutLogin() {
-    this["auth"]["popOutLogin"]()
+    this["auth"]["popOutLogin"]('facebook').subscribe(
+      userCred=> console.log(userCred)
+    )
   }
 
   private generateLoginForm() {

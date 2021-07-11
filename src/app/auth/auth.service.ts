@@ -66,31 +66,18 @@ export class AuthService {
 
 
   public popOutLogin(provider = 'google') {
-    this["logger"]["logError"](new Error('Third Party Authentitcation has not yet been enabled.'), this._user, EEventType.Auth);
+    // this["logger"]["logError"](new Error('Third Party Authentitcation has not yet been enabled.'), this._user, EEventType.Auth);
 
-    const WHEN_IMPLEMENTED = false;
-
-    if (WHEN_IMPLEMENTED) {
+return from(this["auth"]["signInWithPopup"](provider == "google" ? new firebase.auth.GoogleAuthProvider() : new firebase.auth.FacebookAuthProvider()))
+    ["pipe"](tap(  userCred => {
+      this["_user"] = userCred.user;
+      this["gatherClaims"](this["_user"])
       this["triggerAuthEvent"](true)
-      if (provider == "google") {
-        return from(this["auth"]["signInWithPopup"](new firebase.auth.GoogleAuthProvider()))
-      }
-      if (provider == "facebook") {
-        return from(this["auth"]["signInWithPopup"](new firebase.auth.FacebookAuthProvider()))
-      }
-      if (provider == "twitter") {
-        return from(this["auth"]["signInWithPopup"](new firebase.auth.TwitterAuthProvider()))
-      }
-      if (provider == "github") {
-        return from(this["auth"]["signInWithPopup"](new firebase.auth.GithubAuthProvider()))
-      }
-
-
-      if (provider = "phone") {
-        return from(this["auth"]["signInWithPopup"](new firebase.auth.PhoneAuthProvider()))
-      }
-    }
-    return from([])
+      this["redirectToDashboard"]()
+      return userCred
+    },
+    err => this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
+  ))
   }
 
   public claims(): IdTokenResult["claims"][] {
