@@ -83,6 +83,11 @@ import { BugReportItemComponent } from './admin/bugReport/bug-report-item/bug-re
 import { InquiryListComponent } from './admin/inquiry/inquiry-list/inquiry-list.component';
 import { InquiryItemComponent } from './admin/inquiry/inquiry-item/inquiry-item.component';
 import { PageHeaderComponent } from './common/page-header/page-header.component';
+import { BlogPostComponent } from './blog/blog-post/blog-post.component';
+import { BlogCommentComponent } from './blog/blog-comment/blog-comment.component';
+import { BlogPostListComponent } from './blog/blog-post-list/blog-post-list.component';
+import { BlogPostSingleComponent } from './blog/blog-post-single/blog-post-single.component';
+import { BlogCommentListComponent } from './blog-comment-list/blog-comment-list.component';
 
 
 @NgModule({
@@ -113,6 +118,11 @@ import { PageHeaderComponent } from './common/page-header/page-header.component'
     InquiryListComponent,
     InquiryItemComponent,
     PageHeaderComponent,
+    BlogPostComponent,
+    BlogCommentComponent,
+    BlogPostListComponent,
+    BlogPostSingleComponent,
+    BlogCommentListComponent,
 
   ],
   imports: [

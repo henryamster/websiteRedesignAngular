@@ -1,0 +1,46 @@
+
+<div *ngIf="hasNotReachedExpiryDate()" class="expiryCheck">
+  <h1>
+    {{blogPost.title}}
+  </h1>
+
+  <p class="metaInfo">
+    <span class="postedBy" *ngIf="!!blogPost.author">
+      posted by {{blogPost.author}}
+    </span>
+  <span class="timeStamp">
+    on {{blogPost.timestamp | date:'medium' }}
+  </span>
+  </p>
+</div>
+
+<div class="expired" *ngIf="!hasNotReachedExpiryDate()">
+  <h1>
+    This post has expired.
+  </h1>
+  <p>
+    It expired on {{blogPost.expiryDate | date:'medium' }}
+  </p>
+</div>
+
+
+
+/**
+Body
+*/
+
+
+<!-- id: string;
+slug: string;
+timestamp?: Date;
+title: string;
+author?: string;
+body: string;
+imageLinks?: string[];
+codepenSlugs?: string[];
+youtubeLinks?: string[];
+links?: string[];
+tags: string[];
+type?: PostType;
+expiryDate?: Date | null;
+comments?: IBlogComment[]; -->

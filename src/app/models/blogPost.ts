@@ -145,28 +145,33 @@ export enum PostType {
 
 export interface IBlogComment{
   displayName: string;
-  email:string;
   timestamp: Date;
   commentBody: string;
   approved:boolean
+  profileImage?:string
+  email?:string;
 }
 
 export class BlogComment implements IBlogComment{
   displayName: string;
-  email: string;
   timestamp: Date;
   commentBody: string;
   approved: boolean;
+  email?: string;
+  profileImage?:string
   constructor(displayName: string,
-    email: string,
     timestamp: Date,
     commentBody: string,
-    approved: boolean){
+    approved: boolean,
+    email?: string,
+    profileImage?:string
+    ){
       this["displayName"]= displayName
-      this["email"]= email
+      this["email"]= email ?? null
       this["timestamp"]= timestamp
       this["commentBody"]= commentBody
       this["approved"]= approved
+      this["profileImage"]=profileImage ?? null
     }
 
 }
