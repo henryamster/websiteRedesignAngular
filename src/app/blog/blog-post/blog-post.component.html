@@ -12,6 +12,34 @@
     on {{blogPost.timestamp | date:'medium' }}
   </span>
   </p>
+
+  <div class="permaLink">
+    Permanent Link to this article: {{host}}
+  </div>
+
+  <div class="body">
+    <!--This will eventually be a quill html output block-->
+    {{blogPost.body}}
+  </div>
+
+  <div class="tags" *ngIf="blogPost.tags>0">
+    <mat-chip-list>
+      <mat-chip *ngFor="let tag of blogPost.tags" [src]="generateTagUrl(tag)" >{{tag}}</mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div class="links" *ngIf="blogPost.links>0">
+    <mat-chip-list>
+      <mat-chip *ngFor="let link of blogPost.links" [src]="link">{{link}}</mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div class="links" *ngIf="blogPost.links>0">
+    <mat-chip-list>
+      <mat-chip *ngFor="let link of blogPost.links" [src]="link">{{link}}</mat-chip>
+    </mat-chip-list>
+  </div>
+
 </div>
 
 <div class="expired" *ngIf="!hasNotReachedExpiryDate()">
