@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { RouterService } from 'src/app/generic/router.service';
 import { IBlogPost } from 'src/app/models/blogPost';
 
@@ -9,7 +10,7 @@ import { IBlogPost } from 'src/app/models/blogPost';
 })
 export class BlogPostComponent implements OnInit {
 
-  constructor() { }
+  constructor(private sanitizer: DomSanitizer) { }
   @Input('blogPost') blogPost:IBlogPost
   now: number;
   blogSingleUrl: string;
@@ -17,7 +18,7 @@ export class BlogPostComponent implements OnInit {
 
   public hasNotReachedExpiryDate(){
     if (this.hasAnExpirationDate()) return this.asTrueWhenExpirationDateHasNotPassed()
-    return false;
+    return true;
   }
 
   ngOnInit(): void {
@@ -30,6 +31,10 @@ export class BlogPostComponent implements OnInit {
     return this["tagSingleUrl"] + tag
   }
 
+  public postBodySanitized(){
+    return this.sanitizer.bypassSecurityTrustHtml(this.blogPost.body)
+  }
+
   private asTrueWhenExpirationDateHasNotPassed() : boolean {
     return Date.parse(this["blogPost"]["expiryDate"].toString()) > Date.now();
   }
@@ -37,6 +42,8 @@ export class BlogPostComponent implements OnInit {
   private hasAnExpirationDate() : boolean {
     return !!this.blogPost.expiryDate;
   }
+
+
 
 
 

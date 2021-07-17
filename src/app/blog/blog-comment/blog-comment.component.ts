@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { IBlogComment } from 'src/app/models/blogPost';
 
 @Component({
   selector: 'app-blog-comment',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BlogCommentComponent implements OnInit {
 
-  constructor() { }
+  constructor(private sanitizer: DomSanitizer) { }
 
+  @Input('comment') comment: IBlogComment;
   ngOnInit(): void {
+  }
+
+  public commentBodySanitized(){
+   return this.sanitizer.bypassSecurityTrustHtml(this.comment.commentBody)
   }
 
 }

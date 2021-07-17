@@ -88,6 +88,8 @@ import { BlogCommentComponent } from './blog/blog-comment/blog-comment.component
 import { BlogPostListComponent } from './blog/blog-post-list/blog-post-list.component';
 import { BlogPostSingleComponent } from './blog/blog-post-single/blog-post-single.component';
 import { BlogCommentListComponent } from './blog-comment-list/blog-comment-list.component';
+import { CodepenComponent } from './thirdParty/codepen/codepen.component';
+import { YoutubeComponent } from './thirdParty/youtube/youtube.component';
 
 
 @NgModule({
@@ -123,6 +125,8 @@ import { BlogCommentListComponent } from './blog-comment-list/blog-comment-list.
     BlogPostListComponent,
     BlogPostSingleComponent,
     BlogCommentListComponent,
+    CodepenComponent,
+    YoutubeComponent,
 
   ],
   imports: [

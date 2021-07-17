@@ -170,7 +170,7 @@ export class BlogComment implements IBlogComment{
       this["email"]= email ?? null
       this["timestamp"]= timestamp
       this["commentBody"]= commentBody
-      this["approved"]= approved
+      this["approved"]= approved ?? false
       this["profileImage"]=profileImage ?? null
     }
 

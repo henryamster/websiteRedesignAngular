@@ -1,1 +1,20 @@
-<p>blog-comment works!</p>
+<div class="blogComment" *ngIf="comment.approved">
+  <div class="avatar" *ngIf="!!comment.profileImage">
+    <img [src]="comment.profileImage" [alt]="comment.displayName + '\'s avatar'">
+  </div>
+
+  <h4>
+    {{comment.displayName}}
+    <span *ngIf="comment.email"><{{comment.email}}></span>
+  </h4>
+  <p class="commentMetadata">
+    posted on {{comment.timestamp | date:'medium'}}
+  </p>
+
+  {{commentBodySanitized()}}
+</div>
+<div class="blogPendingComment">
+  <p>
+    There is a comment pending administrator approval.
+  </p>
+</div>
