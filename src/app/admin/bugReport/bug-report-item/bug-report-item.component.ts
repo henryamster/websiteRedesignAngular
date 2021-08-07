@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BugReportService } from 'src/app/api/bug-report.service';
 import { IBugReport, ILogItem } from 'src/app/generics/log-item';
 
 @Component({
@@ -8,11 +9,19 @@ import { IBugReport, ILogItem } from 'src/app/generics/log-item';
 })
 export class BugReportItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(private bugReportService:BugReportService) { }
 
-  @Input('bugReport') bugReport:IBugReport
+  @Input('bugReport') bugReport: IBugReport
+  @Output('deleteEvent') deleteEvent: EventEmitter<boolean> = new EventEmitter<boolean>(false);
   ngOnInit(): void {
-    console.log(this.bugReport)
   }
 
+  dismissBugReport(id:string){
+    this.dismiss(id);
+  }
+
+
+  private dismiss(id: string) {
+    this.bugReportService.dismissBugReport(id).subscribe(_=> this.deleteEvent.emit(true))
+  }
 }

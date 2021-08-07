@@ -6,6 +6,6 @@
 <div class="loaded" *ngIf="!loading">
   <h1 class="title font-sans" >Bug Reports</h1>
   <div class="bugReportList">
-    <app-bug-report-item  *ngFor="let bugReport of bugReports" [bugReport]="bugReport"></app-bug-report-item>
+    <app-bug-report-item  *ngFor="let bugReport of bugReports" [bugReport]="bugReport" (deleteEvent)="deleteEvent($event)"></app-bug-report-item>
   </div>
 </div>

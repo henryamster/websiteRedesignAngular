@@ -13,7 +13,7 @@ export interface ILogItem {
   history?: Window["history"];
   location?: Window["location"];
   error?: Error;
-  id?: number;
+  id?: string;
   eventType?: EEventType;
   user?: User;
   serverMessage?: string;
@@ -76,15 +76,17 @@ export enum EEventType{
 }
 
 export interface IBugReport{
+    id?:string
     logItem?: ILogItem;
     bugReportText?: string;
 }
 
 export class BugReport implements IBugReport{
-  constructor(logItem, bugReportText){
-    [this.bugReportText, this.logItem] = [bugReportText, logItem];
+  constructor(logItem: ILogItem, bugReportText: string, id?: string){
+    [this.bugReportText, this.logItem, this.id] = [bugReportText, logItem, id];
 
   }
+  id?:string
   logItem: ILogItem;
   bugReportText: string;
 }

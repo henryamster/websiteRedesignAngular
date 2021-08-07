@@ -14,10 +14,18 @@ export class BugReportListComponent implements OnInit {
   loading: boolean=true;
   // @Input() bugReports: ILogItem
   ngOnInit(): void {
-    this.bugReportService.grabBugReport()
-    .subscribe( bugReports=> this["bugReports"] = bugReports)
-    .add(_=>
-      {this["loading"]=false; console.log(this.bugReports)})
+    this.grabBugReport();
   }
+  deleteEvent(reload:boolean=true){
+    if (reload) this.grabBugReport();
+  }
+
+  private grabBugReport() {
+    this.bugReportService.grabBugReport()
+      .subscribe(bugReports => this["bugReports"] = bugReports)
+      .add(_ => { this["loading"] = false; });
+  }
+
+
 
 }

@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { FunctionResponse } from './../../../functions/src/index';
-import { BugReport, IBugReport } from '../generics/log-item';
+import { BugReport, EEventType, IBugReport } from '../generics/log-item';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { QUERY_PATHS } from './api-helpers';
+import { LoggerService } from '../generic/logger.service';
+import { AuthService } from '../auth/auth.service';
 
 
 @Injectable({
@@ -17,7 +19,9 @@ export class BugReportService {
   constructor(
     private snackbar: MatSnackBar,
     private functions: AngularFireFunctions,
-    private a:AngularFirestore) {
+    private angularFire:AngularFirestore,
+    private loggerService: LoggerService,
+    private authService: AuthService) {
   }
 
   submitBugReport(bugReport): Observable<FunctionResponse> {
@@ -26,10 +30,13 @@ export class BugReportService {
     );
   }
 
-  extractData = (result) => result.map(x=>x.data)
+  dismissBugReport(id:string){
+    return this.removeBugReport(id)
+  }
+
+  extractData = (result) => result.map(x=>{ return {id:x.id, ...x.data}})
 
   grabBugReport() : Observable<IBugReport[]>{
-
     return this.retrieveBugReports().pipe(map(x=>this.extractData(x) as IBugReport[]))
   }
 
@@ -41,10 +48,37 @@ export class BugReportService {
   }
 
   private retrieveBugReports(){
-   return this.a.collection(QUERY_PATHS.BUG_REPORT).get().pipe(map(x=>x.docs.map(y=>y.data()
+   return this.angularFire.collection(QUERY_PATHS.BUG_REPORT).get()
+   .pipe(
+     map(
+       x=>x.docs.map(y=>
+        {
+        const data = y.data() as IBugReport;
+        const id = y.id;
+        return { id, ...data } as IBugReport;
+        }
     )))
   }
 
+  private removeBugReport(id:string){
+    return of(this.deleteBugReport(id));
+
+  }
+
+
+
+  private deleteBugReport(id: string) {
+    return this.angularFire.doc(QUERY_PATHS.BUG_REPORT + `/${id}`).delete()
+    .then(result => console.log(result)
+      )
+      .catch(
+        err => this.loggerService.logError(
+          new Error(`Could not dismiss bug report:${err} `),
+          this.authService.user(),
+          EEventType.Server
+        )
+      );
+  }
 
 
   private checkForSuccessFromServer(result: any): void {
