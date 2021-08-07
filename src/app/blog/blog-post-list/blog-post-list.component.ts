@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { IBlogPost } from 'src/app/models/blogPost';
 
 @Component({
   selector: 'app-blog-post-list',
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class BlogPostListComponent implements OnInit {
 
   constructor() { }
+
+  @Input() blogPosts: IBlogPost[];
 
   ngOnInit(): void {
   }

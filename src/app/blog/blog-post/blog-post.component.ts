@@ -23,8 +23,8 @@ export class BlogPostComponent implements OnInit {
 
   ngOnInit(): void {
     this["now"]=Date.now();
-    this["host"]=`http://localhost:4200/blog/${this.blogPost.slug}`
-    this["tagSingleUrl"]=`http://localhost:4200/blog/tagged/`
+    this["host"]=`http://localhost:4200/post/${this.blogPost.slug}`
+    this["tagSingleUrl"]=`http://localhost:4200/post/tagged/`
   }
 
   public generateTagUrl(tag:string){

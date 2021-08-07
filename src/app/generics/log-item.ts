@@ -1,6 +1,8 @@
 import {v4 as uuidv4} from 'uuid';
 import { User } from '@firebase/auth-types';
 
+
+
 export interface ILogItem {
   timestamp?: Date;
   userAgent?: Navigator["userAgent"];
@@ -71,4 +73,18 @@ export enum EEventType{
   Auth = "AUTH",
   Other = "OTHER",
   Server = "SERVER"
+}
+
+export interface IBugReport{
+    logItem?: ILogItem;
+    bugReportText?: string;
+}
+
+export class BugReport implements IBugReport{
+  constructor(logItem, bugReportText){
+    [this.bugReportText, this.logItem] = [bugReportText, logItem];
+
+  }
+  logItem: ILogItem;
+  bugReportText: string;
 }

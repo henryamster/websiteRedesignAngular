@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ILogItem } from 'src/app/generics/log-item';
+import { IBugReport, ILogItem } from 'src/app/generics/log-item';
 
 @Component({
   selector: 'app-bug-report-item',
@@ -10,8 +10,9 @@ export class BugReportItemComponent implements OnInit {
 
   constructor() { }
 
-  @Input('bugReportItem') bugReport:ILogItem
+  @Input('bugReport') bugReport:IBugReport
   ngOnInit(): void {
+    console.log(this.bugReport)
   }
 
 }

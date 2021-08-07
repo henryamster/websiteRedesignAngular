@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IBlogComment } from '../models/blogPost';
+import { IBlogComment } from './../../models/blogPost';
 
 @Component({
   selector: 'app-blog-comment-list',

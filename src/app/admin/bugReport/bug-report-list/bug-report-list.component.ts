@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { BugReportService } from 'src/app/api/bug-report.service';
+import { IBugReport, ILogItem } from 'src/app/generics/log-item';
 
 @Component({
   selector: 'app-bug-report-list',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BugReportListComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private bugReportService: BugReportService) { }
+  bugReports:IBugReport[];
+  loading: boolean=true;
+  // @Input() bugReports: ILogItem
   ngOnInit(): void {
+    this.bugReportService.grabBugReport()
+    .subscribe( bugReports=> this["bugReports"] = bugReports)
+    .add(_=>
+      {this["loading"]=false; console.log(this.bugReports)})
   }
 
 }

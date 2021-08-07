@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { delay, tap, timeout } from 'rxjs/operators';
 import { BugReportService } from 'src/app/api/bug-report.service';
-import { ILogItem } from 'src/app/generics/log-item';
+import { BugReport, ILogItem } from 'src/app/generics/log-item';
 import { MatQuill } from 'src/app/mat-quill/mat-quill';
 
 @Component({
@@ -54,12 +54,8 @@ export class BugReportComponent implements OnInit {
   submitBugReport() {
     debugger
     this["bugReportService"]["submitBugReport"](
-      JSON.stringify(
-        {
-          logItem: (this["logItem"]),
-          bugReportText: this["bugReportForm"]["get"]('bugReportText').value
-        })
-    )
+      new BugReport(this["logItem"],this["bugReportForm"]["get"]('bugReportText').value)
+       )
     ["pipe"](
       tap(
         response => {

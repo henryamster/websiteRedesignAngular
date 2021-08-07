@@ -26,6 +26,9 @@
     <app-codepen *ngFor="let codepen of blogPost.codepenSlugs" [slug]="codepen" ></app-codepen>
   </div>
 
+  <div class="youtubes" *ngIf="blogPost.youtubeLinks?.length>0">
+    <app-youtube *ngFor="let youtubeLink of blogPost.youtubeLinks" [videoId]="youtubeLink" ></app-youtube>
+  </div>
 
   <div class="body">
     {{postBodySanitized()}}
@@ -58,26 +61,3 @@
     It expired on {{blogPost.expiryDate | date:'medium' }}
   </p>
 </div>
-
-
-
-
-/**
-Body
-*/
-
-
-<!-- id: string;
-slug: string;
-timestamp?: Date;
-title: string;
-author?: string;
-body: string;
-imageLinks?: string[];
-codepenSlugs?: string[];
-youtubeLinks?: string[];
-links?: string[];
-tags: string[];
-type?: PostType;
-expiryDate?: Date | null;
-comments?: IBlogComment[]; -->

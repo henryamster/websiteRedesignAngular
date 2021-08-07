@@ -1,1 +1,12 @@
-<p>blog-post-single works!</p>
+<div class="loading" *ngIf="loading">
+
+  <mat-spinner
+    mode="indeterminate">
+  </mat-spinner>">
+
+</div>
+<div class="notFound" *ngIf="notFound">
+  Blog post does not exists or the url is wrong. Redirecting to the blog page.
+</div>
+
+<app-blog-post [blogPost]="blogPost" *ngIf="!notFound"></app-blog-post>

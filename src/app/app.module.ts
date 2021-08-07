@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 /* Routing and root component */
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +34,19 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { AngularFireModule } from '@angular/fire';
 
 /* Created Components*/
+import { AboutComponent } from './pages/about/about.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { ContactComponent } from './pages/contact/contact.component';
+import { BlogPostComposerComponent } from './blog/blog-post-composer/blog-post-composer.component';
+import { BlogCommentComposerComponent } from './blog/blog-comment-composer/blog-comment-composer.component';
+import { BlogPostComponent } from './blog/blog-post/blog-post.component';
+import { BlogCommentComponent } from './blog/blog-comment/blog-comment.component';
+import { BlogPostListComponent } from './blog/blog-post-list/blog-post-list.component';
+import { BlogPostSingleComponent } from './blog/blog-post-single/blog-post-single.component';
+import { BlogCommentListComponent } from './blog/blog-comment-list/blog-comment-list.component';
+import { BlogComponent } from './pages/blog/blog.component';
+import { PostComponent } from './thirdParty/instagram/post/post.component';
+import { GalleryComponent } from './pages/gallery/gallery.component';
 
 /** Main Components */
 import { MainComponent } from './main/main.component';
@@ -42,6 +56,7 @@ import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { NavListComponent } from './common/nav-list/nav-list.component';
 import { LogTemplateComponent } from './common/snackBar/log-template/log-template.component';
+import { PageHeaderComponent } from './common/page-header/page-header.component';
 
 /** Brand Components */
 import { BrandLogoComponent } from './brand/brand-logo/brand-logo.component';
@@ -53,6 +68,12 @@ import { ResponsiveService } from './generic/responsive.service';
 import { LoginFormComponent } from './auth/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { LoginComponent } from './pages/login/login.component';
+
+/** Admin Components */
+import { BugReportListComponent } from './admin/bugReport/bug-report-list/bug-report-list.component';
+import { BugReportItemComponent } from './admin/bugReport/bug-report-item/bug-report-item.component';
+import { InquiryListComponent } from './admin/inquiry/inquiry-list/inquiry-list.component';
+import { InquiryItemComponent } from './admin/inquiry/inquiry-item/inquiry-item.component';
 
 
 /** Firebase Services */
@@ -66,30 +87,16 @@ import { USE_EMULATOR as USE_DATABASE_EMULATOR } from '@angular/fire/database';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
 import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/functions';
 
-/** Quill Import */
+/** Third Party */
 import { QuillModule } from 'ngx-quill';
-import { AboutComponent } from './pages/about/about.component';
-import { DashboardComponent } from './admin/dashboard/dashboard.component';
-import { ContactComponent } from './pages/contact/contact.component';
 import { ScrobblerComponent } from './thirdParty/scrobbler/scrobbler/scrobbler.component';
-import { HttpClientModule } from '@angular/common/http';
-import { BlogComponent } from './pages/blog/blog.component';
-import { FacebookLikeComponent } from './thirdParty/facebook-like/facebook-like.component';
-import { FeedComponent } from './thirdParty/instagram/feed/feed.component';
-import { PostComponent } from './thirdParty/instagram/post/post.component';
-import { GalleryComponent } from './pages/gallery/gallery.component';
-import { BugReportListComponent } from './admin/bugReport/bug-report-list/bug-report-list.component';
-import { BugReportItemComponent } from './admin/bugReport/bug-report-item/bug-report-item.component';
-import { InquiryListComponent } from './admin/inquiry/inquiry-list/inquiry-list.component';
-import { InquiryItemComponent } from './admin/inquiry/inquiry-item/inquiry-item.component';
-import { PageHeaderComponent } from './common/page-header/page-header.component';
-import { BlogPostComponent } from './blog/blog-post/blog-post.component';
-import { BlogCommentComponent } from './blog/blog-comment/blog-comment.component';
-import { BlogPostListComponent } from './blog/blog-post-list/blog-post-list.component';
-import { BlogPostSingleComponent } from './blog/blog-post-single/blog-post-single.component';
-import { BlogCommentListComponent } from './blog-comment-list/blog-comment-list.component';
 import { CodepenComponent } from './thirdParty/codepen/codepen.component';
 import { YoutubeComponent } from './thirdParty/youtube/youtube.component';
+import { FacebookLikeComponent } from './thirdParty/facebook-like/facebook-like.component';
+import { FeedComponent } from './thirdParty/instagram/feed/feed.component';
+
+
+
 
 
 @NgModule({
@@ -127,6 +134,8 @@ import { YoutubeComponent } from './thirdParty/youtube/youtube.component';
     BlogCommentListComponent,
     CodepenComponent,
     YoutubeComponent,
+    BlogPostComposerComponent,
+    BlogCommentComposerComponent,
 
   ],
   imports: [

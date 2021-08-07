@@ -15,6 +15,7 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { BlogComponent } from './pages/blog/blog.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
+import { BlogPostSingleComponent } from './blog/blog-post-single/blog-post-single.component';
 
 const unauthorizedRedirect = () => redirectUnauthorizedTo(['login'])
 const adminAccess = () => hasCustomClaim('admin')
@@ -46,6 +47,9 @@ const routes: Routes = [
   },
   {
     path:'blog', component: BlogComponent
+  },
+  {
+    path:'post/:slug', component: BlogPostSingleComponent
   },
   {
     path:'gallery', component: GalleryComponent
