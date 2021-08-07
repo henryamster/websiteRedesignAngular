@@ -1,6 +1,6 @@
 
 
-export interface IContactModel{
+export interface IPostContactModel{
   name?:string;
   email?: string;
   contactType?: ContactType;
@@ -9,7 +9,7 @@ export interface IContactModel{
   phone?:string;
   }
 
-  export class ContactModel implements IContactModel{
+  export class PostContactModel implements IPostContactModel{
     constructor(
       name:string,
       email: string,
@@ -36,6 +36,34 @@ export interface IContactModel{
 
   }
   }
+
+export interface IContactModel extends IPostContactModel{
+  id?:string;
+  name?:string;
+  email?: string;
+  contactType?: ContactType;
+  followUp?:boolean;
+  message?: string;
+  phone?:string;
+  }
+
+  export class ContactModel extends PostContactModel{
+    constructor(
+      id:string,
+      name:string,
+      email: string,
+      contactType: ContactType,
+      followUp:boolean,
+      message: string,
+      phone:string=""
+    ){
+      super(name,email,contactType,followUp,message,phone);
+      this["id"]=id;
+  }
+  }
+
+
+
 
  export enum ContactType{
     PERSONAL= "Personal",

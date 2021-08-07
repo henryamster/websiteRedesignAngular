@@ -11,8 +11,8 @@ service cloud.firestore {
   }
 
   match /inquiries/{inquiry} {
-  allow create: if true;
-  allow update, delete, read: if request.auth.uid !=null;
+
+  allow read, create, delete : if true;
   }
 
   match /blogPosts/{entry} {
@@ -27,3 +27,8 @@ service cloud.firestore {
 }
 
 }
+
+/* Anon Create rule
+allow create: if true;
+allow update, delete, read: if request.auth.uid !=null;
+*/

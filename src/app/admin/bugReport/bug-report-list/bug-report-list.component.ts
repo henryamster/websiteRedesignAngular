@@ -12,7 +12,6 @@ export class BugReportListComponent implements OnInit {
   constructor(private bugReportService: BugReportService) { }
   bugReports:IBugReport[];
   loading: boolean=true;
-  // @Input() bugReports: ILogItem
   ngOnInit(): void {
     this.grabBugReport();
   }

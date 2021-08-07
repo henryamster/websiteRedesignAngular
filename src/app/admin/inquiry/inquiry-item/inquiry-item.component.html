@@ -1,1 +1,28 @@
-<p>inquiry-item works!</p>
+<mat-card class="inquiryCard">
+  <mat-card-header>
+    <mat-card-title><mat-icon>person</mat-icon>{{inquiry.name}}</mat-card-title>
+    <mat-card-subtitle><mat-icon>email</mat-icon><a [href]="'mailto:'+inquiry.email">{{inquiry.email}}</a> </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+
+
+    <div class="followup" *ngIf="inquiry.followUp"><mat-icon>update</mat-icon> Requires Followup</div>
+    <p>
+      <strong>Contact Type:</strong> {{inquiry.contactType}}
+    </p>
+
+    <p *ngIf="!!inquiry.phone">
+      <strong>Phone:</strong> <a [href]='"tel:"+inquiry.phone'>{{inquiry.phone}}</a>
+    </p>
+
+  <p>
+    <strong >Message:</strong>
+      <p class="htmlComment" [innerHTML]="postBody()">
+  </p>
+  <div class="id font-sans tiny mainSpacer"><p class="tiny"><mat-icon>article</mat-icon>{{inquiry.id}}</p></div>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button  (click)='dismissInquiry(inquiry["id"])'><mat-icon>cancel</mat-icon> Dismiss</button>
+  </mat-card-actions>
+</mat-card>

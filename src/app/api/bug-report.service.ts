@@ -4,7 +4,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { FunctionResponse } from './../../../functions/src/index';
-import { BugReport, EEventType, IBugReport } from '../generics/log-item';
+import { BugReport, EEventType, IBugReport, IPostBugReport } from '../generics/log-item';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { QUERY_PATHS } from './api-helpers';
 import { LoggerService } from '../generic/logger.service';
@@ -24,7 +24,7 @@ export class BugReportService {
     private authService: AuthService) {
   }
 
-  submitBugReport(bugReport): Observable<FunctionResponse> {
+  submitBugReport(bugReport:IPostBugReport): Observable<FunctionResponse> {
     return this.sendRequest(bugReport)["pipe"](
       tap(_response => this["checkForSuccessFromServer"](_response)),
     );
@@ -40,10 +40,10 @@ export class BugReportService {
     return this.retrieveBugReports().pipe(map(x=>this.extractData(x) as IBugReport[]))
   }
 
-  private sendRequest(bugReportText: string): Observable<FunctionResponse> {
+  private sendRequest(bugReport: IPostBugReport): Observable<FunctionResponse> {
     return this.functions
       .httpsCallable('submitBugReport')(
-        bugReportText as IBugReport
+        bugReport as IPostBugReport
       );
   }
 
@@ -53,7 +53,7 @@ export class BugReportService {
      map(
        x=>x.docs.map(y=>
         {
-        const data = y.data() as IBugReport;
+        const data = y.data() as IPostBugReport;
         const id = y.id;
         return { id, ...data } as IBugReport;
         }

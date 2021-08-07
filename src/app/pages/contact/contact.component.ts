@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { tap, delay } from 'rxjs/operators';
 import { InquiryService } from 'src/app/api/inquiry.service';
-import { ContactModel, ContactType, IContactModel } from 'src/app/models/contact';
+import { ContactModel, ContactType, IContactModel, IPostContactModel, PostContactModel } from 'src/app/models/contact';
 
 @Component({
   selector: 'app-contact',
@@ -21,7 +21,7 @@ export class ContactComponent implements OnInit {
   contactDetailsGroup: FormGroup
   messageDetailsGroup: FormGroup
 
-  submittedValues:IContactModel;
+  submittedValues:IPostContactModel;
 
   submitted:boolean=false;
 
@@ -58,7 +58,7 @@ export class ContactComponent implements OnInit {
 
   private attemptFormSubmission() {
     return this.inquiry.submitContact(
-      new ContactModel(
+      new PostContactModel(
         this["personDetailsGroup"]["get"]('name')["value"],
         this["personDetailsGroup"]["get"]('email')["value"],
         this["contactDetailsGroup"]["get"]('contactType')["value"],

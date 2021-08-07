@@ -81,6 +81,11 @@ export interface IBugReport{
     bugReportText?: string;
 }
 
+export interface IPostBugReport{
+  logItem:ILogItem;
+  bugReportText?:string;
+}
+
 export class BugReport implements IBugReport{
   constructor(logItem: ILogItem, bugReportText: string, id?: string){
     [this.bugReportText, this.logItem, this.id] = [bugReportText, logItem, id];
@@ -90,3 +95,12 @@ export class BugReport implements IBugReport{
   logItem: ILogItem;
   bugReportText: string;
 }
+export class PostBugReport implements IPostBugReport {
+  constructor(logItem: ILogItem, bugReportText: string){
+    [this.bugReportText, this.logItem] = [bugReportText, logItem];
+
+  }
+  logItem: ILogItem;
+  bugReportText: string;
+}
+
