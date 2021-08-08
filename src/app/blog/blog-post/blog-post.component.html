@@ -9,7 +9,7 @@
       posted by {{blogPost.author}}
     </span>
   <span class="timeStamp">
-    on {{blogPost.timestamp | date:'medium' }}
+    on {{blogPost.timestamp.seconds*1000 | date:'medium' }}
   </span>
   </p>
 
@@ -30,22 +30,24 @@
     <app-youtube *ngFor="let youtubeLink of blogPost.youtubeLinks" [videoId]="youtubeLink" ></app-youtube>
   </div>
 
-  <div class="body">
-    {{postBodySanitized()}}
+  <div class="body" [innerHtml]="postBodySanitized()">
+
   </div>
 
   <app-blog-comment-list [comments]="blogPost.comments">
   </app-blog-comment-list>
 
-  <div class="tags" *ngIf="blogPost.tags>0">
+  <div class="tags" *ngIf="blogPost.tags.length>0">
+    <h3>Tags</h3>
     <mat-chip-list>
-      <mat-chip *ngFor="let tag of blogPost.tags" [src]="generateTagUrl(tag)" >{{tag}}</mat-chip>
+      <mat-chip *ngFor="let tag of blogPost.tags"  ><a [href]="generateTagUrl(tag)">{{tag}}</a></mat-chip>
     </mat-chip-list>
   </div>
 
-  <div class="links" *ngIf="blogPost.links>0">
+  <div class="links" *ngIf="blogPost.links.length>0">
+    <h3>Links</h3>
     <mat-chip-list>
-      <mat-chip *ngFor="let link of blogPost.links" [src]="link">{{link}}</mat-chip>
+     <mat-chip *ngFor="let link of blogPost.links" ><a [href]="link">{{link}}</a></mat-chip>
     </mat-chip-list>
   </div>
 
@@ -58,6 +60,6 @@
     This post has expired.
   </h1>
   <p>
-    It expired on {{blogPost.expiryDate | date:'medium' }}
+    It expired on {{(blogPost.expiryDate.seconds)*1000 | date:'medium' }}
   </p>
 </div>

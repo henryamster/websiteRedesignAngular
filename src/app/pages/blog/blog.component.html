@@ -17,8 +17,9 @@ subtitle="Is it worth the read? I'll leave that for you to decide!"
 
 <div class="postContainer">
 
-<mat-card *ngFor="let post of posts">
-  <app-blog-post [blogPost="post"]></app-blog-post>
-</mat-card>
+<!-- <mat-card *ngFor="let post of posts">
+  <app-blog-post [blogPost]="post"></app-blog-post>
+</mat-card> -->
+<app-blog-post-list [blogPosts]="posts"></app-blog-post-list>
 
 </div>

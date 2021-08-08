@@ -23,6 +23,13 @@ export class BlogService {
     this.getPaginatedBlogs()
   }
 
+  public clearLastDoc(){
+    this.nullifyLastVisibleDoc();
+  }
+
+  private nullifyLastVisibleDoc() {
+    this["lastVisibleDoc"] = null;
+  }
 
 public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
     if (!this["lastVisibleDoc"]) { return this["init"](numberOfPosts) }
@@ -43,7 +50,7 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
   }
 
   public post(blogPost:IBlogPost): IBlogPost | void{
-    return this.submitBlogPost(blogPost);
+    return this.submitBlogPost({...blogPost});
   }
 
   private submitBlogPost(blogPost: IBlogPost) :IBlogPost | void {

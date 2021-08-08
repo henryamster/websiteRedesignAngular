@@ -29,6 +29,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 /* Libraries */
 import { AngularFireModule } from '@angular/fire';
@@ -167,7 +169,8 @@ import { FeedComponent } from './thirdParty/instagram/feed/feed.component';
     MatStepperModule,
     MatSelectModule,
     MatSlideToggleModule,
-
+    MatDatepickerModule,
+   MatNativeDateModule,
     //Quill
     QuillModule.forRoot()
   ],

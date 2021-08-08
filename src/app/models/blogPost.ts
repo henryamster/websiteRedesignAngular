@@ -1,7 +1,10 @@
+import { Time } from '@angular/common';
+import {Timestamp} from '@firebase/firestore-types';
+
 export interface IBlogPost {
   id: string;
   slug: string;
-  timestamp?: Date;
+  timestamp?: Date | Timestamp;
   title: string;
   author?: string;
   body: string;
@@ -11,7 +14,7 @@ export interface IBlogPost {
   links?: string[];
   tags: string[];
   type?: PostType;
-  expiryDate?: Date | null;
+  expiryDate?: Date | Timestamp | null;
   comments?: IBlogComment[];
 }
 
@@ -22,12 +25,13 @@ export class BlogPost implements IBlogPost {
     body: string,
     slug: string,
     type: PostType,
-    timestamp?: Date,
+    timestamp?: Date | Timestamp,
     author?: string,
     imageLinks?: string[],
     codepenSlugs?: string[],
     youtubeLinks?: string[],
     links?: string[],
+    tags?:string[],
     expiryDate?: Date | null,
     comments?:IBlogComment[]
   ) {
@@ -43,6 +47,7 @@ export class BlogPost implements IBlogPost {
       this["codepenSlugs"],
       this["youtubeLinks"],
       this["links"],
+      this["tags"],
       this["expiryDate"],
       this["comments"]
     ]
@@ -59,6 +64,7 @@ export class BlogPost implements IBlogPost {
         codepenSlugs ?? [],
         youtubeLinks ?? [],
         links ?? [],
+        tags ?? [],
         expiryDate ?? null,
         comments ?? []
       ]
@@ -67,7 +73,7 @@ export class BlogPost implements IBlogPost {
   type: PostType;
   id: string;
   slug: string;
-  timestamp?: Date;
+  timestamp?: Date | Timestamp;
   title: string;
   author?: string;
   body: string;
@@ -145,7 +151,7 @@ export enum PostType {
 
 export interface IBlogComment{
   displayName: string;
-  timestamp: Date;
+  timestamp: Date | Timestamp;
   commentBody: string;
   approved:boolean
   profileImage?:string
@@ -154,13 +160,13 @@ export interface IBlogComment{
 
 export class BlogComment implements IBlogComment{
   displayName: string;
-  timestamp: Date;
+  timestamp: Date | Timestamp;
   commentBody: string;
   approved: boolean;
   email?: string;
   profileImage?:string
   constructor(displayName: string,
-    timestamp: Date,
+    timestamp: Date | Timestamp,
     commentBody: string,
     approved: boolean,
     email?: string,

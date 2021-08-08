@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-blog-comment-composer',
@@ -8,8 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class BlogCommentComposerComponent implements OnInit {
 
   constructor() { }
-
+  commentForm: FormGroup;
   ngOnInit(): void {
+    this["commentForm"] = this["fb"]["group"]({
+      comment: ['', Validators.required]
+    })
   }
+
 
 }

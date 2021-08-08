@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Timestamp } from '@google-cloud/firestore';
 import { RouterService } from 'src/app/generic/router.service';
 import { IBlogPost } from 'src/app/models/blogPost';
 
@@ -23,8 +24,9 @@ export class BlogPostComponent implements OnInit {
 
   ngOnInit(): void {
     this["now"]=Date.now();
-    this["host"]=`http://localhost:4200/post/${this.blogPost.slug}`
-    this["tagSingleUrl"]=`http://localhost:4200/post/tagged/`
+    this["host"]=`http://localhost:4200/post/${this.blogPost.slug}`;
+    this["tagSingleUrl"]=`http://localhost:4200/post/tagged/`;
+    console.log(this)
   }
 
   public generateTagUrl(tag:string){
@@ -36,7 +38,8 @@ export class BlogPostComponent implements OnInit {
   }
 
   private asTrueWhenExpirationDateHasNotPassed() : boolean {
-    return Date.parse(this["blogPost"]["expiryDate"].toString()) > Date.now();
+console.log((this["blogPost"]["expiryDate"] as Timestamp).seconds*1000,new Date().getTime()*1000)
+    return (this["blogPost"]["expiryDate"] as Timestamp).seconds*1000<new Date().getTime()*1000
   }
 
   private hasAnExpirationDate() : boolean {
