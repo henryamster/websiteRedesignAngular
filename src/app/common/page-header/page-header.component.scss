@@ -1,5 +1,23 @@
-.hueshift{
-  filter: hue-rotate(
-    256deg
-    );
+
+.pageHeader{
+  margin: 0;
+    letter-spacing: 0.4em;
+    font-variant: all-small-caps;
+    font-weight: 100;
+    font-size: 1.7em;
+    background: #333;
+    color: white;
+    animation: contract 2s forwards;
+}
+.noPad{
+  padding: 0;
+}
+@keyframes contract {
+  0%{
+    letter-spacing: 1.4em;
+  }
+  100%{
+    letter-spacing: 0.4em;
+  }
+
 }

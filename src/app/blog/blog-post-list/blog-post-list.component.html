@@ -1,3 +1,6 @@
 <div class="container-Blog-Posts">
-    <app-blog-post *ngFor="let blogPost of blogPosts" [blogPost]="blogPost" ></app-blog-post>
+    <app-blog-post *ngFor="let blogPost of blogPosts"
+    [blogPost]="blogPost"
+    [displayCommentComposer]="displayCommentComposer"
+    ></app-blog-post>
 </div>

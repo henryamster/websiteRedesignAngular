@@ -1,9 +1,10 @@
 
 <mat-card >
-  <mat-card-header>
-    <mat-card-title> <h1 class="title font-sans" >Post a new blog:</h1></mat-card-title>
+  <mat-card-header (click)="hideComposer=!hideComposer">
+
+    <mat-card-title> <h1 class="title font-sans composer " ><app-page-header title="Composer" subtitle="Post a blog here!" ></app-page-header></h1></mat-card-title>
   </mat-card-header>
-  <mat-card-content class="flexContainer">
+  <mat-card-content class="flexContainer" [hidden]="hideComposer">
     <div class="blogForm" [formGroup]="blogPostForm">
 
 
@@ -119,7 +120,9 @@
 
 
   </div>
-  <div class="preview" *ngIf="blogPostInitialized" class="blogForm">
+  <div class="preview" *ngIf="blogPostInitialized && !blogPostForm.pristine" class="blogForm">
+
+    <h1 class="title font-sans composer" ><app-page-header title="Preview" ></app-page-header></h1>
     <app-blog-post [blogPost]="blogPost"></app-blog-post>
   </div>
   </mat-card-content>

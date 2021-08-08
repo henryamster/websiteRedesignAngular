@@ -1,20 +1,28 @@
+
+<mat-card>
+
+
 <div class="blogComment" *ngIf="comment.approved">
-  <div class="avatar" *ngIf="!!comment.profileImage">
-    <img [src]="comment.profileImage" [alt]="comment.displayName + '\'s avatar'">
+  <div class="commentHeader">
+    <span class="avatar" *ngIf="!!comment.profileImage">
+      <img class="circle" width="26px" height="26px" style="padding:4px;" [src]="comment.profileImage" [alt]="comment.displayName + '\'s avatar'">
+    </span><h4>
+      <strong class="font-sans">{{comment.displayName}}</strong>
+      <em><span *ngIf="comment.email" class="font-sans"><{{comment.email}}></span></em>
+    </h4>
   </div>
 
-  <h4>
-    {{comment.displayName}}
-    <span *ngIf="comment.email"><{{comment.email}}></span>
-  </h4>
   <p class="commentMetadata">
     posted on {{comment.timestamp | date:'medium'}}
   </p>
 
-  {{commentBodySanitized()}}
+  <p [innerHtml]="commentBodySanitized()"></p>
+
 </div>
-<div class="blogPendingComment">
+<div class="blogPendingComment" *ngIf="!comment.approved">
   <p>
     There is a comment pending administrator approval.
   </p>
 </div>
+
+</mat-card>

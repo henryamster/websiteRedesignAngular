@@ -16,6 +16,7 @@ export class BlogPostComposerComponent implements OnInit {
   blogPostForm: FormGroup;
   blogPostInitialized=false;
 removable:boolean=true;
+hideComposer:boolean=true;
 
   // for chip-lists
   readonly separatorKeysCodes = [ENTER, COMMA] as const;

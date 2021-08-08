@@ -1,5 +1,5 @@
-<mat-card class="">
-  <h1 class="font-serif huge placeCenter">{{title}}</h1>
-<p class="font-sans placeCenter">{{subtitle}}</p>
+<mat-card class="noPad">
+  <h1 class="font-serif huge placeCenter pageHeader">{{title}}</h1>
+<p *ngIf="!!subtitle" class="font-sans placeCenter">{{subtitle}}</p>
 
 </mat-card>

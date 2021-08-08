@@ -1,65 +1,88 @@
 
+
 <div *ngIf="hasNotReachedExpiryDate()" class="expiryCheck">
-  <h1>
-    {{blogPost.title}}
-  </h1>
 
-  <p class="metaInfo">
-    <span class="postedBy" *ngIf="!!blogPost.author">
-      posted by {{blogPost.author}}
-    </span>
-  <span class="timeStamp">
-    on {{blogPost.timestamp.seconds*1000 | date:'medium' }}
-  </span>
-  </p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
 
-  <div class="permaLink">
-    Permanent Link to this article: {{host}}
+      <h1 class="composer">
+       <a [href]="host" style="font-size: .8em;
+       text-decoration: none;"> <app-page-header [title]="blogPost.title"
+        [subtitle]=" host">
+      </app-page-header>
+      </a>
+      </h1>
+  </mat-card-title>
+    <mat-card-subtitle>
+      <p class="metaInfo">
+        <span class="postedBy" *ngIf="!!blogPost.author">
+          posted by {{blogPost.author}}
+        </span>
+      <span class="timeStamp">
+        on {{blogPost.timestamp.seconds*1000 | date:'medium' }}
+      </span>
+      </p>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+
+
+    <!-- <div class="permaLink">
+
+    </div> -->
+
+    <div class="featuredImages" *ngFor="let image of blogPost.imageLinks">
+      <img class="featuredImage" [src]="image" alt="Featured Image">
+    </div>
+
+
+    <div class="codepens" *ngIf="blogPost.codepenSlugs.length>0">
+      <app-codepen *ngFor="let codepen of blogPost.codepenSlugs" [slug]="codepen" ></app-codepen>
+    </div>
+
+    <div class="youtubes" *ngIf="blogPost.youtubeLinks?.length>0">
+      <app-youtube *ngFor="let youtubeLink of blogPost.youtubeLinks" [videoId]="youtubeLink" ></app-youtube>
+    </div>
+
+    <div class="body" [innerHtml]="postBodySanitized()">
+
+    </div>
+
+    <app-blog-comment-list *ngIf="blogPost.comments.length>0" [comments]="blogPost.comments">
+    </app-blog-comment-list>
+
+    <app-blog-comment-composer [blogPost]="blogPost" *ngIf="displayCommentComposer">
+
+    </app-blog-comment-composer>
+
+    <div class="tags" *ngIf="blogPost.tags.length>0">
+      <h3>Tags</h3>
+      <mat-chip-list>
+        <mat-chip *ngFor="let tag of blogPost.tags"  ><a [href]="generateTagUrl(tag)">{{tag}}</a></mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <div class="links" *ngIf="blogPost.links.length>0">
+      <h3>Links</h3>
+      <mat-chip-list>
+       <mat-chip *ngFor="let link of blogPost.links" ><a [href]="link">{{link}}</a></mat-chip>
+      </mat-chip-list>
+    </div>
+
+
+  <div class="expired" *ngIf="!hasNotReachedExpiryDate()">
+    <h1>
+      This post has expired.
+    </h1>
+    <p>
+      It expired on {{(blogPost.expiryDate.seconds)*1000 | date:'medium' }}
+    </p>
   </div>
-
-  <div class="featuredImages" *ngFor="let image of blogPost.imageLinks">
-    <img class="featuredImage" [src]="image" alt="Featured Image">
-  </div>
-
-
-  <div class="codepens" *ngIf="blogPost.codepenSlugs.length>0">
-    <app-codepen *ngFor="let codepen of blogPost.codepenSlugs" [slug]="codepen" ></app-codepen>
-  </div>
-
-  <div class="youtubes" *ngIf="blogPost.youtubeLinks?.length>0">
-    <app-youtube *ngFor="let youtubeLink of blogPost.youtubeLinks" [videoId]="youtubeLink" ></app-youtube>
-  </div>
-
-  <div class="body" [innerHtml]="postBodySanitized()">
-
-  </div>
-
-  <app-blog-comment-list [comments]="blogPost.comments">
-  </app-blog-comment-list>
-
-  <div class="tags" *ngIf="blogPost.tags.length>0">
-    <h3>Tags</h3>
-    <mat-chip-list>
-      <mat-chip *ngFor="let tag of blogPost.tags"  ><a [href]="generateTagUrl(tag)">{{tag}}</a></mat-chip>
-    </mat-chip-list>
-  </div>
-
-  <div class="links" *ngIf="blogPost.links.length>0">
-    <h3>Links</h3>
-    <mat-chip-list>
-     <mat-chip *ngFor="let link of blogPost.links" ><a [href]="link">{{link}}</a></mat-chip>
-    </mat-chip-list>
-  </div>
+  </mat-card-content>
+</mat-card>
 
 
 
-</div>
 
-<div class="expired" *ngIf="!hasNotReachedExpiryDate()">
-  <h1>
-    This post has expired.
-  </h1>
-  <p>
-    It expired on {{(blogPost.expiryDate.seconds)*1000 | date:'medium' }}
-  </p>
-</div>
+

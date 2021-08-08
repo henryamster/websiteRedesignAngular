@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, Subscription } from 'rxjs';
+import { from, Observable, Subscription } from 'rxjs';
 import { IBlogComment, IBlogPost } from '../models/blogPost';
 import { QUERY_PATHS } from './api-helpers'
 import { first, map, take, tap } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import { LoggerService } from '../generic/logger.service';
 import { EEventType } from '../generics/log-item';
+import { washType } from '../generics/utilities';
 @Injectable({
   providedIn: 'root'
 })
@@ -71,15 +72,30 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
     .catch((err?: Error) => this.logger.logError(err ?? new Error('Error updating post'), null, EEventType.Server))
   }
 
-  public addComment(blogPost: IBlogPost, comment:IBlogComment){
-  let submittedComment: IBlogComment;
-  this.firestore.collection(QUERY_PATHS.BLOG,
-     ref=> ref.where('id','==', blogPost.id)).add(comment).then(x=>{
-      x.get().then(y=> submittedComment = y.data() as IBlogComment)
-    }).catch((err?: Error) => this.logger.logError(err ?? new Error('Error retrieving comment after submission'), null, EEventType.Server)
-    ).catch((err?: Error) => this.logger.logError(err ?? new Error('Error submitting comment'), null, EEventType.Server));
-  return submittedComment;
+  // public addComment(blogPost: IBlogPost, comment:IBlogComment){
+  // let submittedComment: IBlogComment;
+  // this.firestore.collection(QUERY_PATHS.BLOG,
+  //    ref=> ref.where('id','==', blogPost.id)).add(comment).then(x=>{
+  //     x.get().then(y=> submittedComment = y.data() as IBlogComment)
+  //   }).catch((err?: Error) => this.logger.logError(err ?? new Error('Error retrieving comment after submission'), null, EEventType.Server)
+  //   ).catch((err?: Error) => this.logger.logError(err ?? new Error('Error submitting comment'), null, EEventType.Server));
+  // return submittedComment;
+  // }
+
+  public addComment(blogPost:IBlogPost, comment:IBlogComment){
+    blogPost.comments.push(comment);
+    return from(this.firestore.doc<IBlogPost>(QUERY_PATHS.BLOG+ '/' +blogPost.id)
+      .update(washType(blogPost))
+    )
   }
+
+  public approveComment(blogPost:IBlogPost, comment:IBlogComment){
+    blogPost.comments.find(x=>x===comment).approved=true;
+    return from(this.firestore.doc<IBlogPost>(QUERY_PATHS.BLOG +'/'+ blogPost.id)
+    .update(washType(blogPost))
+    )
+  }
+
 
 
   // public search(){

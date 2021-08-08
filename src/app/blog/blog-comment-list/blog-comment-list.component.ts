@@ -10,6 +10,7 @@ export class BlogCommentListComponent implements OnInit {
 
   constructor() { }
   @Input('comments') comments : IBlogComment[];
+  @Input('showComments') showComments:boolean=false;
   ngOnInit(): void {
   }
 

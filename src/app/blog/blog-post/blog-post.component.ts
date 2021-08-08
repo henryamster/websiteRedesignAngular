@@ -13,6 +13,8 @@ export class BlogPostComponent implements OnInit {
 
   constructor(private sanitizer: DomSanitizer) { }
   @Input('blogPost') blogPost:IBlogPost
+  @Input('displayCommentComposer') displayCommentComposer:boolean=false
+
   now: number;
   blogSingleUrl: string;
   tagSingleUrl:string;
@@ -38,7 +40,10 @@ export class BlogPostComponent implements OnInit {
   }
 
   private asTrueWhenExpirationDateHasNotPassed() : boolean {
-console.log((this["blogPost"]["expiryDate"] as Timestamp).seconds*1000,new Date().getTime()*1000)
+    if (this["blogPost"]["expiryDate"] instanceof Date){
+      return (this["blogPost"]["expiryDate"]as Date) < new Date()
+    }
+ console.log((this["blogPost"]["expiryDate"] as Timestamp).seconds*1000,new Date().getTime()*1000)
     return (this["blogPost"]["expiryDate"] as Timestamp).seconds*1000<new Date().getTime()*1000
   }
 

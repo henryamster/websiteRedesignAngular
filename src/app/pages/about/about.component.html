@@ -1,6 +1,6 @@
 <app-page-header
 title="About"
-subtitle="Sorry it's a book!"
+subtitle=""
 icon="sentiment_very_satisfied"
 ></app-page-header>
 <div class="componentLoadInAnimation">
@@ -162,13 +162,13 @@ icon="sentiment_very_satisfied"
   </div>
 
   <div class="personal fullSection">
-    <mat-card class="cardWidth">
-      <mat-card-header>
+    <mat-card class="cardWidth" >
+      <mat-card-header (click)="expandSocialAndBio=!expandSocialAndBio">
         <mat-card-title>
-          <h1  class="font-serif">About Me</h1>
+          <h1  class="font-serif">About Me<mat-icon *ngIf="!expandSocialAndBio">expand_more</mat-icon></h1>
         </mat-card-title>
       </mat-card-header>
-     <mat-card-content class="bio aside font-sans">
+     <mat-card-content *ngIf="expandSocialAndBio"  class="bio aside font-sans">
        <mat-divider>
        </mat-divider>
       <p >
@@ -218,13 +218,13 @@ icon="sentiment_very_satisfied"
      </mat-card-content>
 
     </mat-card>
-   <mat-card class="cardWidth">
-     <mat-card-header>
+   <mat-card class="cardWidth" >
+     <mat-card-header (click)="expandSocialAndBio=!expandSocialAndBio">
        <mat-card-title>
-        <h1  class="font-serif">Social Media</h1>
+        <h1  class="font-serif">Social Media <mat-icon *ngIf="!expandSocialAndBio">expand_more</mat-icon></h1>
        </mat-card-title>
      </mat-card-header>
-     <mat-card-content  class="bio aside font-sans">
+     <mat-card-content *ngIf="expandSocialAndBio"  class="bio aside font-sans">
        <mat-divider>
        </mat-divider>
 <div class="smIconGrid">

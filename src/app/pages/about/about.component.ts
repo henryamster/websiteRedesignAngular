@@ -9,6 +9,7 @@ export class AboutComponent implements OnInit {
 
   constructor() { }
   workExperiences: workExperience[]
+  expandSocialAndBio:boolean=false;
 
   ngOnInit(): void {
     this["workExperiences"]= this["WORK_EXPERIENCE_ARRAY"]
