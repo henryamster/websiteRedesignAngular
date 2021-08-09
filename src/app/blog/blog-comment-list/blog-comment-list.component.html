@@ -4,9 +4,9 @@
   <app-page-header *ngIf="comments.length>0"
     class="composer"
     title="Comments"
-    [subtitle]="'There '+ (comments.length>1 ? 'are':'is') + ' currently ' + comments.length + ' comment'+(comments.length>1? 's':'' )+' on this post. Click to expand.'"
+    [subtitle]="'There '+ (comments.length>1 ? 'are':'is') + ' currently ' + comments.length + ' comment'+(comments.length>1? 's':'' )+' on this post. Click to ' +(showComments? 'shrink':'expand' )+ '.'"
     (click)="showComments=!showComments"
-    ></app-page-header>
+    ><mat-icon>expand_more</mat-icon></app-page-header>
 <div class="commentSection" *ngIf="showComments">
     <app-blog-comment *ngFor="let comment of comments" [comment]="comment"></app-blog-comment>
 </div>

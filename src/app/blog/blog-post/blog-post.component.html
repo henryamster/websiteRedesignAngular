@@ -2,17 +2,20 @@
 
 <div *ngIf="hasNotReachedExpiryDate()" class="expiryCheck">
 
-<mat-card>
+<mat-card class="blogPostContainer">
   <mat-card-header>
     <mat-card-title>
 
       <h1 class="composer">
        <a [href]="host" style="font-size: .8em;
-       text-decoration: none;"> <app-page-header [title]="blogPost.title"
+       text-decoration: none;">
+       {{blogPost.title}}
+       <!-- <app-page-header [title]="blogPost.title"
         [subtitle]=" host">
-      </app-page-header>
+      </app-page-header> -->
       </a>
       </h1>
+
   </mat-card-title>
     <mat-card-subtitle>
       <p class="metaInfo">
@@ -45,11 +48,16 @@
       <app-youtube *ngFor="let youtubeLink of blogPost.youtubeLinks" [videoId]="youtubeLink" ></app-youtube>
     </div>
 
-    <div class="body" [innerHtml]="postBodySanitized()">
+    <div class="body" id="blogPost" [innerHtml]="postBodySanitized()" >
 
     </div>
 
-    <app-blog-comment-list *ngIf="blogPost.comments.length>0" [comments]="blogPost.comments">
+    <mat-divider>
+    </mat-divider>
+
+    <app-blog-comment-list *ngIf="blogPost.comments.length>0"
+      [comments]="blogPost.comments"
+      [showComments]="showComments">
     </app-blog-comment-list>
 
     <app-blog-comment-composer [blogPost]="blogPost" *ngIf="displayCommentComposer">

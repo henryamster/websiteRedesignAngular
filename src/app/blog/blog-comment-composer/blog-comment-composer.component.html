@@ -1,11 +1,11 @@
-<mat-card>
+<mat-card class="blogCommentCard">
 
   <mat-card-header >
-    <mat-card-title><button mat-button (click)="displayCommentForm=!displayCommentForm">Leave A Comment <mat-icon>expand_more</mat-icon></button></mat-card-title>
+    <mat-card-title><button mat-button (click)="openComposer()">Leave A Comment <mat-icon>expand_more</mat-icon></button></mat-card-title>
   </mat-card-header>
   <mat-card-content [hidden]="displayCommentForm">
-    <form action="" class="commentForm" [formGroup]="commentForm" >
-      <quill-editor class="full-width" style="display: inherit;"
+    <form class="commentForm" [formGroup]="commentForm" >
+      <quill-editor [id]="blogPost.id+'_composer'" class="full-width" style="display: inherit;"
         #body
           formControlName="comment"
           placeholder="Post your comment here..."
@@ -17,3 +17,5 @@
     <button mat-button (click)="submitComment()">Submit</button>
   </mat-card-actions>
 </mat-card>
+<mat-divider>
+

@@ -1,5 +1,5 @@
 
-<mat-card>
+<mat-card style="margin: 20px 0">
 
 
 <div class="blogComment" *ngIf="comment.approved">
@@ -10,13 +10,15 @@
       <strong class="font-sans">{{comment.displayName}}</strong>
       <em><span *ngIf="comment.email" class="font-sans"><{{comment.email}}></span></em>
     </h4>
+    <p class="commentMetadata">
+      posted on {{comment.timestamp | date:'medium'}}
+    </p>
   </div>
 
-  <p class="commentMetadata">
-    posted on {{comment.timestamp | date:'medium'}}
-  </p>
 
-  <p [innerHtml]="commentBodySanitized()"></p>
+  <mat-divider>
+  </mat-divider>
+  <p class="body" [innerHtml]="commentBodySanitized()"></p>
 
 </div>
 <div class="blogPendingComment" *ngIf="!comment.approved">
@@ -26,3 +28,4 @@
 </div>
 
 </mat-card>
+

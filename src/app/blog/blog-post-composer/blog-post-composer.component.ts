@@ -4,6 +4,8 @@ import { BlogPost, IBlogPost, PostType } from 'src/app/models/blogPost';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { BlogService } from 'src/app/api/blog.service';
+import { ViewportScroller } from '@angular/common';
+import { ResponsiveService } from 'src/app/generic/responsive.service';
 @Component({
   selector: 'app-blog-post-composer',
   templateUrl: './blog-post-composer.component.html',
@@ -11,7 +13,9 @@ import { BlogService } from 'src/app/api/blog.service';
 })
 export class BlogPostComposerComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private blog: BlogService) { }
+  constructor(private fb: FormBuilder,
+    private blog: BlogService,
+    ) { }
   blogPost:IBlogPost;
   blogPostForm: FormGroup;
   blogPostInitialized=false;
@@ -43,6 +47,9 @@ hideComposer:boolean=true;
 
     this.blogPostForm.controls[formControl].updateValueAndValidity()
   }
+
+
+
 
 
   ngOnInit(): void {
