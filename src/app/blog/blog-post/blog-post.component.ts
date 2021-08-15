@@ -65,7 +65,6 @@ export class BlogPostComponent implements OnInit {
   maxHeight:number= this.size.initialSize().height- this.CONTENT_PAD_SIZE;
 
   public postBodySanitized(){
-    console.log(this.combineStyleSheetAndCommentBody())
     return this.sanitizer.bypassSecurityTrustHtml(this.combineStyleSheetAndCommentBody())
   }
 

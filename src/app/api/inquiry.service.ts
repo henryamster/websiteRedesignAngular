@@ -66,7 +66,7 @@ export class InquiryService {
 
   private deleteInquiry(id:string){
     return this.angularFire.doc(QUERY_PATHS.INQUIRY + `/${id}`).delete()
-    .then(result => console.log(result)
+    .then(result => result
       )
       .catch(
         err => this.logger.logError(

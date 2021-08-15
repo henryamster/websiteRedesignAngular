@@ -99,6 +99,7 @@ import { FeedComponent } from './thirdParty/instagram/feed/feed.component';
 import { ShortComponent } from './pages/short/short.component';
 import { ShortFormComponent } from './short/short-form/short-form.component';
 import { ShortListComponent } from './short/short-list/short-list.component';
+import { BlogTaggedComponent } from './blog/blog-tagged/blog-tagged.component';
 
 
 
@@ -144,6 +145,7 @@ import { ShortListComponent } from './short/short-list/short-list.component';
     ShortComponent,
     ShortFormComponent,
     ShortListComponent,
+    BlogTaggedComponent,
 
   ],
   imports: [
@@ -182,7 +184,7 @@ import { ShortListComponent } from './short/short-list/short-list.component';
   ],
   providers: [ResponsiveService,
 
-    { provide: PERSISTENCE, useValue: 'session' },
+    { provide: PERSISTENCE, useValue: 'local' },
     // { provide: USE_STORAGE_EMULATOR, useValue: environment.useEmulators? ['localhost', ]},
 
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },

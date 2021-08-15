@@ -1,0 +1,15 @@
+<div class="loading" *ngIf="loading">
+  <mat-spinner
+    mode="indeterminate">
+  </mat-spinner>
+</div>
+
+<div class="postContainer" *ngIf="!loading && posts.length>0">
+
+  <app-blog-post-list [blogPosts]="posts" [showComments]="false" [displayCommentComposer]="false"></app-blog-post-list>
+
+  </div>
+
+  <div class="noPostsFound" *ngIf="!loading && posts.length<1">
+    <h1>Could not find any posts tagged {{tag}}. Redirecting you to the blog page.</h1>
+  </div>

@@ -69,7 +69,7 @@ export class BugReportService {
 
   private deleteBugReport(id: string) {
     return this.angularFire.doc(QUERY_PATHS.BUG_REPORT + `/${id}`).delete()
-    .then(result => console.log(result)
+    .then(result => result
       )
       .catch(
         err => this.loggerService.logError(

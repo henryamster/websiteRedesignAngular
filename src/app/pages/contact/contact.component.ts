@@ -50,7 +50,7 @@ export class ContactComponent implements OnInit {
         }
       }),
       delay(1600),
-      tap(_=>this["router"]["navigateByUrl"]('dashboard')
+      tap(_=>this["router"]["navigateByUrl"]('blog')
       )
     )["subscribe"]();
 

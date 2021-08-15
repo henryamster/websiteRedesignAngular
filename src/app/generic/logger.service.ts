@@ -14,9 +14,7 @@ export class LoggerService {
     this["logItemPost$"] = new Subject()
 
     this["logItemPost$"]["pipe"](
-      tap(logItem =>
-        // mock LogService
-        console.log(`MOCK HTTP REQUEST TO POST ${console.log(this["logItems"][this.logItems["length"] - 1])}`)
+      tap(logItem =>logItem
       )
     )
 

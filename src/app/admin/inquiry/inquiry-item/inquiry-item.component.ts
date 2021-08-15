@@ -18,7 +18,6 @@ export class InquiryItemComponent implements OnInit {
 
   }
   dismissInquiry(id:string){
-    console.log(`dismissing inquiry with id ${id}`);
     this.dismiss(id);
   }
   private dismiss(id:string){

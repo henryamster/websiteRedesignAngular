@@ -40,13 +40,13 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
+
     this["user"] = this["getUser"]()
 
     if (this.isUserNotNull()) {
       this["redirectCountdown$"] = this["secondsTimer$"]["pipe"](
         startWith(this["COUNTDOWN_SECONDS"]),
-        tap(count => (count == 0) ? this.router.navigateByUrl('/dashboard') : noop)
+        tap(count => (count == 0) ? this.router.navigateByUrl('/blog') : noop)
       )["subscribe"](
         secondsRemaining => this.countdown = secondsRemaining
       )

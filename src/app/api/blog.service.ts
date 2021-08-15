@@ -63,16 +63,6 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
         )
       })).subscribe()
       return submittedBlogPost;
-
-
-      /*
-      .then(
-        x => x.get()
-          .then(y => submittedBlogPost = y.data() as IBlogPost)
-      ).catch((err?: Error) => this.logger.logError(err ?? new Error('Error retrieving post after submission'), null, EEventType.Server)
-      ).catch((err?: Error) => this.logger.logError(err ?? new Error('Error submitting post'), null, EEventType.Server));
-    return submittedBlogPost;
-    */
   }
 
   public update(blogPost:IBlogPost){
@@ -85,16 +75,6 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
     debugger
     return from(this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPost.slug}`).delete())
   }
-
-  // public addComment(blogPost: IBlogPost, comment:IBlogComment){
-  // let submittedComment: IBlogComment;
-  // this.firestore.collection(QUERY_PATHS.BLOG,
-  //    ref=> ref.where('id','==', blogPost.id)).add(comment).then(x=>{
-  //     x.get().then(y=> submittedComment = y.data() as IBlogComment)
-  //   }).catch((err?: Error) => this.logger.logError(err ?? new Error('Error retrieving comment after submission'), null, EEventType.Server)
-  //   ).catch((err?: Error) => this.logger.logError(err ?? new Error('Error submitting comment'), null, EEventType.Server));
-  // return submittedComment;
-  // }
 
   public addComment(blogPost:IBlogPost, comment:IBlogComment){
     blogPost.comments.push(comment);
@@ -126,18 +106,6 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
       .update(washType(blogPost))
     }))
   }
-
-  // public deleteComment(blogPostRef: string, comment:IBlogComment){
-  //   blogPost.comments.splice(blogPost.comments.findIndex(x=>x===comment),1)
-  //   return from(this.firestore.doc<IBlogPost>(`${QUERY_PATHS.BLOG}/${blogPost.id}`)
-  //   .update(washType(blogPost)))
-  // }
-
-
-
-  // public search(){
-    //ref.collection('user').orderBy('name').startAt(name).endAt(name+'\uf8ff')
-  // }
 
   private getPostsTagged(tag: string) {
     return this.firestore.collection(QUERY_PATHS.BLOG,

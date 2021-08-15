@@ -34,7 +34,6 @@ export class ScrobblerService {
     this["generateURL"](numberOfTracks)
     return this["http"]["get"](this["SCROBBLER_URL"])
     ["pipe"](map((res: { recenttracks: { track: IScrobblerTrack[] } }) => {
-      console.log(res)
       this["tracks$"]["next"](res["recenttracks"]["track"])
     })
     )

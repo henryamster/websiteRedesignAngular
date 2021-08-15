@@ -25,7 +25,7 @@
   <p class="body" [innerHtml]="commentBodySanitized()"></p>
 
   <div class="adminActions" *ngIf="isAdmin()">
-    <button mat-button (click)="approveComment(comment)">Approve</button>
+    <button *ngIf="!comment.approved" mat-button (click)="approveComment(comment)">Approve</button>
     <button mat-button (click)="deleteComment(comment)">Delete</button>
   </div>
 

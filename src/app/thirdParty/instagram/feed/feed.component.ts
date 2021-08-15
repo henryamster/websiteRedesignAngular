@@ -15,7 +15,6 @@ export class FeedComponent implements OnInit {
   ngOnInit(): void {
     this.ig.instagramFeed().subscribe( feed =>{
       [this.feed,this.paging]= [feed.data,feed.paging]
-      console.log( [this.feed,this.paging])
     })
   }
 

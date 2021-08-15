@@ -19,7 +19,6 @@ export class InquiryListComponent implements OnInit {
     this.inquiryService.grabInquiries()
       .subscribe(inquiries =>
         {this["inquiries"] = inquiries
-      console.log(inquiries)
       })
       .add(_ => this["loading"] = false);
   }

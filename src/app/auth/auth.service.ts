@@ -8,7 +8,7 @@ import firebase from 'firebase/app';
 import { LoggerService } from '../generic/logger.service';
 import { EEventType } from '../generics/log-item';
 import { Router } from '@angular/router';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,12 +20,19 @@ export class AuthService {
   public authEvent: Subject<boolean>
   private _claims: IdTokenResult["claims"][]
 
-
-
-
   constructor(private auth: AngularFireAuth,
     private logger: LoggerService,
     private router: Router) {
+
+      // Trying to work around https://github.com/angular/angularfire/issues/2656
+
+      // if(environment.useEmulators){
+      //   const indexOfOldPort = environment.location.indexOf(':4200/');
+      //   const host = environment.location.split('').splice(indexOfOldPort,5)
+      //   const emu = `http://${host}:9099/`
+      //   this.auth.useEmulator(emu)
+      // }
+
     this["authEvent"] = new Subject();
     this["getCurrentUser"](auth)
     ["pipe"](
@@ -37,7 +44,9 @@ export class AuthService {
         throw 'Could not retrieve user.' + err;
       }),
     )
-    ["subscribe"]()
+    ["subscribe"](
+      user=> this["_user"]=user
+    )
 
     this["auth"]["authState"]["pipe"](tap(user => <void>this["triggerAuthEvent"](!user?.["email"] === null)))
       .subscribe()
@@ -81,9 +90,9 @@ export class AuthService {
     return from(this["auth"]["signInWithPopup"](this.selectProvider(provider)))["pipe"](tap((userCred: UserCredential) => {
       console.log(userCred);
       this["_user"] = userCred.user;
-      this["gatherClaims"](this["_user"]);
+      this["gatherClaims"](this["_user"])["subscribe"]();
       this["triggerAuthEvent"](true);
-      this["redirectToDashboard"]();
+      this["redirectToBlog"]();
     },
       err => this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
     ));
@@ -97,15 +106,17 @@ export class AuthService {
 
   public claims(): IdTokenResult["claims"][] {
     return this["_claims"]
+    debugger
   }
 
   public user(): User {
     return this["_user"] ?? null
+    debugger
   }
 
   public IS_ADMIN(): boolean {
-    // return this["_isAdmin"]
-    return true
+   return this["_isAdmin"]
+
   }
 
   private makeAdmin() {
@@ -116,8 +127,8 @@ export class AuthService {
 
   }
 
-  private redirectToDashboard() {
-    this["router"]["navigateByUrl"]('/dashboard');
+  private redirectToBlog() {
+    this["router"]["navigateByUrl"]('/blog');
   }
 
   private redirectToLogin() {
@@ -130,10 +141,13 @@ export class AuthService {
     return from(this["auth"]["signInWithEmailAndPassword"](cred["email"], cred["password"])).subscribe(
       userCred => {
         this["_user"] = userCred.user;
-        this["gatherClaims"](this["_user"])
-        this["triggerAuthEvent"](true)
-        this["redirectToDashboard"]()
-        return userCred
+        this["gatherClaims"](this["_user"]).subscribe(_=>{
+          this["triggerAuthEvent"](true)
+          this["redirectToBlog"]()
+          return userCred
+        }
+          )
+
       },
       err => this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
     )
@@ -148,6 +162,7 @@ export class AuthService {
           this["_isAdmin"] = this["checkAdminRoleInClaims"](token)
           this["_claims"] = this["getClaims"](token)
           this["_user"] = user
+          debugger
         }
         ),
         catchError(err => {

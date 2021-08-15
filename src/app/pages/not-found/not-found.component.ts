@@ -44,7 +44,7 @@ export class NotFoundComponent implements OnInit {
 
     this["redirectCountdown$"] = this["secondsTimer$"]["pipe"](
       startWith(this["COUNTDOWN_SECONDS"]),
-      tap(count => (count == 0) ? this.router.navigateByUrl('/dashboard') : noop)
+      tap(count => (count == 0) ? this.router.navigateByUrl('/login') : noop)
     )["subscribe"](
       secondsRemaining => this.countdown = secondsRemaining
     );
