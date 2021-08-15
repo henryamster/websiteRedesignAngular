@@ -28,7 +28,7 @@
       </p>
     </mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="blogPostContent">
 
 
     <!-- <div class="permaLink">
@@ -57,7 +57,8 @@
 
     <app-blog-comment-list *ngIf="blogPost.comments.length>0"
       [comments]="blogPost.comments"
-      [showComments]="showComments">
+      [showComments]="showComments"
+      [blogPostRef]="blogPost.slug">
     </app-blog-comment-list>
 
     <div class="tags" *ngIf="blogPost.tags.length>0">
@@ -66,6 +67,9 @@
         <mat-chip *ngFor="let tag of blogPost.tags"  ><a [href]="generateTagUrl(tag)">{{tag}}</a></mat-chip>
       </mat-chip-list>
     </div>
+
+    <mat-divider *ngIf="blogPost.tags.length>0 && blogPost.links.length>0">
+    </mat-divider>
 
     <div class="links" *ngIf="blogPost.links.length>0">
       <h3>Links</h3>

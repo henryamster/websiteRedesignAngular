@@ -97,6 +97,8 @@ import { YoutubeComponent } from './thirdParty/youtube/youtube.component';
 import { FacebookLikeComponent } from './thirdParty/facebook-like/facebook-like.component';
 import { FeedComponent } from './thirdParty/instagram/feed/feed.component';
 import { ShortComponent } from './pages/short/short.component';
+import { ShortFormComponent } from './short/short-form/short-form.component';
+import { ShortListComponent } from './short/short-list/short-list.component';
 
 
 
@@ -140,6 +142,8 @@ import { ShortComponent } from './pages/short/short.component';
     BlogPostComposerComponent,
     BlogCommentComposerComponent,
     ShortComponent,
+    ShortFormComponent,
+    ShortListComponent,
 
   ],
   imports: [

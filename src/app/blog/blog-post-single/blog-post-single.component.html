@@ -9,5 +9,20 @@
   Blog post does not exists or the url is wrong. Redirecting to the blog page.
 </div>
 
+<div class="adminEdit" *ngIf="isAdmin()">
+  <button mat-button (click)="showComposer=!showComposer">Edit</button>
+  <button mat-button (click)="deleteBlogPost()">Delete</button>
+
+  <mat-divider>
+  </mat-divider>
+  <app-blog-post-composer *ngIf="showComposer"
+
+  [editableBlogPost]="blogPost"></app-blog-post-composer>
+
+</div>
+
 <app-blog-post [blogPost]="blogPost" [displayCommentComposer]="'true'"
 [showComments]="'true'" *ngIf="!loading && !notFound"></app-blog-post>
+
+
+

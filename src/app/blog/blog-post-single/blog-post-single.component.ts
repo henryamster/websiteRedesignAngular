@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of, Subscription } from 'rxjs';
 import { delay, map, tap } from 'rxjs/operators';
 import { BlogService } from 'src/app/api/blog.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { RouterService } from 'src/app/generic/router.service';
 import { IBlogPost } from 'src/app/models/blogPost';
 
@@ -17,12 +18,15 @@ export class BlogPostSingleComponent implements OnInit, OnDestroy {
 
   constructor(private route:ActivatedRoute,
      private blogService:BlogService,
-     private router: Router) { }
+     private router: Router,
+     private auth:AuthService) { }
   blogPost:IBlogPost;
   notFound:boolean=false;
   loading:boolean=true;
   grabPost$:Subscription;
   slug:string;
+  showComposer:boolean=false;
+
   ngOnInit(): void {
     this.route.params.subscribe(
       params => {
@@ -32,6 +36,7 @@ export class BlogPostSingleComponent implements OnInit, OnDestroy {
     )
 
     this.getBlogPost();
+
 
 
 //     this["grabPost$"]= this["route"].params.pipe(tap(params =>
@@ -47,11 +52,23 @@ export class BlogPostSingleComponent implements OnInit, OnDestroy {
 //     })
 
   }
+
+  isAdmin(){
+     return this.auth.IS_ADMIN();
+
+  }
+
   private getBlogPost() {
     this.grabPost$ = this.blogService.getPost(this.slug).pipe(
       map(blogPost => this.blogPost = blogPost[0]),
       tap(_=> this.loading = false)
     ).subscribe();
+  }
+
+   deleteBlogPost(){
+    this.blogService.delete(this.blogPost).subscribe(
+      _=> this.router.navigateByUrl('blog')
+    )
   }
 
   ngOnDestroy(): void {

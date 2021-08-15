@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BlogPost, IBlogPost, PostType } from 'src/app/models/blogPost';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -21,7 +21,8 @@ export class BlogPostComposerComponent implements OnInit {
   blogPostInitialized = false;
   removable: boolean = true;
   hideComposer: boolean = true;
-
+  @Input('editableBlogPost') editableBlogPost?: IBlogPost;
+  editMode: boolean = false;
   // for chip-lists
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   add(event: MatChipInputEvent, formControl: string): void {
@@ -48,25 +49,15 @@ export class BlogPostComposerComponent implements OnInit {
     this.blogPostForm.controls[formControl].updateValueAndValidity()
   }
 
-
-
-
-
   ngOnInit(): void {
-    this.blogPostForm = this.fb.group({
 
-      slug: ['', Validators.required],
-      title: ['', Validators.required],
-      author: [''],
-      body: ['', Validators.required],
-      imageLinks: [[]],
-      codepenSlugs: [[]],
-      youtubeLinks: [[]],
-      links: [[]],
-      tags: [[]],
-      type: [PostType.FULL_BLOG_POST],
-      expiryDate: [null]
-    })
+    if (!!this.editableBlogPost) {
+      this.fillFormWithEditablePost();
+      this.editMode = true
+    }
+    else {
+      this.fillFormWithEmptyPost();
+    }
 
     this.previewPost()
     this.blogPostInitialized = true;
@@ -84,18 +75,60 @@ export class BlogPostComposerComponent implements OnInit {
     { val: PostType.UNCATEGORIZED, text: PostType.UNCATEGORIZED }
   ]
 
-  public submitBlogPost() {
-    if (this.blogPostForm.valid) {
-      this.blog.post(this.blogPost)
-      this.displaySuccessMessage();
-      this.resetAndCloseComposer();
+  private fillFormWithEmptyPost() {
+    this.blogPostForm = this.fb.group({
+      slug: ['', Validators.required],
+      title: ['', Validators.required],
+      author: [''],
+      body: ['', Validators.required],
+      imageLinks: [[]],
+      codepenSlugs: [[]],
+      youtubeLinks: [[]],
+      links: [[]],
+      tags: [[]],
+      type: [PostType.FULL_BLOG_POST],
+      expiryDate: [null]
+    });
+  }
 
+  private fillFormWithEditablePost() {
+    this.blogPostForm = this.fb.group(
+      {
+        slug: [this.editableBlogPost.slug, Validators.required],
+        title: [this.editableBlogPost.title, Validators.required],
+        author: [this.editableBlogPost.author],
+        body: [this.editableBlogPost.body, Validators.required],
+        imageLinks: [this.editableBlogPost.imageLinks],
+        codepenSlugs: [this.editableBlogPost.codepenSlugs],
+        youtubeLinks: [this.editableBlogPost.youtubeLinks],
+        links: [this.editableBlogPost.links],
+        tags: [this.editableBlogPost.tags],
+        type: [PostType.FULL_BLOG_POST],
+        expiryDate: [this.editableBlogPost.expiryDate]
+      }
+    );
+  }
+
+  public submitBlogPost() {
+    if (this.blogPostForm.valid && !this.editMode) {
+      this.blog.post(this.blogPost)
+      this.displaySuccessMesageAndCloseAndResetComposer();
+    }
+
+    if (this.blogPostForm.valid && this.editMode) {
+      this.blog.update(this.blogPost)
+      this.displaySuccessMesageAndCloseAndResetComposer();
     }
 
   }
 
+  private displaySuccessMesageAndCloseAndResetComposer() {
+    this.displaySuccessMessage();
+    this.resetAndCloseComposer();
+  }
+
   private displaySuccessMessage() {
-    this.alert.open(`Successfully posted ${this.blogPost.title}!`, 'Okay');
+    this.alert.open(`Successfully ${this.editMode ? 'edited ' : 'posted '} ${this.blogPost.title}!`, 'Okay');
   }
 
   private resetAndCloseComposer() {

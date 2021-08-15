@@ -18,6 +18,7 @@ export class BlogPostComponent implements OnInit {
   @Input('displayCommentComposer') displayCommentComposer:boolean=false
   @Input('showComments') showComments:boolean=false;
 
+
   now: number;
   blogSingleUrl: string;
   tagSingleUrl:string;
@@ -79,6 +80,12 @@ export class BlogPostComponent implements OnInit {
   .body{
     text-align:center;
   }
+  .body iframe{
+    max-width:${this.maxWidth}px;
+    max-height:${this.maxHeight}px;
+    width:auto;
+    height:auto;
+  }
   </style>
   `
 
@@ -97,6 +104,8 @@ export class BlogPostComponent implements OnInit {
   private hasAnExpirationDate() : boolean {
     return !!this.blogPost.expiryDate;
   }
+
+
 
 
 

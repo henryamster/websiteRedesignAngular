@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { from, Observable, Subscription } from 'rxjs';
 import { IBlogComment, IBlogPost } from '../models/blogPost';
 import { QUERY_PATHS } from './api-helpers'
-import { first, map, take, tap } from 'rxjs/operators';
+import { first, map, mergeMap, switchMap, take, tap } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import { LoggerService } from '../generic/logger.service';
 import { EEventType } from '../generics/log-item';
@@ -56,20 +56,34 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
 
   private submitBlogPost(blogPost: IBlogPost) :IBlogPost | void {
     let submittedBlogPost: IBlogPost;
-    this.firestore.collection(QUERY_PATHS.BLOG)
-      .add(blogPost).then(
+    from(this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPost.slug}`)
+      .set(blogPost)).pipe(map(_=>{
+        this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPost.slug}`).get().pipe(
+          map(_=>submittedBlogPost = _.data() as IBlogPost)
+        )
+      })).subscribe()
+      return submittedBlogPost;
+
+
+      /*
+      .then(
         x => x.get()
           .then(y => submittedBlogPost = y.data() as IBlogPost)
       ).catch((err?: Error) => this.logger.logError(err ?? new Error('Error retrieving post after submission'), null, EEventType.Server)
       ).catch((err?: Error) => this.logger.logError(err ?? new Error('Error submitting post'), null, EEventType.Server));
     return submittedBlogPost;
+    */
   }
 
   public update(blogPost:IBlogPost){
     let updatedBlogPost:IBlogPost
     return this.firestore.collection(QUERY_PATHS.BLOG)
-    .doc(blogPost.id).update(blogPost)
+    .doc(blogPost.id).set(washType(blogPost))
     .catch((err?: Error) => this.logger.logError(err ?? new Error('Error updating post'), null, EEventType.Server))
+  }
+  public delete(blogPost:IBlogPost) : Observable<void>{
+    debugger
+    return from(this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPost.slug}`).delete())
   }
 
   // public addComment(blogPost: IBlogPost, comment:IBlogComment){
@@ -89,12 +103,35 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
     )
   }
 
-  public approveComment(blogPost:IBlogPost, comment:IBlogComment){
-    blogPost.comments.find(x=>x===comment).approved=true;
-    return from(this.firestore.doc<IBlogPost>(QUERY_PATHS.BLOG +'/'+ blogPost.id)
-    .update(washType(blogPost))
-    )
+  public approveComment(blogPostRef:string, comment:IBlogComment)  {
+
+     return this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPostRef}`)
+      .get()
+      .pipe(mergeMap(snap=>{
+        let blogPost = snap.data() as IBlogPost
+        (blogPost.comments.find(x=>x.commentBody==comment.commentBody)).approved=true;
+        return this.firestore.doc<IBlogPost>(`${QUERY_PATHS.BLOG}/${blogPost.id}`)
+        .update(washType(blogPost))
+      }))
+
   }
+
+  public deleteComment(blogPostRef: string, comment:IBlogComment){
+    return this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPostRef}`)
+    .get()
+    .pipe(mergeMap(snap=>{
+      let blogPost = snap.data() as IBlogPost
+      blogPost.comments.splice(blogPost.comments.findIndex(x=>x===comment),1);
+      return this.firestore.doc<IBlogPost>(`${QUERY_PATHS.BLOG}/${blogPost.id}`)
+      .update(washType(blogPost))
+    }))
+  }
+
+  // public deleteComment(blogPostRef: string, comment:IBlogComment){
+  //   blogPost.comments.splice(blogPost.comments.findIndex(x=>x===comment),1)
+  //   return from(this.firestore.doc<IBlogPost>(`${QUERY_PATHS.BLOG}/${blogPost.id}`)
+  //   .update(washType(blogPost)))
+  // }
 
 
 

@@ -8,7 +8,7 @@
     (click)="showComments=!showComments"
     ><mat-icon>expand_more</mat-icon></app-page-header>
 <div class="commentSection" *ngIf="showComments">
-    <app-blog-comment *ngFor="let comment of comments" [comment]="comment"></app-blog-comment>
+    <app-blog-comment *ngFor="let comment of comments" [comment]="comment" [blogPostRef]="blogPostRef"></app-blog-comment>
 </div>
 </mat-card>
 </div>
