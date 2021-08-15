@@ -5,8 +5,9 @@
   </mat-spinner>">
 
 </div>
-<div class="notFound" *ngIf="notFound">
+<div class="notFound" *ngIf="!loading && notFound">
   Blog post does not exists or the url is wrong. Redirecting to the blog page.
 </div>
 
-<app-blog-post [blogPost]="blogPost" *ngIf="!notFound"></app-blog-post>
+<app-blog-post [blogPost]="blogPost" [displayCommentComposer]="'true'"
+[showComments]="'true'" *ngIf="!loading && !notFound"></app-blog-post>

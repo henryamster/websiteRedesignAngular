@@ -129,6 +129,6 @@
 
 
   <mat-card-actions>
-    <button mat-button (click)="submitBlogPost()">Post</button>
+    <button mat-button *ngIf="blogPostInitialized && !blogPostForm.pristine && !hideComposer" (click)="submitBlogPost()">Post</button>
   </mat-card-actions>
 </mat-card>

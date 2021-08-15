@@ -7,8 +7,9 @@
     <span class="avatar" *ngIf="!!comment.profileImage">
       <img class="circle" width="26px" height="26px" style="padding:4px;" [src]="comment.profileImage" [alt]="comment.displayName + '\'s avatar'">
     </span><h4>
-      <strong class="font-sans">{{comment.displayName}}</strong>
-      <em><span *ngIf="comment.email" class="font-sans"><{{comment.email}}></span></em>
+
+      <strong class="font-sans">{{comment.displayName }}</strong>
+      {{comment.email!='Posting Anonymously'? '🔑' : ''}}<em><span *ngIf="comment.email" class="font-sans"><{{comment.email}}></span></em>
     </h4>
     <p class="commentMetadata">
       posted on {{comment.timestamp | date:'medium'}}
@@ -25,6 +26,8 @@
   <p>
     There is a comment pending administrator approval.
   </p>
+
+
 </div>
 
 </mat-card>

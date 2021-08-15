@@ -96,6 +96,7 @@ import { CodepenComponent } from './thirdParty/codepen/codepen.component';
 import { YoutubeComponent } from './thirdParty/youtube/youtube.component';
 import { FacebookLikeComponent } from './thirdParty/facebook-like/facebook-like.component';
 import { FeedComponent } from './thirdParty/instagram/feed/feed.component';
+import { ShortComponent } from './pages/short/short.component';
 
 
 
@@ -138,6 +139,7 @@ import { FeedComponent } from './thirdParty/instagram/feed/feed.component';
     YoutubeComponent,
     BlogPostComposerComponent,
     BlogCommentComposerComponent,
+    ShortComponent,
 
   ],
   imports: [

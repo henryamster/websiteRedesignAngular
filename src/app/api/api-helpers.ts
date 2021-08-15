@@ -1,7 +1,8 @@
 export enum QUERY_PATHS {
   INQUIRY = "inquiries",
   BUG_REPORT = "bugReports",
-  BLOG = "blogPosts"
+  BLOG = "blogPosts",
+  SHORT_URLS = "shortUrls"
 }
 export enum functionNames {
   POST_INQUIRY = "submitInquiry",

@@ -127,7 +127,7 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
   private init(numberOfPosts: number=6) {
      return this.firestore.collection(
       QUERY_PATHS.BLOG,
-      ref => ref.orderBy('timestamp').limit(numberOfPosts)
+      ref => ref.orderBy('timestamp','desc').limit(numberOfPosts)
     ).get().pipe(
       tap(snap => this["lastVisibleDoc"] = snap.docs[snap.docs.length - 1]),
       map(snap => snap.docs.map(doc => this.injectIdIntoData(doc))) ,
@@ -144,7 +144,7 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
   private next(numberOfPosts: number=6) {
     return this.firestore.collection(
       QUERY_PATHS.BLOG,
-      ref => ref.orderBy('timestamp')
+      ref => ref.orderBy('timestamp', 'desc')
         .startAfter(this["lastVisibleDoc"])
         .limit(numberOfPosts)
     ).get().pipe(
@@ -155,7 +155,7 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
   private back(numberOfPosts: number =6){
    return this.firestore.collection(
       QUERY_PATHS.BLOG,
-      ref=> ref.orderBy('timestamp')
+      ref=> ref.orderBy('timestamp', 'desc')
       .endBefore(this["lastVisibleDoc"])
       .limit(numberOfPosts)
     ).get().pipe(

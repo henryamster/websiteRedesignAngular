@@ -1,11 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Timestamp } from '@google-cloud/firestore';
-import { Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { ResponsiveService } from 'src/app/generic/responsive.service';
-import { RouterService } from 'src/app/generic/router.service';
 import { IBlogPost } from 'src/app/models/blogPost';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-blog-post',
@@ -26,6 +24,7 @@ export class BlogPostComponent implements OnInit {
   // responsiveBodyContent$:Subscription;
   CONTENT_PAD_SIZE=30
 
+
   public hasNotReachedExpiryDate(){
     if (this.hasAnExpirationDate()) return this.asTrueWhenExpirationDateHasNotPassed()
     return true;
@@ -33,8 +32,8 @@ export class BlogPostComponent implements OnInit {
 
   ngOnInit(): void {
     this["now"]=Date.now();
-    this["host"]=`http://localhost:4200/post/${this.blogPost.slug}`;
-    this["tagSingleUrl"]=`http://localhost:4200/post/tagged/`;
+    this["host"]=`${environment.location}post/${this.blogPost.slug}`;
+    this["tagSingleUrl"]=`${environment.location}post/tagged/`;
     // this["responsiveBodyContent$"]=this.watchWindowSizeForBodyContent().subscribe()
   }
 

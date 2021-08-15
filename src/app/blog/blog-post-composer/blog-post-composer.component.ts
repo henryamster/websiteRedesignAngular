@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BlogPost, IBlogPost, PostType } from 'src/app/models/blogPost';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { BlogService } from 'src/app/api/blog.service';
-import { ViewportScroller } from '@angular/common';
-import { ResponsiveService } from 'src/app/generic/responsive.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-blog-post-composer',
   templateUrl: './blog-post-composer.component.html',
@@ -15,19 +14,20 @@ export class BlogPostComposerComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private blog: BlogService,
-    ) { }
-  blogPost:IBlogPost;
+    private alert: MatSnackBar
+  ) { }
+  blogPost: IBlogPost;
   blogPostForm: FormGroup;
-  blogPostInitialized=false;
-removable:boolean=true;
-hideComposer:boolean=true;
+  blogPostInitialized = false;
+  removable: boolean = true;
+  hideComposer: boolean = true;
 
   // for chip-lists
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  add(event: MatChipInputEvent, formControl:string): void {
+  add(event: MatChipInputEvent, formControl: string): void {
     const value = (event.value || '').trim();
 
-    // Add our fruit
+
     if (value) {
       //this.blogPostForm.controls.tags.setValue([...this.blogPostForm.controls.tags.value, value]);
       this.blogPostForm.controls[formControl].value.push(value)
@@ -38,7 +38,7 @@ hideComposer:boolean=true;
     event.chipInput!.clear();
   }
 
-  remove(tag: string, formControl:string): void {
+  remove(tag: string, formControl: string): void {
     const index = this.blogPostForm.controls[formControl].value.indexOf(tag);
 
     if (index >= 0) {
@@ -53,25 +53,25 @@ hideComposer:boolean=true;
 
 
   ngOnInit(): void {
-    this.blogPostForm= this.fb.group({
+    this.blogPostForm = this.fb.group({
 
-      slug: ['',Validators.required],
-      title: ['',Validators.required],
-      author:  [''],
+      slug: ['', Validators.required],
+      title: ['', Validators.required],
+      author: [''],
       body: ['', Validators.required],
       imageLinks: [[]],
       codepenSlugs: [[]],
       youtubeLinks: [[]],
-      links:  [[]],
-      tags:  [[]],
-      type: [PostType.FULL_BLOG_POST ],
+      links: [[]],
+      tags: [[]],
+      type: [PostType.FULL_BLOG_POST],
       expiryDate: [null]
     })
 
     this.previewPost()
-    this.blogPostInitialized=true;
+    this.blogPostInitialized = true;
 
-    this.blogPostForm.valueChanges.subscribe(x=>this.previewPost())
+    this.blogPostForm.valueChanges.subscribe(x => this.previewPost())
 
 
 
@@ -79,16 +79,28 @@ hideComposer:boolean=true;
   postTypes = [
     { val: PostType.EXPIRING, text: PostType.EXPIRING },
     { val: PostType.FULL_BLOG_POST, text: PostType.FULL_BLOG_POST },
-    { val: PostType.SHORT_POST, text: PostType.SHORT_POST},
-    {val:PostType.SOCIAL_MEDIA, text: PostType.SOCIAL_MEDIA},
-    {val: PostType.UNCATEGORIZED, text: PostType.UNCATEGORIZED}
+    { val: PostType.SHORT_POST, text: PostType.SHORT_POST },
+    { val: PostType.SOCIAL_MEDIA, text: PostType.SOCIAL_MEDIA },
+    { val: PostType.UNCATEGORIZED, text: PostType.UNCATEGORIZED }
   ]
 
-  public submitBlogPost(){
-    if (this.blogPostForm.valid){
+  public submitBlogPost() {
+    if (this.blogPostForm.valid) {
       this.blog.post(this.blogPost)
+      this.displaySuccessMessage();
+      this.resetAndCloseComposer();
+
     }
 
+  }
+
+  private displaySuccessMessage() {
+    this.alert.open(`Successfully posted ${this.blogPost.title}!`, 'Okay');
+  }
+
+  private resetAndCloseComposer() {
+    this.blogPostForm.reset();
+    this.hideComposer = true;
   }
 
   private previewPost(): void {
