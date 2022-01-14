@@ -1,0 +1,14 @@
+<div class="commentList">
+<mat-card>
+
+  <app-page-header *ngIf="comments.length>0"
+    class="composer"
+    title="Comments"
+    [subtitle]="'There '+ (comments.length>1 ? 'are':'is') + ' currently ' + comments.length + ' comment'+(comments.length>1? 's':'' )+' on this post. Click to ' +(showComments? 'shrink':'expand' )+ '.'"
+    (click)="showComments=!showComments"
+    ><mat-icon>expand_more</mat-icon></app-page-header>
+<div class="commentSection" *ngIf="showComments">
+    <app-blog-comment *ngFor="let comment of comments" [comment]="comment" [blogPostRef]="blogPostRef"></app-blog-comment>
+</div>
+</mat-card>
+</div>

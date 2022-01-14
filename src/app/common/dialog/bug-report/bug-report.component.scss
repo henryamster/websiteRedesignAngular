@@ -1,0 +1,30 @@
+.debugInfo{
+  color:rgb(92, 88, 88);
+  text-align: justify;
+  font-family: monospace;
+  font-size: .4em;
+  line-height: .8;
+  background: rgb(231, 231, 231);
+  padding: 8px;
+  border-radius: 8px;
+  margin:2em;
+}
+.full-width{
+  width:100%;
+}
+
+.cdk-overlay-container{
+  overflow: hidden !important;
+}
+
+.leftAuto{
+  margin-left: auto;
+  font-size: 1.3em;
+  margin-right: 10px;
+}
+.padding2em{
+  padding:2em;
+}
+.mat-dialog-container{
+  overflow: hidden;
+}

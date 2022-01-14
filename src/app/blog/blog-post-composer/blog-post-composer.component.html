@@ -1,0 +1,134 @@
+
+<mat-card >
+  <mat-card-header (click)="hideComposer=!hideComposer">
+
+    <mat-card-title> <h1 class="title font-sans composer " ><app-page-header title="Composer" subtitle="Post a blog here!" ></app-page-header></h1></mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="flexContainer" [hidden]="hideComposer">
+    <div class="blogForm" [formGroup]="blogPostForm">
+
+
+      <mat-form-field class="full-width">
+        <input formControlName="title" matInput placeholder="title">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input formControlName="slug" matInput placeholder="slug" >
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input formControlName="author" matInput placeholder="author" >
+      </mat-form-field>
+      <quill-editor class="full-width" style="display: inherit;"
+      #body
+        formControlName="body"
+        placeholder="Post your blog content here..."
+      ></quill-editor>
+
+      <mat-select placeholder="Select post type" formControlName="type" name="type">
+        <mat-option *ngFor="let type of postTypes" [value]="type.val">
+          {{type.text}}
+        </mat-option>
+      </mat-select>
+
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Expiration date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="expiryDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+
+    <mat-form-field  appearance="fill" class="full-width">
+      <mat-label>tags</mat-label>
+      <mat-chip-list #tags aria-label="Tags">
+        <mat-chip *ngFor="let tag of blogPostForm.get('tags').value" [selectable]="true"
+                 [removable]="true" (removed)="remove(tag, 'tags')">
+          {{tag}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New tag..."
+               [matChipInputFor]="tags"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="add($event, 'tags')">
+      </mat-chip-list>
+    </mat-form-field>
+
+    <mat-form-field  appearance="fill" class="full-width">
+      <mat-label>links</mat-label>
+      <mat-chip-list #links aria-label="Links">
+        <mat-chip *ngFor="let link of blogPostForm.get('links').value" [selectable]="true"
+                 [removable]="true" (removed)="remove(link, 'links')">
+          {{link}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New link..."
+               [matChipInputFor]="links"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="add($event, 'links')">
+      </mat-chip-list>
+    </mat-form-field>
+
+    <mat-form-field  appearance="fill" class="full-width">
+      <mat-label>youtubeLinks</mat-label>
+      <mat-chip-list #youtubeLinks aria-label="youtubeLinks">
+        <mat-chip *ngFor="let youtubeLink of blogPostForm.get('youtubeLinks').value" [selectable]="true"
+                 [removable]="true" (removed)="remove(youtubeLink, 'youtubeLinks')">
+          {{youtubeLink}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New link..."
+               [matChipInputFor]="youtubeLinks"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="add($event, 'youtubeLinks')">
+      </mat-chip-list>
+    </mat-form-field>
+
+    <mat-form-field  appearance="fill" class="full-width">
+      <mat-label>imageLinks</mat-label>
+      <mat-chip-list #imageLinks aria-label="Links">
+        <mat-chip *ngFor="let imageLink of blogPostForm.get('imageLinks').value" [selectable]="true"
+                 [removable]="true" (removed)="remove(imageLink, 'imageLinks')">
+          {{imageLink}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New link..."
+               [matChipInputFor]="imageLinks"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="add($event, 'imageLinks')">
+      </mat-chip-list>
+    </mat-form-field>
+
+    <mat-form-field  appearance="fill" class="full-width">
+      <mat-label>codepenSlugs</mat-label>
+      <mat-chip-list #codepenSlugs aria-label="Links">
+        <mat-chip *ngFor="let codepenSlug of blogPostForm.get('codepenSlugs').value" [selectable]="true"
+                 [removable]="true" (removed)="remove(codepenSlug, 'codepenSlugs')">
+          {{codepenSlug}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New link..."
+               [matChipInputFor]="codepenSlugs"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="add($event, 'codepenSlugs')">
+      </mat-chip-list>
+    </mat-form-field>
+
+
+  </div>
+  <div class="preview" *ngIf="blogPostInitialized && !blogPostForm.pristine" class="blogForm">
+
+    <h1 class="title font-sans composer" ><app-page-header title="Preview" ></app-page-header></h1>
+    <app-blog-post [blogPost]="blogPost"></app-blog-post>
+  </div>
+  </mat-card-content>
+
+
+  <mat-card-actions>
+    <button mat-button *ngIf="blogPostInitialized && !blogPostForm.pristine && !hideComposer" (click)="submitBlogPost()">Post</button>
+  </mat-card-actions>
+</mat-card>

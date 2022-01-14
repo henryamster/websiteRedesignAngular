@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "henryfritz-30302": {
+      "hosting": {
+        "hfnyz": [
+          "henryfritz-30302"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "henryfritz-30302"
+  }
+}

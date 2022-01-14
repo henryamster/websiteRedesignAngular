@@ -1,0 +1,13 @@
+.commentHeader{
+  display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.commentMetadata{
+  font-size:.7em;
+  font-weight: 100;
+  padding: 4px;
+}

@@ -1,0 +1,24 @@
+<div class="componentLoadInAnimation">
+  <app-page-header
+  title="Blog"
+  subtitle=""
+  >
+  </app-page-header>
+  <div class="loading placeCenter huge" *ngIf="loading">
+    <h1 >Loading...</h1>
+  <mat-progress-bar
+    mode="indeterminate">
+  </mat-progress-bar>
+  </div>
+
+  <div class="noResults placeCenter huge" *ngIf="posts.length<1">
+    <h1>No blog posts</h1>
+    <p>Check back soon!</p>
+  </div>
+
+  <div class="postContainer">
+
+  <app-blog-post-list [blogPosts]="posts" [showComments]="false" [displayCommentComposer]="false"></app-blog-post-list>
+
+  </div>
+</div>

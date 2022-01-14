@@ -1,0 +1,45 @@
+<div class="alert">
+<h1 class="font-sans">
+  <mat-icon>save_alt</mat-icon> Logging Service
+</h1>
+<mat-divider
+  [vertical]="true">
+</mat-divider>
+
+
+<!-- Error Template -->
+<div *ngIf='logItem["eventType"]=== eventType["Error"]||
+            logItem["eventType"]=== eventType["Landing"]||
+            logItem["eventType"]=== eventType["Auth"]||
+            logItem["eventType"]=== eventType["Server"]' class="error">
+  <p class=" logDataHeader">
+    <mat-icon>report</mat-icon> Something went wrong
+    <strong class="redText font-sans"
+    *ngIf='logItem["eventType"]=== eventType["Error"]||
+            logItem["eventType"]=== eventType["Auth"]||
+            logItem["eventType"]=== eventType["Server"]'
+    >{{logItem["error"]?  logItem["error"] :''}}</strong>
+
+    <strong class="redText font-sans"
+    *ngIf="logItem['eventType'] === eventType['Landing']">
+      You've visited a url that doesn't exist.
+    </strong>
+  </p>
+  <mat-divider
+  [inset]="true">
+</mat-divider>
+  <p class=" logDataHeader">
+    Submitting information to logging service with incident Id: <br/>
+  <strong class="blueText font-sans">{{logItem["id"]}}</strong>
+  </p>
+
+  <div class="actionItems">
+    <button mat-raised-button (click)="openBugReport()"> <mat-icon>bug_report</mat-icon> Report this as a bug</button>
+  </div>
+
+ <br/>
+  <p class=" logData">
+   {{logItem | json | uppercase}}
+  </p>
+</div>
+</div>

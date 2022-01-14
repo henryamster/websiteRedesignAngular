@@ -1,0 +1,40 @@
+
+*{
+  text-shadow: 1px 1px 1px #2222;
+}
+h1{
+  font-weight:600;
+  border-radius:18px;
+  color:rgb(48, 48, 48);
+  font-size: 2.4em;
+
+  width:100%}
+.logDataHeader{
+  color:rgb(63, 63, 63);
+  font-size: .7em;
+
+
+}
+
+.alert{
+  background: rgba(255, 255, 255, 0.925);
+  backdrop-filter: blur(1px);
+  border-radius: 18px;
+  padding:1.5em;
+  margin:.2em;
+  animation: jump 5s;
+}
+
+
+
+.attachedId{
+  position: absolute;
+  top:100%;
+  color:#555;
+  font-size: .4em;
+  text-shadow: .6px .6px rgba(0,0,0,0.3);
+}
+.actionItems{
+  display: grid;
+  place-content: center;
+}

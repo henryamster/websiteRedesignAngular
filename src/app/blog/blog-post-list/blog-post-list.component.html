@@ -1,0 +1,8 @@
+<div class="container-Blog-Posts">
+    <app-blog-post *ngFor="let blogPost of blogPosts"
+    [blogPost]="blogPost"
+    [displayCommentComposer]="displayCommentComposer"
+    [showComments]="showComments"
+    class="slideIn"
+    ></app-blog-post>
+</div>

@@ -1,0 +1,44 @@
+
+<mat-card style="margin: 20px 0">
+
+
+<div class="blogComment" *ngIf="comment.approved || isAdmin()">
+
+  <h3 class="font-sans" *ngIf="!comment.approved"> <mat-icon>pending</mat-icon> AWAITING APPROVAL</h3>
+
+  <div class="commentHeader">
+    <span class="avatar" *ngIf="!!comment.profileImage">
+      <img class="circle" width="26px" height="26px" style="padding:4px;" [src]="comment.profileImage" [alt]="comment.displayName + '\'s avatar'">
+    </span><h4>
+
+      <strong class="font-sans">{{comment.displayName }}</strong>
+      {{comment.email!='Posting Anonymously'? '🔑' : ''}}<em><span *ngIf="comment.email" class="font-sans"><{{comment.email}}></span></em>
+    </h4>
+    <p class="commentMetadata">
+      posted on {{comment.timestamp | date:'medium'}}
+    </p>
+  </div>
+
+
+  <mat-divider>
+  </mat-divider>
+  <p class="body" [innerHtml]="commentBodySanitized()"></p>
+
+  <div class="adminActions" *ngIf="isAdmin()">
+    <button *ngIf="!comment.approved" mat-button (click)="approveComment(comment)">Approve</button>
+    <button mat-button (click)="deleteComment(comment)">Delete</button>
+  </div>
+
+</div>
+<div class="blogPendingComment" *ngIf="!comment.approved">
+  <p>
+    There is a comment pending administrator approval.
+  </p>
+
+
+
+
+</div>
+
+</mat-card>
+

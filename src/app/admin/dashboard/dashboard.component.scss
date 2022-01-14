@@ -1,0 +1,22 @@
+.container{
+  min-height: 90vh;
+  // background: linear-gradient(antiquewhite, turquoise);
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+// .wavyAnimation{
+//   background: linear-gradient(
+//     45deg
+//     , rgba(250, 235, 215, 0.493),rgba(255, 166, 0, 0.596), rgba(64, 224, 208, 0.377));
+//         background-size: 3%;
+
+//         background-repeat: unset;
+//         animation: wavy 12s infinite;
+// }
+
+

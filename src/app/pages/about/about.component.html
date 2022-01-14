@@ -1,0 +1,251 @@
+<app-page-header
+title="About"
+subtitle=""
+icon="sentiment_very_satisfied"
+></app-page-header>
+<div class="componentLoadInAnimation">
+  <div class="animatedContainer">
+      <div class="animatedContainerContent">
+
+        <div class="aboutHeaderBlock">
+        <img src="./../../../assets/me-sm.png" class="attachPhoto">
+        <div class="aside font-sans">
+
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title><h1 class="font-serif">Welcome!</h1></mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="bio aside font-sans">
+
+              <p>
+                <span class="firstLetter font-cursive">M</span>y name is Henry Fritz. I'm a Software Architect at the EKU Training Resource Center.
+               
+                Thank you for taking the time to visit my page!
+              </p>
+              <p><span class="firstLetter font-cursive">T</span>his first section should cover the professional (stuff you'll find on a resume), but I would
+                also like to talk a little about myself personally, so you'll find that below. <mat-icon>arrow_downward</mat-icon>
+                </p>
+            </mat-card-content>
+
+          </mat-card>
+
+          </div>
+      </div>
+
+      <div class="aboutHeaderBlock">
+       <div class="work aside">
+        <h2 class="font-serif"><span class="firstLetter font-cursive">W</span>ork Experience</h2>
+
+
+
+
+        <div class="experience  " *ngFor="let experience of workExperiences">
+          <mat-expansion-panel hideToggle class="  panels">
+            <mat-expansion-panel-header class="headerPad">
+              <mat-panel-title>
+               <img *ngIf="!!experience['logo']" [src]="experience['logo']"class="orgLogo">
+                <h3 class="organization font-sans">{{experience["organization"]}}</h3>
+
+
+              </mat-panel-title>
+
+              <mat-panel-description class="noFlexGrow">
+                <h4 class="position">{{experience["positions"][0]}}</h4>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <em class="positions"> <strong>Positions held: </strong>{{experience["positions"].join(', ')}}</em>
+                <p class="durations"> <strong>Employed through: </strong>{{experience["employmentDurations"].join(', ')}}</p>
+
+                <mat-card  class="">
+              <mat-card-title>
+                <h4 class="semiHeader">Responsibilities</h4>
+              </mat-card-title>
+              <mat-chip-list>
+                <mat-chip class="  extraPad" *ngFor="let responsibility of experience['responsibilities']">{{responsibility}}</mat-chip>
+              </mat-chip-list>
+            </mat-card>
+  <mat-card  class="">
+  <mat-card-title>
+
+                <h4 class="semiHeader">Tech Stack</h4>
+  </mat-card-title>
+              <mat-chip-list>
+                <mat-chip class="  extraPad" *ngFor="let tech of experience['techStack']">{{tech}}</mat-chip>
+              </mat-chip-list>
+  </mat-card>
+          </mat-expansion-panel>
+
+
+
+
+
+        </div>
+       </div>
+       <div class="education aside">
+         <h2  class="font-serif"><span class="firstLetter font-cursive">E</span>ducation</h2>
+         <mat-expansion-panel class="  panels">
+           <mat-expansion-panel-header class="headerPad">
+            <mat-panel-title>
+              <img src="./../../../assets/eku.png" alt="EKU Logo" class="orgLogo">
+              <h3 class="organization font-sans">Eastern Kentucky University</h3>
+
+
+            </mat-panel-title>
+            <mat-panel-description class="noFlexGrow">
+              <h4 class="position">B.B.A. in Computer Information Systems</h4>
+            </mat-panel-description>
+           </mat-expansion-panel-header>
+           <p class="degree"><strong>B.B.A.</strong> in <em>Computer Information Systems</em></p>
+           <p class="school"><strong>Eastern Kentucky University</strong></p>
+           <p class="graduationDate"><span class="small">Magna Cum Laude June, 2019</span></p>
+           <p class="graduationDate"><span class="small">C.I.S. Club, <strong>President; </strong>President's List; Dean's List;</span></p>
+
+           <mat-card  class="">
+            <mat-card-title>
+             <h4 class="semiHeader">Courses</h4>
+            </mat-card-title>
+            <mat-card-content>
+             <mat-chip-list>
+               <mat-chip class="  extraPad" *ngFor="let course of COURSE_LIST[0]">{{course}}</mat-chip>
+             </mat-chip-list>
+            </mat-card-content>
+
+          </mat-card>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="  panels">
+            <mat-expansion-panel-header class="headerPad">
+             <mat-panel-title>
+              <img src="./../../../assets/uk.png" alt="UK Logo" class="orgLogo">
+               <h3 class="organization font-sans">University of Kentucky</h3>
+
+
+             </mat-panel-title>
+             <mat-panel-description class="noFlexGrow">
+               <h4 class="position">Physics/ Geology/ Computer Science</h4>
+             </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p class="degree"><strong>No Degree Received</strong> </p>
+            <p class="school"><strong>University of Kentucky</strong></p>
+            <p class="graduationDate"><span class="small">2007-2009, 2011</span></p>
+            <p class="graduationDate"><span class="small">WRFL, <strong>Volunteer DJ;</strong> Pi Kappa Phi</span></p>
+
+            <mat-card  class="">
+             <mat-card-title>
+              <h4 class="semiHeader">Courses</h4>
+             </mat-card-title>
+             <mat-card-content>
+              <mat-chip-list>
+                <mat-chip class="  extraPad" *ngFor="let course of COURSE_LIST[1]">{{course}}</mat-chip>
+              </mat-chip-list>
+             </mat-card-content>
+
+           </mat-card>
+           </mat-expansion-panel>
+
+           <h2 class="padTop font-serif"><span class="firstLetter font-cursive">I</span>nterests</h2>
+           <mat-expansion-panel class="  panels">
+             <mat-expansion-panel-header class="headerPad">
+               Interests
+             </mat-expansion-panel-header>
+             <mat-chip-list>
+               <mat-chip class="  extraPad" *ngFor="let interest of INTERESTS">{{interest}}</mat-chip>
+             </mat-chip-list>
+           </mat-expansion-panel>
+
+
+       </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="personal fullSection">
+    <mat-card class="cardWidth" >
+      <mat-card-header (click)="expandSocialAndBio=!expandSocialAndBio">
+        <mat-card-title>
+          <h1  class="font-serif">About Me<mat-icon *ngIf="!expandSocialAndBio">expand_more</mat-icon></h1>
+        </mat-card-title>
+      </mat-card-header>
+     <mat-card-content *ngIf="expandSocialAndBio"  class="bio aside font-sans">
+       <mat-divider>
+       </mat-divider>
+      <p >
+        <br/>
+        <span class="firstLetter font-cursive">I</span> grew up in Richmond, Kentucky, near the historic Fort Boonesboro State Park and attended Madison Central High School,
+        where I was an officer in the Junior Classical League (Latin Club), participated in the Academic Team all 4 years
+        and was a participant in the National Youth Leadership Foundation Conference for Technology in San Diego in 2006.
+      </p>
+      <mat-divider
+        [inset]="true">
+      </mat-divider>
+      <p>
+        <span class="firstLetter font-cursive">A</span>fter graduating high school, I moved to Lexington, Kentucky, to attend the University of Kentucky, which I did on
+        and off over the next five years. I was a volunteer DJ at UK's college radio station, <a href="https://wrfl.fm">WRFL</a>, during this time.
+       </p>
+       <mat-divider
+       [inset]="true">
+     </mat-divider>
+     <p>
+       <span class="firstLetter font-cursive">O</span>ver the following decade, I tried to make the most of my twenties: I moved to Louisville to start a band,
+       I worked a number of gigs as a FoH sound engineer, graphic designer, and web developer, and ended up going to Eastern Kentucky University to finish a degree in Computer Information Systems.
+      For the majority of this time I worked full-time with Meijer, in a number of different positions in the retail environment. I spent a couple years in management and
+      after completing my degree, took an internship on the Infrastructure team at Meijer's corporate headquarters in Grand Rapids, Michigan. I ended up turning down a position 
+      there so that I could stay close to home, and wound up at my current job at EKU Training Resource Center, where I've been working since 2019.
+      </p>
+      <mat-divider
+      [inset]="true">
+    </mat-divider>
+    <p>
+      <span class="firstLetter font-cursive">I</span>n my time outside of work I enjoy playing, writing/arranging, and recording music, making 3d motion graphics, and playing with generative art.
+      I watch every UK Basketball game, my artwork was recently featured in <a href="https://thegoldenrod.substack.com/p/the-goldenrods-first-digital-art">The Goldenrod</a>, and (like everyone else) I'm always listening to music or a podcast. 
+
+     </p>
+
+
+
+     </mat-card-content>
+
+    </mat-card>
+   <mat-card class="cardWidth" >
+     <mat-card-header (click)="expandSocialAndBio=!expandSocialAndBio">
+       <mat-card-title>
+        <h1  class="font-serif">Social Media <mat-icon *ngIf="!expandSocialAndBio">expand_more</mat-icon></h1>
+       </mat-card-title>
+     </mat-card-header>
+     <mat-card-content *ngIf="expandSocialAndBio"  class="bio aside font-sans">
+       <mat-divider>
+       </mat-divider>
+<div class="smIconGrid">
+  <a mat-fab class=" fabBg" href="https://instagram.com/henryamster">
+    <img src="./../../../assets/a2.png" alt="" class="smIcon" >
+  </a>
+  <a mat-fab class=" fabBg" href="https://codepen.io/henryamster/">
+    <img src="./../../../assets/a3.png" alt="" class="smIcon">
+  </a>
+  <a mat-fab class="fabBg" href="https://github.com/henryamster">
+    <img src="./../../../assets/a4.png" alt="" class="smIcon">
+  </a>
+  <a mat-fab class=" fabBg" href="https://www.linkedin.com/in/henryfritz/">
+    <img src="./../../../assets/a5.png" alt="" class="smIcon">
+  </a>
+  <mat-divider>
+  </mat-divider>
+<br/>
+  <h1  class="font-serif text-center padTop" >What I'm listening to: <br/>
+    <span class="tiny" >Powered by <a href="https://www.last.fm/api"> AudioScrobber</a> </span>
+
+  </h1>
+
+<app-scrobbler></app-scrobbler>
+
+
+</div>
+     </mat-card-content>
+   </mat-card>
+
+
+  </div>
+</div>
+

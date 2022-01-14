@@ -1,0 +1,48 @@
+.example-container {
+
+
+}
+.example-toolbar{
+  height: 40px;
+
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+.hamburger{
+  border: 0;
+    box-shadow: 3px -1px 4px 3px rgb(218 217 217 / 20%);
+    border-radius: 6px;
+
+}
+
+
+
+
+.main-content{
+  min-width: 100%;
+  min-height: 80vh;
+  overflow:hidden;
+}
+
+#container{
+  min-height: 90vh;
+  min-width: 100%;
+}
+
+.hideOverflow{
+  overflow-x: clip !important;
+
+}
+.mat-drawer-content{
+  overflow: hidden;
+}

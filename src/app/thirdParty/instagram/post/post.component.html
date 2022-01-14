@@ -1,0 +1,15 @@
+<div class="post">
+  <div class="image fullsc" *ngIf="post.media_type==INSTAGRAM_MEDIA_TYPES.IMAGE">
+    <img class="wide" [src]='post["media_url"]' alt="Instagram Post Image">
+  </div>
+  <div class="video fullsc " *ngIf="post.media_type==INSTAGRAM_MEDIA_TYPES.VIDEO">
+    <video class="wide" controls [src]='post["media_url"]'  alt="Instagram Post Video" ></video>
+  </div>
+  <div class="caro fullsc " *ngIf="post.media_type==INSTAGRAM_MEDIA_TYPES.CAROUSEL_ALBUM">
+    <img class="wide" [src]='post["media_url"]' alt="Instagram Post Image">
+  </div>
+  <div class="caption-card" >
+    <strong>{{post.timestamp | date}}</strong>
+    <p *ngIf="post.caption">{{post.caption}}</p>
+  </div>
+</div>

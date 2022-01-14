@@ -1,0 +1,26 @@
+.container{
+  display: grid;
+  place-content: center;
+  min-height: 80vh;
+  text-align: center;
+  font-size: 1em;
+
+
+
+
+}
+.header{
+  font-size: 5em;
+    padding: 1em;
+    line-height: 1em;
+}
+
+.hbg{
+  background: coral;
+  background-image: url('./../../../assets/me.png');
+  background-position: 50% 30%;
+  background-attachment: fixed;
+  aspect-ratio: 3/4;
+  background-repeat: no-repeat;
+}
+

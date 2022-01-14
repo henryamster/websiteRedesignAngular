@@ -1,0 +1,16 @@
+<div class="loading" *ngIf="loading">
+  <h1>Loading Bug Reports...</h1>
+  <mat-progress-bar
+    mode="indeterminate">
+  </mat-progress-bar>
+</div>
+<div class="loaded" *ngIf="!loading">
+  <h1 class="title font-sans" >Bug Reports</h1>
+  <div class="bugReportList" *ngIf="bugReports.length>0">
+
+    <app-bug-report-item class="multiViewBugReport"  *ngFor="let bugReport of bugReports" [bugReport]="bugReport" (deleteEvent)="deleteEvent($event)"></app-bug-report-item>
+  </div>
+  <div class="bugReportList" *ngIf="!bugReports.length>0">
+    <p class=" font-sans">No bugs reported!</p>
+  </div>
+</div>

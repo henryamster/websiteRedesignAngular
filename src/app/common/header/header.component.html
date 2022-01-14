@@ -1,0 +1,25 @@
+<header class="glass">
+<mat-toolbar  class="example-toolbar">
+  <button mat-button *ngIf="size.width<=800" (click)="sideNavToggle.emit()" class="hamburger"><mat-icon>menu</mat-icon></button>
+  <app-brand-logo routerLink="/" class="positionLogo"></app-brand-logo>
+
+
+  <div class="links" *ngIf="size.width>800">
+    <div class="wrapBtn" *ngFor="let nav of navList; index as index" >
+      <button mat-button class="navLinks font-sans "  [routerLink]='"/"+nav["link"]'>{{nav["link"] | uppercase}}</button>
+      <span
+        [vertical]="true"
+        *ngIf="index<navList.length-1">
+
+        |
+        </span>
+
+
+
+    </div>
+
+  </div>
+
+  <app-profile-menu *ngIf="size.width>700"> </app-profile-menu>
+</mat-toolbar>
+</header>

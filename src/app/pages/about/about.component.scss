@@ -1,0 +1,134 @@
+
+.attachPhoto{
+  margin: 2em 0;
+  max-height: 70%;
+  max-width: 70%;
+  border-radius: 50%;
+  animation: morph 22s infinite;
+  box-shadow: 15px 2px 14px 3px #dce7dc61, 15px 20px 9px 7px #69525266, -2px 16px 5px 3px #7bb2ea4d;
+  border: 11px solid rgb(44 43 43);
+  background: radial-gradient(#cbccee59,transparent) ;
+  align-self: center;
+  justify-self: center;
+}
+.emptyBlock{
+  width: 400px;
+  height: 400px;
+  display: grid;
+  place-content: center;
+}
+.aboutHeaderBlock{
+display: flex;
+   flex-direction: row;
+   flex-wrap:wrap;
+    place-content: center;
+    justify-content: space-evenly;
+}
+.aside{
+  min-width: 14em;
+    max-width: 40em;
+    margin-top: .5em;
+    text-shadow: -2px 2px 2px #ffffff;
+    padding: .5em;
+    font-size: 1.2em;
+    line-height: 1.5;
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 3em;
+    color: #333;
+}
+
+.extraPad{
+  padding: 25px;
+  text-align: center;
+  background-color: #d3c1c111;
+}
+.experience{
+  // display: contents;
+  // margin: .4em;
+}
+.card{
+  background: radial-gradient(#a5d2e791, #f3f0c95c);
+  color: rgb(113 113 113 / 87%);
+}
+.position{
+  color: #333;
+  font-variant: all-petite-caps;
+  font-weight: 800;
+}
+.semiHeader{
+  text-align: center;
+    font-size: 2em;
+    font-variant: all-small-caps;
+}
+.panels{
+
+}
+.noFlexGrow{
+  flex-grow:0;
+}
+.headerPad{
+  padding: 7px 8px;
+}
+.padTop{
+  margin-top: 8px;
+}
+
+.fullSection{
+  display: flex;
+   flex-direction: row;
+   flex-wrap:wrap;
+    place-content: center;
+    justify-content: space-evenly;
+    // min-height: 80vh;
+    width: 100%;
+}
+
+.personal{
+
+  backdrop-filter: blur(2px);
+ background-repeat: no-repeat;
+  background-size:400%;
+  background-position: center center;
+  background-color: #FFFFFF21;
+  animation: upAndDown 22s infinite;
+  padding:  2em 0;
+  perspective: 36pc 3em;
+}
+
+.orgLogo{
+  max-width: 60px;
+  max-height: 30px;
+  margin: 10px 13px;
+}
+.firstLetter{
+  font-size: 35px;
+    padding: 0 4px;
+    line-height: 12px;
+}
+mat-divider{
+  padding-top: 1em;
+}
+
+.smIcon{
+  max-width: 25px;
+
+}
+
+.fabBg{
+  background-color: rgba(255, 255, 255, 0.021);
+  margin:3em;
+}
+
+.tiny{
+  font-size: .6em;
+}
+
+.cardWidth{
+padding:1em;
+margin:1em
+}
+
+h3.organization {
+  margin: 8px;
+}

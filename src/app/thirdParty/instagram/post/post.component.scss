@@ -1,0 +1,37 @@
+.fullsc{
+
+  padding: 0;
+  margin: 0;
+  display: grid;
+  place-content: center center;
+}
+
+.wide{
+  display: grid;
+  place-content: center center;
+  min-width: 30vw;
+  height: auto;
+  max-width: calc(100vw - 8em);
+  margin: 1em;
+  border: 2px solid #7e7e7e80;
+  border-radius: 12px;
+  box-shadow: 4px 8px 8px 2px #bebebe;
+}
+
+.post{
+  background: white;
+  border-radius: 12px;
+  box-shadow: 4px 8px 8px 2px #bebebe;
+  
+  margin: 1em;
+  text-shadow: 2px 2px 3px #bebebe;
+}
+.caption-card{
+  margin: 12px 12px 0 0;
+  padding: 1em;
+  // max-width: 50%;
+  // min-width: 300px;
+  border-top-right-radius: 76px;
+  box-shadow: inset -2px 1px 4px 1px #dbd5d5;
+  background: white;
+}

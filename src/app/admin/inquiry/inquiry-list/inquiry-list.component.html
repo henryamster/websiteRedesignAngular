@@ -1,0 +1,16 @@
+<div class="loading" *ngIf="loading">
+  <h1>Loading Inquiries...</h1>
+  <mat-progress-bar
+    mode="indeterminate">
+  </mat-progress-bar>
+</div>
+<div class="loaded" *ngIf="!loading">
+  <h1 class="title font-sans" >Inquiries</h1>
+  <div class="inquiryList" *ngIf="inquiries.length>0">
+
+    <app-inquiry-item class="multiViewInquiry"  *ngFor="let inquiry of inquiries" [inquiry]="inquiry" (deleteEvent)="deleteEvent($event)"></app-inquiry-item>
+  </div>
+  <div class="inquiryList" *ngIf="!inquiries.length>0">
+    <p class=" font-sans">No inquiries available!</p>
+  </div>
+</div>

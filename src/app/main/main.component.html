@@ -1,0 +1,19 @@
+
+<div class="example-container">
+  <app-header (sideNavToggle)="toggle($event)"></app-header>
+
+  <mat-sidenav-container  id="container" >
+    <mat-sidenav #snav class="hideOverflow" >
+     <app-nav-list></app-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="mainContent">
+
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+
+  </mat-sidenav-container>
+
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,26 @@
+.brandLogo{
+  width: 100px;
+  min-width: 120px;
+}
+.navList{
+  position: absolute;
+    bottom: 30px;
+    right: -26px;
+    font-size: .8em;
+    padding-top: 20px;
+    overflow-x: clip;
+
+}
+.navLinks{
+  font-family: 'Red Hat Display';
+    font-size: 1.8em;
+}
+.live{
+  margin-top: 4em;
+}
+.displayGrid{
+  display: grid;
+}
+.active-link{
+  color:blue;
+}

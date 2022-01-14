@@ -1,0 +1,21 @@
+.container-Blog-Posts{
+  display: flex;
+
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  flex-direction: row;
+  align-items: center;
+
+
+}
+
+.slideIn{
+  animation: slide .5s forwards;
+}
+@keyframes slide {
+
+  0%{margin-right: 3em;
+  transform: rotateX(45deg) rotateZ(-30deg) scale(.6) translateZ(4em)}
+  100%{margin: inherit;}
+}

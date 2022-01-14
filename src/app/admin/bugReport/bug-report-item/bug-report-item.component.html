@@ -1,0 +1,78 @@
+<mat-card class="bugReportCard">
+  <mat-card-header>
+    <mat-card-title>  <h1><mat-icon>bug_report</mat-icon>{{bugReport["logItem"]["id"]}}</h1></mat-card-title>
+    <mat-card-subtitle> <p class="mainSpacer">
+      <mat-icon >article</mat-icon>{{bugReport["id"]}}<br/>
+      <mat-icon >access_time</mat-icon>{{bugReport["logItem"]["timestamp"] | date:'short' }}
+    </p></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="bugReportItem">
+
+
+<div class="basicInfo">
+
+        <p >
+          <strong>Bug Type:</strong> {{bugReport["logItem"]["eventType"]}}
+        </p>
+
+
+        <p >
+         <strong>Comment: </strong> {{bugReport["bugReportText"]}}
+        </p>
+</div>
+
+<mat-divider
+  [vertical]="true">
+</mat-divider>
+
+
+      <ul class="logItemData">
+        <li *ngIf='!!bugReport["logItem"]["error"]'>
+          <strong>Error:</strong> {{bugReport["logItem"]["error"]| json}}
+        </li>
+        <li *ngIf='!!bugReport["logItem"]["serverMessage"]'>
+          <strong>Server Message:</strong> {{bugReport["logItem"]["serverMessage"] | json}}
+        </li>
+        <li *ngIf='!!bugReport["logItem"]["user"]'>
+          <strong>User: </strong>{{bugReport["logItem"]["user"] | json}}
+        </li>
+        <li *ngIf='!!bugReport["logItem"]["userAgent"]'>
+         <strong>User Agent:</strong> {{bugReport["logItem"]["userAgent"] | json}}
+        </li>
+        <li *ngIf='!!bugReport["logItem"]["geoLocation?"]'>
+         <strong>Geo Location Data:</strong> {{bugReport["logItem"]["geoLocation?"] | json}}
+        </li>
+        <li *ngIf='!!bugReport["logItem"]["vendor"]'>
+         <strong>Vendor:</strong> {{bugReport["logItem"]["vendor"] | json}}
+        </li>
+        <li *ngIf='!!bugReport["logItem"]["appCache"]'>
+        <strong>App Cache:</strong> {{bugReport["logItem"]["appCache"] | json}}
+        </li>
+        <li *ngIf='!!bugReport["logItem"]["clientInformation"]'>
+        <strong>Client Information:</strong> {{bugReport["logItem"]["clientInformation"] | json}}
+        </li>
+        <li *ngIf='!!bugReport["logItem"]["history"]'>
+          <strong>History: </strong>{{bugReport["logItem"]["history"] | json}}
+        </li>
+        <li *ngIf='!!bugReport["logItem"]["location"]'>
+          <strong>Location: </strong>{{bugReport["logItem"]["location"]["href"]| json}}
+        </li>
+      </ul>
+
+
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+
+    <button mat-button  (click)='dismissBugReport(bugReport["id"])'><mat-icon>cancel</mat-icon> Dismiss</button>
+  </mat-card-actions>
+</mat-card>
+
+
+
+
+
+
+
+

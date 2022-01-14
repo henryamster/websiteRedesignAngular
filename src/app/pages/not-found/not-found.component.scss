@@ -1,0 +1,20 @@
+.container{
+  display: grid;
+  place-content: center;
+  min-height: 80vh;
+  text-align: center;
+
+}
+
+.slowTextFadeIn{
+  animation: fadeinslow 2s forwards;
+}
+
+
+  .animatedContainerContent{
+
+      display: grid;
+      place-content: center;
+
+  }
+

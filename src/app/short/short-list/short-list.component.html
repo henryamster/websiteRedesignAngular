@@ -1,0 +1,16 @@
+<div class="shortLinkList">
+
+    <h1  class="title font-sans">
+      Short Links
+    </h1>
+
+    <ul>
+      <li *ngFor="let link of shortLinks">
+        <strong>{{link.id}}</strong>: <em>{{link.url}}</em>
+        <mat-chip (click)="delete(link.id)">delete</mat-chip>
+      </li>
+    </ul>
+
+   <app-short-form (newShortLink)="newShortLink($event)"> </app-short-form>
+
+</div>

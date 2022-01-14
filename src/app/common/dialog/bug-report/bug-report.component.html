@@ -1,0 +1,69 @@
+<mat-card  class="font-sans padding2em " [ngClass]="!notClosing? 'disappear' :''" >
+  <mat-card-header  *ngIf="notClosing">
+    <mat-card-title> <mat-icon>bug_report</mat-icon> Bug Report</mat-card-title>
+    <mat-card-subtitle *ngIf="notClosing"  class="blueText"> [ISSUE: {{logItem["id"]}}]</mat-card-subtitle>
+    <mat-divider
+      [vertical]="true">
+    </mat-divider>
+    <app-brand-logo class="leftAuto"></app-brand-logo>
+
+  </mat-card-header>
+  <mat-card-content *ngIf="notClosing && !submitted" >
+    <mat-divider
+    [inset]="true">
+  </mat-divider>
+    <h4 class="font-sans textCenter">Thank you for taking the time to submit this bug report!</h4>
+
+    <p>If you wouldn't mind, please describe what you were doing when the issue occured:</p>
+    <form class="bugReportForm" [formGroup]="bugReportForm">
+       <!-- <quill-editor
+        #bugReportText
+          formControlName="bugReportText"
+          placeholder="Type your text here..."
+          ngAcceptInputType_required="true"
+          required
+        ></quill-editor> -->
+        <mat-form-field class="full-width">
+          <textarea id='bugReportText' #bugReportText matInput placeholder="Type your text here..." formControlName="bugReportText">
+            </textarea>
+
+            <mat-error>
+              A description is <strong>required</strong>
+        </mat-error>
+        </mat-form-field>
+
+
+    </form>
+
+    <mat-divider
+    [inset]="true">
+  </mat-divider>
+    <p class="textCenter blueText">Debug Information</p>
+    <p class="debugInfo">
+      {{ logItem | json}}
+    </p>
+
+  </mat-card-content>
+
+  <mat-card-content *ngIf="!notClosing" >
+    <mat-icon class="huge-icon">sentiment_dissatisfied</mat-icon>
+    <h1>Sorry to bug you!</h1>
+    <br/>
+    <p>Thanks anyway!</p>
+  </mat-card-content>
+
+  <mat-card-content *ngIf="submitted" >
+    <mat-icon class="huge-icon">sentiment_satisfied</mat-icon>
+    <h1>Thank you for your bug report!</h1>
+    <br/>
+    <p>You're the best!</p>
+    <app-brand-logo class="textCenter"></app-brand-logo>
+  </mat-card-content>
+
+
+
+  <mat-card-actions *ngIf="notClosing && !submitted" align="center">
+    <button mat-raised-button (click)="submitBugReport()"> <mat-icon>check</mat-icon> Submit</button>
+    <button mat-raised-button (click)="close()"> <mat-icon>cancel</mat-icon> Cancel</button>
+  </mat-card-actions>
+</mat-card>

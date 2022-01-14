@@ -1,0 +1,16 @@
+.bugReportList{
+  display: flex;
+ flex-wrap: wrap;
+
+  align-items: center;
+  justify-content: center;
+}
+.loaded{
+  background: white;
+}
+.title{
+  text-align: center;
+  font-size: 2.6em;
+  padding: 0.7em;
+}
+
