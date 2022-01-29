@@ -40,6 +40,9 @@ export class BugReportComponent implements OnInit {
     });
   }
 
+ /**
+  * *When the user clicks the close button, the dialog will close after 1600 milliseconds.*
+  */
   close() {
     of(true).pipe(
       tap(_ => this["notClosing"] = !_),
@@ -51,6 +54,9 @@ export class BugReportComponent implements OnInit {
 
   }
 
+  /**
+   * Submit a bug report to the bug report service.
+   */
   submitBugReport() {
     debugger
     this["bugReportService"]["submitBugReport"](

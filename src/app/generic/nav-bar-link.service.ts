@@ -20,11 +20,23 @@ export class NavBarLinkService {
   constructor(private auth: AuthService, private logger: LoggerService) {
     // this["authEvent"] = this["auth"]["authEvent"]["asObservable"]()
 
-    this["_isAdmin"] = this["auth"]["IS_ADMIN"]()
 
-    this["watchAuthEvents"]();
   }
 
+ /**
+  * *This function is called when the component is initialized.
+  * It checks to see if the user is an admin and sets the _isAdmin property accordingly.
+  * It also calls the getAvailableLinks function to get the links that are available to the user.*
+  */
+  ngOnInit(){
+    this["_isAdmin"] = this["auth"].IS_ADMIN()
+    this["getAvailableLinks"]();
+    this["watchAuthEvents"]();
+  }
+ /**
+  * return links
+  * @returns The links array.
+  */
   links(): NavBarLink[] {
     this["getAvailableLinks"]()
     if (this["availableLinks"]["length"] == 0){
@@ -35,21 +47,23 @@ export class NavBarLinkService {
     return this["availableLinks"];
   }
 
+  /**
+   * * Get the user's information from the session storage.
+   * * Get the links from the navBarLinks array.
+   * * If the user is not logged in, filter out the adminOnly links.
+   * * If the user is logged in, filter out the anonymousAccess links.
+   * * If the user is an admin, filter out the adminOnly links.
+   * * Return the available links.
+   */
   getAvailableLinks() {
+
     this["getLocalUser"]();
     this["_shadowLinks"] = this["navBarLinks"]
-    console.log(this._isAdmin)
+
     if (!this["_isAdmin"]){
       this["conditionallyFilterLinks"](true, 'adminOnly', false)
      }
      else{
-       console.log(
-         [
-           this.availableLinks,
-           this._shadowLinks,
-           this.navBarLinks
-         ]
-       )
        this.availableLinks = this.navBarLinks;
 
     }
@@ -57,11 +71,20 @@ export class NavBarLinkService {
    // this["conditionallyFilterLinks"](this["_user"]?.["uid"]!=null, 'adminOnly', false)
   }
 
+  /** get the user from the auth service */
   private getLocalUser() {
     this["_user"] = this["auth"]["user"]();
+    this["_isAdmin"] = this["auth"]["IS_ADMIN"]();
+
   }
 
+ /**
+  * * Subscribe to the authEvent observable.
+  * * When the authEvent observable emits, call the setLocalUserAndAdmin function.
+  * * When the setLocalUserAndAdmin function is called, get the available links.
+  */
   private watchAuthEvents(): void {
+
     this["auth"]["authEvent"]["pipe"](tap(_loggedIn => {
     }))
     ["subscribe"](
@@ -70,14 +93,27 @@ export class NavBarLinkService {
     }
     );
 
+
   }
 
+ /**
+  * * Set the local user and admin variables to the values of the user and admin properties of the auth
+  * service.
+  */
   private setLocalUserAndAdmin() {
+
     [this["_user"], this["_isAdmin"]] =
       [this["auth"]["user"](), this["auth"]["IS_ADMIN"]()];
   }
 
+  /**
+   * If the condition is true, then filter the links by the given property and value.
+   * @param {boolean} condition - boolean
+   * @param {string} prop - The property of the link object to filter on.
+   * @param {boolean} value - boolean
+   */
   private conditionallyFilterLinks(condition: boolean, prop: string, value: boolean): void {
+
     if (condition) this["availableLinks"] = this["navBarLinks"]["filter"](_links => _links[prop] === value)
   }
 

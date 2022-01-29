@@ -20,6 +20,13 @@ export class LoggerService {
 
   }
 
+  /**
+   * Logs an error to the console, to the database, to the user, and to the server.
+   * @param {Error} err - Error
+   * @param {User} [user] - The user that caused the error.
+   * @param type - The type of log item.
+   * @param  - `err` - The error object
+   */
   public logError(err: Error, user?: User, type=EEventType.Error, ...additionalParams) {
     let logItem;
     switch (type){
@@ -47,6 +54,10 @@ export class LoggerService {
   private logItems: ILogItem[] = [];
   logItemPost$: Subject<ILogItem>;
 
+ /**
+  * * Logs an error to the console and to the logging service.
+  * @param {ILogItem} logItem - ILogItem
+  */
   private consLog(logItem: ILogItem) {
     console.log(
       `%c [Logging Service] :
@@ -60,6 +71,10 @@ export class LoggerService {
   }
 
 
+/**
+ * `displaySnackbar` is a function that displays a snackbar with a message and a duration.
+ * @param {ILogItem} logItem - ILogItem
+ */
   private displaySnackbar(logItem: ILogItem) {
     this["snackBar"]["openFromComponent"](LogTemplateComponent, {
       data: logItem,
@@ -71,6 +86,10 @@ export class LoggerService {
 
   }
 
+  /**
+   * Write the log item to local storage.
+   * @param {ILogItem} logItem - The log item to write to local storage.
+   */
   private writeToLocalStorage(logItem: ILogItem) {
     const MAX_SAVED_LOCALSTORAGE_LOGS = 10
     let rehydratedLogItems: ILogItem[]

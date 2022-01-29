@@ -12,7 +12,7 @@ icon="sentiment_very_satisfied"
         <div class="aside font-sans">
 
 
-          <mat-card>
+          <mat-card class="panels">
             <mat-card-header>
               <mat-card-title><h1 class="font-serif">Welcome!</h1></mat-card-title>
             </mat-card-header>
@@ -20,7 +20,7 @@ icon="sentiment_very_satisfied"
 
               <p>
                 <span class="firstLetter font-cursive">M</span>y name is Henry Fritz. I'm a Software Architect at the EKU Training Resource Center.
-               
+
                 Thank you for taking the time to visit my page!
               </p>
               <p><span class="firstLetter font-cursive">T</span>his first section should cover the professional (stuff you'll find on a resume), but I would
@@ -58,7 +58,7 @@ icon="sentiment_very_satisfied"
             <em class="positions"> <strong>Positions held: </strong>{{experience["positions"].join(', ')}}</em>
                 <p class="durations"> <strong>Employed through: </strong>{{experience["employmentDurations"].join(', ')}}</p>
 
-                <mat-card  class="">
+                <mat-card  class="panels">
               <mat-card-title>
                 <h4 class="semiHeader">Responsibilities</h4>
               </mat-card-title>
@@ -66,7 +66,7 @@ icon="sentiment_very_satisfied"
                 <mat-chip class="  extraPad" *ngFor="let responsibility of experience['responsibilities']">{{responsibility}}</mat-chip>
               </mat-chip-list>
             </mat-card>
-  <mat-card  class="">
+  <mat-card  class="panels">
   <mat-card-title>
 
                 <h4 class="semiHeader">Tech Stack</h4>
@@ -102,7 +102,7 @@ icon="sentiment_very_satisfied"
            <p class="graduationDate"><span class="small">Magna Cum Laude June, 2019</span></p>
            <p class="graduationDate"><span class="small">C.I.S. Club, <strong>President; </strong>President's List; Dean's List;</span></p>
 
-           <mat-card  class="">
+           <mat-card  class="panels">
             <mat-card-title>
              <h4 class="semiHeader">Courses</h4>
             </mat-card-title>
@@ -129,9 +129,9 @@ icon="sentiment_very_satisfied"
             <p class="degree"><strong>No Degree Received</strong> </p>
             <p class="school"><strong>University of Kentucky</strong></p>
             <p class="graduationDate"><span class="small">2007-2009, 2011</span></p>
-            <p class="graduationDate"><span class="small">WRFL, <strong>Volunteer DJ;</strong> Pi Kappa Phi</span></p>
+            <p class="graduationDate"><span class="small">WRFL, <strong>Volunteer DJ</strong></span></p>
 
-            <mat-card  class="">
+            <mat-card  class="panels">
              <mat-card-title>
               <h4 class="semiHeader">Courses</h4>
              </mat-card-title>
@@ -191,7 +191,7 @@ icon="sentiment_very_satisfied"
        <span class="firstLetter font-cursive">O</span>ver the following decade, I tried to make the most of my twenties: I moved to Louisville to start a band,
        I worked a number of gigs as a FoH sound engineer, graphic designer, and web developer, and ended up going to Eastern Kentucky University to finish a degree in Computer Information Systems.
       For the majority of this time I worked full-time with Meijer, in a number of different positions in the retail environment. I spent a couple years in management and
-      after completing my degree, took an internship on the Infrastructure team at Meijer's corporate headquarters in Grand Rapids, Michigan. I ended up turning down a position 
+      after completing my degree, took an internship on the Infrastructure team at Meijer's corporate headquarters in Grand Rapids, Michigan. I ended up turning down a position
       there so that I could stay close to home, and wound up at my current job at EKU Training Resource Center, where I've been working since 2019.
       </p>
       <mat-divider
@@ -199,7 +199,7 @@ icon="sentiment_very_satisfied"
     </mat-divider>
     <p>
       <span class="firstLetter font-cursive">I</span>n my time outside of work I enjoy playing, writing/arranging, and recording music, making 3d motion graphics, and playing with generative art.
-      I watch every UK Basketball game, my artwork was recently featured in <a href="https://thegoldenrod.substack.com/p/the-goldenrods-first-digital-art">The Goldenrod</a>, and (like everyone else) I'm always listening to music or a podcast. 
+      I watch every UK Basketball game, my artwork was recently featured in <a href="https://thegoldenrod.substack.com/p/the-goldenrods-first-digital-art">The Goldenrod</a>, and (like everyone else) I'm always listening to music or a podcast.
 
      </p>
 

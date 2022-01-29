@@ -19,6 +19,9 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
 
+ /**
+  * * Set the initial size of the grid based on the size of the window.
+  */
   private setResponsiveBehavior() {
     this.size = this.resize.initialSize();
     this.resize$ = this.resize.resizeWindowSize$.subscribe(size => this.size = size);

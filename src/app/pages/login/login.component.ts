@@ -27,14 +27,26 @@ export class LoginComponent implements OnInit {
 
   }
 
+ /**
+  * `loggedIn` returns `true` if the user is logged in, `false` otherwise.
+  * @returns The loggedIn() method is returning a boolean value.
+  */
   public loggedIn() {
     return this.isUserNotNull() ? true : false;
   }
 
+  /**
+   * Cannot generate summary
+   * @returns The user object.
+   */
   private isUserNotNull() {
     return (this.getUser() != null);
   }
 
+ /**
+  * Get the current user.
+  * @returns The user object.
+  */
   private getUser() {
     return this["auth"]["user"]();
   }

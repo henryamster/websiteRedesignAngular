@@ -1,0 +1,51 @@
+#infDiffScroller{
+  // width:100vw !important;
+  height:100vh !important;
+  filter: blur(.5px);
+}
+#landingOverlay{
+  position: absolute;
+  z-index: 200;
+  top: 3%;
+  left: 3%;
+  font-size: 4em;
+  color: #fff;
+  line-height: 1em;
+  width: 94%;
+  height:94%;
+  // background: radial-gradient(#ececec73 74.5%, #c1b2b25e 95%);
+  border-radius: 12px;
+  box-shadow: 4px 6px 10px #474747;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+  flex-direction: column;
+
+  @media screen and (min-width: 350px){
+    font-size: 4em;
+  }
+
+    @media screen and (min-width: 900px){
+      font-size: 6em;
+    }
+
+    @media screen and (min-width: 1200px){
+      font-size: 8em;
+    }
+
+
+
+      font-size: 2em;
+
+
+
+
+
+
+  // text-shadow: 5px 2px 8px #5e5e5ec4;
+}
+.landingContainer{
+ background: #b3ecf561;
+ text-shadow: 0px 3px 3px;
+}

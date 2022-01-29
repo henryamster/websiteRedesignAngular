@@ -15,6 +15,7 @@ export class InquiryListComponent implements OnInit {
   ngOnInit(): void {
     this.grabInquiries();
   }
+
   private grabInquiries() {
     this.inquiryService.grabInquiries()
       .subscribe(inquiries =>
@@ -23,6 +24,10 @@ export class InquiryListComponent implements OnInit {
       .add(_ => this["loading"] = false);
   }
 
+  /**
+   * Delete an event from the database.
+   * @param {boolean} [reload=true] - boolean = true
+   */
   deleteEvent(reload:boolean=true){
     if (reload) this.grabInquiries();
   }

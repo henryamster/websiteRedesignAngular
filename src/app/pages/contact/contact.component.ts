@@ -28,6 +28,11 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {
     this.createForms();
   }
+  /**
+   * * If the form is invalid, mark all fields as touched and return.
+   * * If the form is valid, submit the form and return the response.
+   * @returns A promise that is resolved after the form submission is complete.
+   */
   public submit(){
     if (
       !this.personDetailsGroup.valid ||
@@ -70,6 +75,9 @@ export class ContactComponent implements OnInit {
     );
   }
 
+/**
+ * Clear the form.
+ */
   public clear(){
     this["resetFormGroups"]();
   }
@@ -85,6 +93,9 @@ export class ContactComponent implements OnInit {
   ]
 
 
+/**
+ * Reset the form groups.
+ */
   private resetFormGroups() {
     this["personDetailsGroup"]["reset"]();
     this["contactDetailsGroup"]["reset"]();

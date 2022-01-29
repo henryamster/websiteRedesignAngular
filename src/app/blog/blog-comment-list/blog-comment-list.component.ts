@@ -13,7 +13,6 @@ export class BlogCommentListComponent implements OnInit {
   @Input('showComments') showComments:boolean=false;
   @Input('blogPostRef') blogPostRef?:string;
   ngOnInit(): void {
-
   }
 
 }

@@ -39,6 +39,10 @@ export class ProfileMenuComponent implements OnInit {
     this["userProfileImage"] = (this.retrieveUser()?.["photoURL"] != undefined) ? this["auth"]["user"]()?.["photoURL"] : false;
   }
 
+  /**
+   * Retrieve the current user.
+   * @returns The user object.
+   */
   private retrieveUser() {
     return this["auth"]["user"]();
   }

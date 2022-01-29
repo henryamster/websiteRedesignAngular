@@ -8,9 +8,6 @@ export interface ILogItem {
   userAgent?: Navigator["userAgent"];
   geoLocation?: any; //GeolocationPosition | GeolocationPositionError;
   vendor?: Navigator["vendor"];
-  appCache?: Window["applicationCache"];
-  clientInformation?: Window["clientInformation"];
-  history?: Window["history"];
   location?: Window["location"];
   error?: Error;
   id?: string;
@@ -26,9 +23,6 @@ export class LogItem implements ILogItem{
     this["timestamp"] = new Date();
     this["userAgent"] = window.navigator["userAgent"];
     this["vendor"] = window.navigator["vendor"];
-    this["appCache"] = window["applicationCache"];
-    this["clientInformation"] = window["clientInformation"];
-    this["history"] = window["history"];
     this["location"] = window["location"];
     this["id"] = uuidv4();
     this["user"] = user;

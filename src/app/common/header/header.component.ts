@@ -31,11 +31,21 @@ export class HeaderComponent implements OnInit {
   }
 
 
+/**
+ * *This function toggles the side navigation panel.*
+ */
   public togglePanel(){
     this["sideNavToggle"]["emit"](true)
   }
 
 
+  /**
+   * * Set the initial size of the component based on the window size.
+   *
+   * * Subscribe to the resize window size observable.
+   *
+   * * Set the size of the component to the window size.
+   */
   private setResponsiveBehavior() {
     this["size"] = this["resize"]["initialSize"]();
     this["resize$"] = this["resize"]["resizeWindowSize$"]
@@ -44,19 +54,26 @@ export class HeaderComponent implements OnInit {
       });
   }
 
+  /**
+   * Refresh the navList property with the navbar's links.
+   */
   private refreshNavList() {
     this["navList"] = this["navbar"]["links"]();
-    console.log(this.navList)
+
   }
 
+  /**
+   * `watchAuthEvents` subscribes to the `authEvent` observable and calls `refreshNavList` when it
+   * receives a new event.
+   */
   private watchAuthEvents() {
     this["auth"]["authEvent"]["pipe"](
-      tap(_ => {this["refreshNavList"]
-    console.log(_)
-    })
+      tap(_ => this["refreshNavList"]())
     )
-    ["subscribe"]()
+    ["subscribe"](x=>
+{})
   }
+
 
   ngOnDestroy() {
     this["resize$"]["unsubscribe"]()

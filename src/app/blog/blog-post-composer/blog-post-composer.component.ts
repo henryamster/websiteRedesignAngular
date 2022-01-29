@@ -25,6 +25,11 @@ export class BlogPostComposerComponent implements OnInit {
   editMode: boolean = false;
   // for chip-lists
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
+ /**
+  * Add a new tag to the list of tags.
+  * @param {MatChipInputEvent} event - MatChipInputEvent
+  * @param {string} formControl - string - The name of the form control that the chip input belongs to.
+  */
   add(event: MatChipInputEvent, formControl: string): void {
     const value = (event.value || '').trim();
 
@@ -39,6 +44,12 @@ export class BlogPostComposerComponent implements OnInit {
     event.chipInput!.clear();
   }
 
+ /**
+  * Remove a tag from a form control.
+  * @param {string} tag - string - The tag to remove.
+  * @param {string} formControl - string - The name of the form control that the tag should be removed
+  * from.
+  */
   remove(tag: string, formControl: string): void {
     const index = this.blogPostForm.controls[formControl].value.indexOf(tag);
 
@@ -75,6 +86,9 @@ export class BlogPostComposerComponent implements OnInit {
     { val: PostType.UNCATEGORIZED, text: PostType.UNCATEGORIZED }
   ]
 
+ /**
+  * gen empty post
+  */
   private fillFormWithEmptyPost() {
     this.blogPostForm = this.fb.group({
       slug: ['', Validators.required],
@@ -91,6 +105,9 @@ export class BlogPostComposerComponent implements OnInit {
     });
   }
 
+  /**
+   * Fill the form with the data from the blog post that is being edited.
+   */
   private fillFormWithEditablePost() {
     this.blogPostForm = this.fb.group(
       {
@@ -109,6 +126,10 @@ export class BlogPostComposerComponent implements OnInit {
     );
   }
 
+ /**
+  * If the form is valid and we are not in edit mode, then submit the blog post. If the form is valid
+  * and we are in edit mode, then update the blog post.
+  */
   public submitBlogPost() {
     if (this.blogPostForm.valid && !this.editMode) {
       this.blog.post(this.blogPost)
@@ -131,6 +152,9 @@ export class BlogPostComposerComponent implements OnInit {
     this.alert.open(`Successfully ${this.editMode ? 'edited ' : 'posted '} ${this.blogPost.title}!`, 'Okay');
   }
 
+  /**
+   * Reset the form and hide the composer.
+   */
   private resetAndCloseComposer() {
     this.blogPostForm.reset();
     this.hideComposer = true;
@@ -140,6 +164,10 @@ export class BlogPostComposerComponent implements OnInit {
     this.blogPost = this.createMockPost();
   }
 
+  /**
+   * Create a mock post from the form values.
+   * @returns The blog post.
+   */
   private createMockPost(): IBlogPost {
     return new BlogPost(
       this.blogPostForm.controls.slug.value ?? 'untitled',

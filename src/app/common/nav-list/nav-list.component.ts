@@ -21,16 +21,22 @@ export class NavListComponent implements OnInit {
     this["watchAuthEvents"]()
   }
 
+  /**
+   * Refresh the navList property with the navbar's links.
+   */
   private refreshNavList() {
     this["navList"] = this["navbar"]["links"]();
-    console.log(this.navList)
   }
 
+  /**
+   * `watchAuthEvents` subscribes to the `authEvent` observable and calls `refreshNavList` when it
+   * receives a new event.
+   */
   private watchAuthEvents() {
     this["auth"]["authEvent"]["pipe"](
-      tap(_ => this["refreshNavList"])
+      tap(_ => this["refreshNavList"]())
     )
     ["subscribe"](x=>
-      console.log(x))
+   {})
   }
 }

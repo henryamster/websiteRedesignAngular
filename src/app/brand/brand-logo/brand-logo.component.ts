@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 
 @Component({
   selector: 'app-brand-logo',
@@ -10,6 +10,7 @@ export class BrandLogoComponent implements OnInit {
 
   constructor() { }
 
+  @Input() expandedLineHeight = false;
   ngOnInit(): void {
   }
 

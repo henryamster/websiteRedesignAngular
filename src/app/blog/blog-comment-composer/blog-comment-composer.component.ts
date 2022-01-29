@@ -28,30 +28,48 @@ export class BlogCommentComposerComponent implements OnInit {
     this.createForm();
   }
 
+/**
+ * *Submit the comment to the database and then hide the form and reset it.*
+ */
   submitComment(){
 
     this.addBlogComment();
     this.hideAndResetForm();
   }
 
+ /**
+  * Hide the form and reset it.
+  */
   private hideAndResetForm() {
     this.displayCommentForm = false;
     this.commentForm.reset();
   }
+/**
+ * Open the composer and focus on the subject line.
+ */
 
   openComposer(){
     this.openComposerAndFocus()
   }
 
+  /**
+   * *Open the comment form and focus the composer.*
+   */
   private openComposerAndFocus(){
     this["displayCommentForm"]=!this["displayCommentForm"]
     from([true]).pipe(delay(1000),tap(_=>this.focusComposer())).subscribe()
   }
 
+  /**
+   * `scrollToAnchor` scrolls the scroller to the anchor with the given id.
+   */
   private focusComposer() {
     this["scroller"]["scrollToAnchor"](`${this.blogPost.id}+'_composer'`);
   }
 
+  /**
+   * Create a form group with a comment form control.
+   */
   private createForm() {
     this["commentForm"] = this["fb"]["group"]({
       comment: ['', Validators.required]
@@ -59,6 +77,10 @@ export class BlogCommentComposerComponent implements OnInit {
   }
 
 
+  /**
+   * If the user is logged in, add the comment to the blog post. If the user is not logged in, add the
+   * comment to the blog post as an anonymous user.
+   */
   private addBlogComment() {
     if(this.auth.user() != null){
     this.blog.addComment(this.blogPost, new BlogComment(

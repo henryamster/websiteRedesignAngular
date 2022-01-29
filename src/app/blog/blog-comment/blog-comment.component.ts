@@ -28,6 +28,10 @@ export class BlogCommentComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Returns true if the current user is an administrator.
+   * @returns The function isAdmin() is returning a boolean value.
+   */
   isAdmin(){
     return this.checkAdmin()
   }
@@ -43,6 +47,10 @@ export class BlogCommentComponent implements OnInit {
     return this.auth.IS_ADMIN();
   }
 
+ /**
+  * * Combine the style sheet and the comment body into one string.
+  * @returns The sanitized html.
+  */
   public commentBodySanitized(){
 
     return this.sanitizer.bypassSecurityTrustHtml(this.combineStyleSheetAndCommentBody())
@@ -63,6 +71,10 @@ export class BlogCommentComponent implements OnInit {
   </style>
   `
 
+  /**
+   * Combine the comment body and the style sheet.
+   * @returns The style sheet and the comment body.
+   */
   private combineStyleSheetAndCommentBody(): string {
     return this.comment.commentBody + this.styleSheet;
   }

@@ -1,7 +1,7 @@
 <header class="glass">
 <mat-toolbar  class="example-toolbar">
   <button mat-button *ngIf="size.width<=800" (click)="sideNavToggle.emit()" class="hamburger"><mat-icon>menu</mat-icon></button>
-  <app-brand-logo routerLink="/" class="positionLogo"></app-brand-logo>
+  <app-brand-logo routerLink="/landing" class="positionLogo"></app-brand-logo>
 
 
   <div class="links" *ngIf="size.width>800">

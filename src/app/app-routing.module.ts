@@ -18,6 +18,7 @@ import { GalleryComponent } from './pages/gallery/gallery.component';
 import { BlogPostSingleComponent } from './blog/blog-post-single/blog-post-single.component';
 import { ShortComponent } from './pages/short/short.component';
 import { BlogTaggedComponent } from './blog/blog-tagged/blog-tagged.component';
+import { LandingComponent } from './pages/landing/landing.component';
 
 const unauthorizedRedirect = () => redirectUnauthorizedTo(['login'])
 const adminAccess = () => hasCustomClaim('admin')
@@ -38,9 +39,9 @@ const routes: Routes = [
 
   },
   {path:'dashboard', component: DashboardComponent,
-  ...canActivate(adminAccess)
-  // canActivate: [AngularFireAuthGuard],
-  // data: {authGuardPipe: adminAccess && unauthorizedRedirect}
+  // ...canActivate(adminAccess), ...unauthorizedRedirect()
+  canActivate: [AngularFireAuthGuard],
+  data: {authGuardPipe: adminAccess && unauthorizedRedirect}
 
   },
   {
@@ -60,6 +61,9 @@ const routes: Routes = [
   },
   {
     path: 'post/tagged/:tag', component: BlogTaggedComponent
+  },
+  {
+    path: 'landing', component: LandingComponent
   },
   {path:'**', component: NotFoundComponent},
 

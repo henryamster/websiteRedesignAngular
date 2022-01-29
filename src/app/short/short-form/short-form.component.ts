@@ -25,6 +25,9 @@ export class ShortFormComponent implements OnInit {
   }
 
 
+/**
+ * * Add a new short link to the database.
+ */
   async add(){
     await this.addNewShortLink();
     this.resetForm();
@@ -32,10 +35,16 @@ export class ShortFormComponent implements OnInit {
   }
 
 
+  /**
+   * Emit a new short link.
+   */
   private emitNewShortLink() {
     this.newShortLink.emit(true);
   }
 
+ /**
+  * Reset the form.
+  */
   private resetForm() {
     this.shortLinkForm.reset();
   }

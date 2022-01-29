@@ -100,6 +100,7 @@ import { ShortComponent } from './pages/short/short.component';
 import { ShortFormComponent } from './short/short-form/short-form.component';
 import { ShortListComponent } from './short/short-list/short-list.component';
 import { BlogTaggedComponent } from './blog/blog-tagged/blog-tagged.component';
+import { LandingComponent } from './pages/landing/landing.component';
 
 
 
@@ -146,6 +147,7 @@ import { BlogTaggedComponent } from './blog/blog-tagged/blog-tagged.component';
     ShortFormComponent,
     ShortListComponent,
     BlogTaggedComponent,
+    LandingComponent,
 
   ],
   imports: [

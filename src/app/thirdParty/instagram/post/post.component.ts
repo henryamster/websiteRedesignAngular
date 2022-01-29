@@ -12,7 +12,7 @@ export class PostComponent implements OnInit {
   constructor() { }
   INSTAGRAM_MEDIA_TYPES=INSTAGRAM_MEDIA_TYPES;
   ngOnInit(): void {
-    console.log(this.post);
+
   }
 
 }
