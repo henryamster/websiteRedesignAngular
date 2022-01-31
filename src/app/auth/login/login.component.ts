@@ -5,7 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { LoggerService } from 'src/app/generic/logger.service';
 import { EEventType } from 'src/app/generics/log-item';
 import { LoginForm, ILogin } from 'src/app/generics/login';
-import { AuthService ,AUTH_PROVIDERS} from '../auth.service';
+import { AuthService , AUTH_PROVIDERS} from '../auth.service';
 
 @Component({
   selector: 'app-login-form',
@@ -17,10 +17,10 @@ export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   formValues$: Subscription;
   _loginValues: LoginForm = { email: '', password: '' };
-  AUTH_PROVIDERS=AUTH_PROVIDERS;
+  AUTH_PROVIDERS = AUTH_PROVIDERS;
 
   constructor(private _formBuilder: FormBuilder,
-    public auth: AuthService, private logger: LoggerService) {
+              public auth: AuthService, private logger: LoggerService) {
 
   }
 
@@ -29,8 +29,8 @@ export class LoginFormComponent implements OnInit {
   * Generate the login form and watch for changes in the form.
   */
   ngOnInit(): void {
-    this.generateLoginForm()
-    this.watchLoginForm()
+    this.generateLoginForm();
+    this.watchLoginForm();
   }
 
   /**
@@ -38,26 +38,26 @@ export class LoginFormComponent implements OnInit {
    * @returns The login method is returning a promise.
    */
   public attemptLogin(): void {
-    if (!this["loginForm"]["valid"]){
-      this["loginForm"]["markAllAsTouched"]()
-      return
+    if (!this.loginForm.valid){
+      this.loginForm.markAllAsTouched();
+      return;
     }
     const cred = {
-      email: this["loginForm"]["get"]("email")["value"],
-      password: this["loginForm"]["get"]("password")["value"]
-    }
+      email: this.loginForm.get('email').value,
+      password: this.loginForm.get('password').value
+    };
 
-    this.login(cred)
+    this.login(cred);
   }
 
 /**
  * Clear the login form.
  */
-  public clearLoginForm() {
+  public clearLoginForm(): void {
     this.loginForm.setValue({
       email: '',
       password: ''
-    })
+    });
   }
 
  /**
@@ -66,26 +66,26 @@ export class LoginFormComponent implements OnInit {
   * This function is used to pop out a login window from the current window.
   * @param {AUTH_PROVIDERS} provider - The provider to log out of.
   */
-  public popOutLogin(provider:AUTH_PROVIDERS) {
-    this["auth"]["popOutLogin"](provider)
+  public popOutLogin(provider: AUTH_PROVIDERS) : void {
+    this.auth.popOutLogin(provider);
   }
 
 /**
  * Create a form group with the email and password fields.
  */
-  private generateLoginForm() {
+  private generateLoginForm(): void {
     this.loginForm = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email, Validators.minLength(3)]],
       password: ['', Validators.minLength(8)]
     });
   }
 
-  private watchLoginForm() {
+  private watchLoginForm(): void {
     this.formValues$ = this.loginForm
       .valueChanges.pipe(
         map(login => {
-          [this._loginValues["email"], this._loginValues["password"]]
-            = [login["email"], login["password"]]
+          [this._loginValues.email, this._loginValues.password]
+            = [login.email, login.password];
         })
       )
       .subscribe();
@@ -97,10 +97,10 @@ export class LoginFormComponent implements OnInit {
    * @param {ILogin} cred - ILogin
    * @returns The token
    */
-  private login(cred: ILogin) {
+  private login(cred: ILogin): void {
     return this.auth.login(
       cred
-    )
+    );
   }
 
 }

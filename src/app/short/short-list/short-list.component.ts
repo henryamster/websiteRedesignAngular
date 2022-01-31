@@ -17,7 +17,7 @@ export class ShortListComponent implements OnInit {
    * @param event - The event object that is passed to the function.
    */
   newShortLink(event){
-    this.grabShortLinkList()
+    this.grabShortLinkList();
   }
 
   ngOnInit(): void {
@@ -38,9 +38,9 @@ export class ShortListComponent implements OnInit {
    * Delete a short link from the database.
    * @param {string} slug - the slug of the short link to delete
    */
-  async delete(slug:string){
-    await this.short.delete(slug)
-    this.grabShortLinkList()
+  async delete(slug: string){
+    await this.short.delete(slug);
+    this.grabShortLinkList();
   }
 
 }

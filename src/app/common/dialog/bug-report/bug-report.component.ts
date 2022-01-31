@@ -20,22 +20,22 @@ export class BugReportComponent implements OnInit {
     private formBuilder: FormBuilder,
     private bugReportService: BugReportService
   ) { }
-  notClosing: boolean = true;
-  submitted: boolean = false;
-  logItem: ILogItem
+  notClosing = true;
+  submitted = false;
+  logItem: ILogItem;
   bugReportForm: FormGroup;
   @ViewChild('bugReportEditor', {
     static: true
-  }) bugtext: MatQuill
+  }) bugtext: MatQuill;
 
 
 
   ngOnInit(): void {
-    this["logItem"] = this["data"]
+    this.logItem = this.data;
     this.createFormGroup();
   }
   private createFormGroup() {
-    this["bugReportForm"] = this["formBuilder"]["group"]({
+    this.bugReportForm = this.formBuilder.group({
       bugReportText: ['', Validators.required]
     });
   }
@@ -45,10 +45,10 @@ export class BugReportComponent implements OnInit {
   */
   close() {
     of(true).pipe(
-      tap(_ => this["notClosing"] = !_),
+      tap(_ => this.notClosing = !_),
       delay(1600),
-      tap(_ => this["dialogRef"]["close"]())
-    )["subscribe"]()
+      tap(_ => this.dialogRef.close())
+    ).subscribe();
 
 
 
@@ -58,21 +58,20 @@ export class BugReportComponent implements OnInit {
    * Submit a bug report to the bug report service.
    */
   submitBugReport() {
-    debugger
-    this["bugReportService"]["submitBugReport"](
-      new PostBugReport(this["logItem"],this["bugReportForm"]["get"]('bugReportText').value)
-       )
-    ["pipe"](
+
+    this.bugReportService.submitBugReport(
+      new PostBugReport(this.logItem, this.bugReportForm.get('bugReportText').value)
+       ).pipe(
       tap(
         response => {
-          if (!!response["success"]) {
-            this["submitted"] = true
+          if (!!response.success) {
+            this.submitted = true;
           }
         }),
       delay(1600),
-      tap(_ => this["dialogRef"]["close"]()
+      tap(_ => this.dialogRef.close()
       )
-    )["subscribe"]();
+    ).subscribe();
 
   }
 

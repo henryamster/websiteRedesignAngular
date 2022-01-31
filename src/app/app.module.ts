@@ -158,7 +158,7 @@ import { LandingComponent } from './pages/landing/landing.component';
     CommonModule,
     HttpClientModule,
 
-    //Firebase
+    // Firebase
     AngularFireModule.initializeApp(environment.firebase),
 
     // Material
@@ -181,7 +181,7 @@ import { LandingComponent } from './pages/landing/landing.component';
     MatSlideToggleModule,
     MatDatepickerModule,
    MatNativeDateModule,
-    //Quill
+    // Quill
     QuillModule.forRoot()
   ],
   providers: [ResponsiveService,

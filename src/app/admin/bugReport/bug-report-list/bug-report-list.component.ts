@@ -10,19 +10,19 @@ import { IBugReport, ILogItem } from 'src/app/generics/log-item';
 export class BugReportListComponent implements OnInit {
 
   constructor(private bugReportService: BugReportService) { }
-  bugReports:IBugReport[];
-  loading: boolean=true;
+  bugReports: IBugReport[];
+  loading = true;
   ngOnInit(): void {
     this.grabBugReport();
   }
-  deleteEvent(reload:boolean=true){
-    if (reload) this.grabBugReport();
+  deleteEvent(reload: boolean= true):void{
+    if (reload) { this.grabBugReport(); }
   }
 
-  private grabBugReport() {
+  private grabBugReport():void {
     this.bugReportService.grabBugReport()
-      .subscribe(bugReports => this["bugReports"] = bugReports)
-      .add(_ => { this["loading"] = false; });
+      .subscribe(bugReports => this.bugReports = bugReports)
+      .add(_ => { this.loading = false; });
   }
 
 

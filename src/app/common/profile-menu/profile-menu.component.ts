@@ -13,30 +13,32 @@ import { IWindowSize } from 'src/app/generics/window-size';
 export class ProfileMenuComponent implements OnInit {
 
   constructor(private resize: ResponsiveService,
-    private auth: AuthService) {
+              private auth: AuthService) {
 
   }
 
 
   size: IWindowSize;
-  resize$: Subscription
+  resize$: Subscription;
   userProfileImage: string | boolean;
-  authEvents$: Subscription
+  authEvents$: Subscription;
   loggedIn: boolean;
   name: string;
+  user: any;
+
 
 
   ngOnInit(): void {
-    this["setResponsiveBehavior"]()
-    this["watchAuthEvents"]()
-    this["setUserInfo"]()
-    this["setProfileImage"]()
+    this.setResponsiveBehavior();
+    this.watchAuthEvents();
+    this.setUserInfo();
+    this.setProfileImage();
 
 
 
   }
   private setProfileImage() {
-    this["userProfileImage"] = (this.retrieveUser()?.["photoURL"] != undefined) ? this["auth"]["user"]()?.["photoURL"] : false;
+    this.userProfileImage = (this.retrieveUser()?.photoURL != undefined) ? this.auth.user().photoURL : false;
   }
 
   /**
@@ -44,38 +46,38 @@ export class ProfileMenuComponent implements OnInit {
    * @returns The user object.
    */
   private retrieveUser() {
-    return this["auth"]["user"]();
+    return this.auth.user();
   }
 
   private setUserInfo() {
-    this["user"] = this["retrieveUser"]()
+    this.user = this.retrieveUser();
   }
 
   private setResponsiveBehavior() {
-    this["size"] = this["resize"]["initialSize"]();
-    this["resize$"] = this["resize"]["resizeWindowSize$"]
+    this.size = this.resize.initialSize();
+    this.resize$ = this.resize.resizeWindowSize$
       .subscribe(windowSize => {
-        this["size"] = windowSize;
+        this.size = windowSize;
       });
   }
 
   private watchAuthEvents() {
 
-    this["authEvents$"] = this["auth"]["authEvent"]["pipe"](
+    this.authEvents$ = this.auth.authEvent.pipe(
       tap(event => {
-        const USER_IS_LOGGED_IN = this["auth"]["user"]() == undefined ? false : true;
-        this["setProfileImage"]();
-        this["setUserInfo"]();
-        this["loggedIn"] = USER_IS_LOGGED_IN
+        const USER_IS_LOGGED_IN = this.auth.user() == undefined ? false : true;
+        this.setProfileImage();
+        this.setUserInfo();
+        this.loggedIn = USER_IS_LOGGED_IN;
       }),
-    )["subscribe"]()
+    ).subscribe();
 
   }
 
 
   public logOut() {
-    this["auth"]["logout"]()["subscribe"]()
-    this["userProfileImage"] = null
+    this.auth.logout().subscribe();
+    this.userProfileImage = null;
 
   }
 

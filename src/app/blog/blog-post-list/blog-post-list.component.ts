@@ -10,9 +10,9 @@ export class BlogPostListComponent implements OnInit {
 
   constructor() { }
 
-  @Input('blogPosts') blogPosts: IBlogPost[];
-  @Input('displayCommentComposer') displayCommentComposer:boolean=false;
-  @Input('showComments') showComments:boolean=false;
+  @Input() blogPosts: IBlogPost[];
+  @Input() displayCommentComposer = false;
+  @Input() showComments = false;
   ngOnInit(): void {
 
   }

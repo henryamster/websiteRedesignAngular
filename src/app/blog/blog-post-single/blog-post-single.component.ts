@@ -2,7 +2,7 @@ import { X } from '@angular/cdk/keycodes';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, Subscription } from 'rxjs';
-import { delay, map, tap } from 'rxjs/operators';
+import { catchError, delay, map, tap } from 'rxjs/operators';
 import { BlogService } from 'src/app/api/blog.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { RouterService } from 'src/app/generic/router.service';
@@ -16,24 +16,24 @@ const TWO_SECONDS = 2000;
 })
 export class BlogPostSingleComponent implements OnInit, OnDestroy {
 
-  constructor(private route:ActivatedRoute,
-     private blogService:BlogService,
-     private router: Router,
-     private auth:AuthService) { }
-  blogPost:IBlogPost;
-  notFound:boolean=false;
-  loading:boolean=true;
-  grabPost$:Subscription;
-  slug:string;
-  showComposer:boolean=false;
+  constructor(private route: ActivatedRoute,
+              private blogService: BlogService,
+              private router: Router,
+              private auth: AuthService) { }
+  blogPost: IBlogPost;
+  notFound = false;
+  loading = true;
+  grabPost$: Subscription;
+  slug: string;
+  showComposer = false;
 
   ngOnInit(): void {
     this.route.params.subscribe(
       params => {
         this.slug = params.slug;
-        this.getBlogPost()
+        this.getBlogPost();
       }
-    )
+    );
 
     this.getBlogPost();
 
@@ -61,18 +61,24 @@ export class BlogPostSingleComponent implements OnInit, OnDestroy {
   private getBlogPost() {
     this.grabPost$ = this.blogService.getPost(this.slug).pipe(
       map(blogPost => this.blogPost = blogPost[0]),
-      tap(_=> this.loading = false)
+      tap(_ => {this.loading = false;
+        if (this.blogPost == null) {
+          this.notFound = true;
+          of(this.router.navigateByUrl('/blog')).pipe(delay(TWO_SECONDS)).subscribe();
+        }
+      }),
+
     ).subscribe();
   }
 
    deleteBlogPost(){
     this.blogService.delete(this.blogPost).subscribe(
-      _=> this.router.navigateByUrl('blog')
-    )
+      _ => this.router.navigateByUrl('blog')
+    );
   }
 
   ngOnDestroy(): void {
-   this["grabPost$"]["unsubscribe"]()
+   this.grabPost$.unsubscribe();
   }
 
 

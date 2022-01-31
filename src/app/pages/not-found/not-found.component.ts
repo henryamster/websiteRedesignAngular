@@ -16,49 +16,49 @@ import { environment } from 'src/environments/environment';
 })
 export class NotFoundComponent implements OnInit {
   constructor(private routerService: RouterService,
-    private logger: LoggerService, private router:Router) {
-    this.stringUrl = this.routerService.getCurrentUrl()
+              private logger: LoggerService, private router: Router) {
+    this.stringUrl = this.routerService.getCurrentUrl();
     this.routerService.routerEvents$
       .pipe(
         pluck('url')
       )
-      .subscribe(x => this.stringUrl = this.routerService.getCurrentUrl(<string>x))
+      .subscribe(x => this.stringUrl = this.routerService.getCurrentUrl(x as string));
   }
 
   stringUrl: string;
-  loaded: boolean = false;
+  loaded = false;
   COUNTDOWN_SECONDS = 5;
   countdown: number;
   redirectCountdown$: Subscription = null;
 
-  secondsTimer$ = interval(1000)["pipe"](
-    take(this["COUNTDOWN_SECONDS"]),
-    map((sec) => (this["COUNTDOWN_SECONDS"]-1)-sec
-  ))
+  secondsTimer$ = interval(1000).pipe(
+    take(this.COUNTDOWN_SECONDS),
+    map((sec) => (this.COUNTDOWN_SECONDS - 1) - sec
+  ));
 
 
   ngOnInit(): void {
     interval(1000).pipe(take(1)).subscribe(x =>
-      this.loaded=true
-    )
+      this.loaded = true
+    );
 
-    this["redirectCountdown$"] = this["secondsTimer$"]["pipe"](
-      startWith(this["COUNTDOWN_SECONDS"]),
+    this.redirectCountdown$ = this.secondsTimer$.pipe(
+      startWith(this.COUNTDOWN_SECONDS),
       tap(count => (count == 0) ? this.router.navigateByUrl('/login') : noop)
-    )["subscribe"](
+    ).subscribe(
       secondsRemaining => this.countdown = secondsRemaining
     );
 
 
-    this["logger"]["logError"](new Error(`
-    Invalid URL attempt: ${this.stringUrl}`), null, EEventType.Landing)
+    this.logger.logError(new Error(`
+    Invalid URL attempt: ${this.stringUrl}`), null, EEventType.Landing);
 
 
   }
 
 
   ngOnDestroy(): void {
-    this["redirectCountdown$"]["unsubscribe"]()
+    this.redirectCountdown$.unsubscribe();
   }
 
 

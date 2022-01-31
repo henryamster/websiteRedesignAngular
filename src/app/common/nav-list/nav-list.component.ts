@@ -11,21 +11,21 @@ import {  NavBarLink } from 'src/app/generics/nav-bar-link';
 })
 export class NavListComponent implements OnInit {
 
-  constructor(private navbar:NavBarLinkService, private auth: AuthService) {
+  constructor(private navbar: NavBarLinkService, private auth: AuthService) {
 
   }
   navList: NavBarLink[] = [];
 
   ngOnInit(): void {
-    this["refreshNavList"]()
-    this["watchAuthEvents"]()
+    this.refreshNavList();
+    this.watchAuthEvents();
   }
 
   /**
    * Refresh the navList property with the navbar's links.
    */
   private refreshNavList() {
-    this["navList"] = this["navbar"]["links"]();
+    this.navList = this.navbar.links();
   }
 
   /**
@@ -33,10 +33,9 @@ export class NavListComponent implements OnInit {
    * receives a new event.
    */
   private watchAuthEvents() {
-    this["auth"]["authEvent"]["pipe"](
-      tap(_ => this["refreshNavList"]())
-    )
-    ["subscribe"](x=>
-   {})
+    this.auth.authEvent.pipe(
+      tap(_ => this.refreshNavList())
+    ).subscribe(x =>
+   {});
   }
 }

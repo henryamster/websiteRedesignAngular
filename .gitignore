@@ -9,11 +9,14 @@
 
 # dev env file
 src/environments/environment.ts
+functions/lib/src/environments/environment.js
 
 # dev emulator data
 functions/auth_export/
 functions/firestore_export/
 functions/storage_export/
+functions/firestore_export/
+
 
 # dependencies
 /node_modules

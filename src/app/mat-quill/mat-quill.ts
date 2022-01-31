@@ -2,14 +2,14 @@ import {
   Component,
   ChangeDetectionStrategy,
   HostBinding
-} from '@angular/core'
-import { MatFormFieldControl } from '@angular/material/form-field'
-import { _MatQuillBase } from './mat-quill-base'
+} from '@angular/core';
+import { MatFormFieldControl } from '@angular/material/form-field';
+import { _MatQuillBase } from './mat-quill-base';
 
 // Increasing integer for generating unique ids for mat-quill components.
-let nextUniqueId = 0
+let nextUniqueId = 0;
 
-const SELECTOR = 'mat-quill'
+const SELECTOR = 'mat-quill';
 
 @Component({
   selector: SELECTOR,
@@ -24,9 +24,9 @@ const SELECTOR = 'mat-quill'
 })
 export class MatQuill extends _MatQuillBase
 {
-  controlType = SELECTOR
-  @HostBinding() id = `${SELECTOR}-${nextUniqueId++}`
 
-  static ngAcceptInputType_disabled: boolean | string | null | undefined
-  static ngAcceptInputType_required: boolean | string | null | undefined
+  static ngAcceptInputType_disabled: boolean | string | null | undefined;
+  static ngAcceptInputType_required: boolean | string | null | undefined;
+  controlType = SELECTOR;
+  @HostBinding() id = `${SELECTOR}-${nextUniqueId++}`;
 }

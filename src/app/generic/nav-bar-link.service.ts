@@ -10,11 +10,6 @@ import { ABOUT, CONTACT, BLOG, GALLERY, LOGIN, LOGOUT, POST, DASHBOARD } from '.
   providedIn: 'root'
 })
 export class NavBarLinkService {
-  private _user: User | null
-  private _isAdmin: boolean = false;
-  authEvent: Observable<boolean>
-  availableLinks: NavBarLink[]
-  _shadowLinks: NavBarLink[];
 
 
   constructor(private auth: AuthService, private logger: LoggerService) {
@@ -22,6 +17,20 @@ export class NavBarLinkService {
 
 
   }
+  private _user: User | null;
+  private _isAdmin = false;
+  authEvent: Observable<boolean>;
+  availableLinks: NavBarLink[];
+  _shadowLinks: NavBarLink[];
+
+  navBarLinks =
+    [
+      ABOUT,
+      CONTACT,
+      BLOG,
+      GALLERY,
+      DASHBOARD
+    ];
 
  /**
   * *This function is called when the component is initialized.
@@ -29,22 +38,22 @@ export class NavBarLinkService {
   * It also calls the getAvailableLinks function to get the links that are available to the user.*
   */
   ngOnInit(){
-    this["_isAdmin"] = this["auth"].IS_ADMIN()
-    this["getAvailableLinks"]();
-    this["watchAuthEvents"]();
+    this._isAdmin = this.auth.IS_ADMIN();
+    this.getAvailableLinks();
+    this.watchAuthEvents();
   }
  /**
   * return links
   * @returns The links array.
   */
   links(): NavBarLink[] {
-    this["getAvailableLinks"]()
-    if (this["availableLinks"]["length"] == 0){
-      this["logger"]["logError"](
+    this.getAvailableLinks();
+    if (this.availableLinks.length == 0){
+      this.logger.logError(
         new Error('No links have loaded')
-      )
+      );
     }
-    return this["availableLinks"];
+    return this.availableLinks;
   }
 
   /**
@@ -57,11 +66,11 @@ export class NavBarLinkService {
    */
   getAvailableLinks() {
 
-    this["getLocalUser"]();
-    this["_shadowLinks"] = this["navBarLinks"]
+    this.getLocalUser();
+    this._shadowLinks = this.navBarLinks;
 
-    if (!this["_isAdmin"]){
-      this["conditionallyFilterLinks"](true, 'adminOnly', false)
+    if (!this._isAdmin){
+      this.conditionallyFilterLinks(true, 'adminOnly', false);
      }
      else{
        this.availableLinks = this.navBarLinks;
@@ -73,8 +82,8 @@ export class NavBarLinkService {
 
   /** get the user from the auth service */
   private getLocalUser() {
-    this["_user"] = this["auth"]["user"]();
-    this["_isAdmin"] = this["auth"]["IS_ADMIN"]();
+    this._user = this.auth.user();
+    this._isAdmin = this.auth.IS_ADMIN();
 
   }
 
@@ -85,11 +94,10 @@ export class NavBarLinkService {
   */
   private watchAuthEvents(): void {
 
-    this["auth"]["authEvent"]["pipe"](tap(_loggedIn => {
-    }))
-    ["subscribe"](
-      _=>{this["setLocalUserAndAdmin"]();
-      this["getAvailableLinks"]()
+    this.auth.authEvent.pipe(tap(_loggedIn => {
+    })).subscribe(
+      _ => {this.setLocalUserAndAdmin();
+            this.getAvailableLinks();
     }
     );
 
@@ -102,8 +110,8 @@ export class NavBarLinkService {
   */
   private setLocalUserAndAdmin() {
 
-    [this["_user"], this["_isAdmin"]] =
-      [this["auth"]["user"](), this["auth"]["IS_ADMIN"]()];
+    [this._user, this._isAdmin] =
+      [this.auth.user(), this.auth.IS_ADMIN()];
   }
 
   /**
@@ -114,17 +122,8 @@ export class NavBarLinkService {
    */
   private conditionallyFilterLinks(condition: boolean, prop: string, value: boolean): void {
 
-    if (condition) this["availableLinks"] = this["navBarLinks"]["filter"](_links => _links[prop] === value)
+    if (condition) { this.availableLinks = this.navBarLinks.filter(_links => _links[prop] === value); }
   }
-
-  navBarLinks =
-    [
-      ABOUT,
-      CONTACT,
-      BLOG,
-      GALLERY,
-      DASHBOARD
-    ]
 }
 
 

@@ -31,25 +31,25 @@ export class BlogPost implements IBlogPost {
     codepenSlugs?: string[],
     youtubeLinks?: string[],
     links?: string[],
-    tags?:string[],
+    tags?: string[],
     expiryDate?: Date | null,
-    comments?:IBlogComment[]
+    comments?: IBlogComment[]
   ) {
     [
-      this["id"],
-      this["title"],
-      this["body"],
-      this["slug"],
-      this["type"],
-      this["timestamp"],
-      this["author"],
-      this["imageLinks"],
-      this["codepenSlugs"],
-      this["youtubeLinks"],
-      this["links"],
-      this["tags"],
-      this["expiryDate"],
-      this["comments"]
+      this.id,
+      this.title,
+      this.body,
+      this.slug,
+      this.type,
+      this.timestamp,
+      this.author,
+      this.imageLinks,
+      this.codepenSlugs,
+      this.youtubeLinks,
+      this.links,
+      this.tags,
+      this.expiryDate,
+      this.comments
     ]
       =
       [
@@ -67,7 +67,7 @@ export class BlogPost implements IBlogPost {
         tags ?? [],
         expiryDate ?? null,
         comments ?? []
-      ]
+      ];
   }
   tags: string[];
   type: PostType;
@@ -87,16 +87,16 @@ export class BlogPost implements IBlogPost {
 
 export class FullBlogPost extends BlogPost {
   constructor(id,
-    title,
-    body,
-    slug,
-    timestamp,
-    author,
-    imageLinks,
-    codepenSlugs,
-    youtubeLinks,
-    links,
-    comments?
+              title,
+              body,
+              slug,
+              timestamp,
+              author,
+              imageLinks,
+              codepenSlugs,
+              youtubeLinks,
+              links,
+              comments?
   ) {
     super(id,
       title,
@@ -109,22 +109,22 @@ export class FullBlogPost extends BlogPost {
       codepenSlugs,
       youtubeLinks,
       links,
-      comments)
+      comments);
     {}
   }
 }
 
 export class ShortBlogPost extends BlogPost {
   constructor(id,
-    title,
-    body,
-    slug,
-    timestamp,
-    author,
-    imageLinks,
-    codepenSlugs,
-    youtubeLinks,
-    links,
+              title,
+              body,
+              slug,
+              timestamp,
+              author,
+              imageLinks,
+              codepenSlugs,
+              youtubeLinks,
+              links,
   ) {
     super(id,
       title,
@@ -136,26 +136,26 @@ export class ShortBlogPost extends BlogPost {
       imageLinks,
       codepenSlugs,
       youtubeLinks,
-      links)
+      links);
     {}
   }
 }
 
 export enum PostType {
-  FULL_BLOG_POST = "Blog",
-  SHORT_POST = "Short",
-  SOCIAL_MEDIA = "Social",
-  EXPIRING = "Expiry",
-  UNCATEGORIZED = "Uncategorized"
+  FULL_BLOG_POST = 'Blog',
+  SHORT_POST = 'Short',
+  SOCIAL_MEDIA = 'Social',
+  EXPIRING = 'Expiry',
+  UNCATEGORIZED = 'Uncategorized'
 }
 
 export interface IBlogComment{
   displayName: string;
   timestamp: Date | Timestamp;
   commentBody: string;
-  approved:boolean
-  profileImage?:string
-  email?:string;
+  approved: boolean;
+  profileImage?: string;
+  email?: string;
 }
 
 export class BlogComment implements IBlogComment{
@@ -164,20 +164,20 @@ export class BlogComment implements IBlogComment{
   commentBody: string;
   approved: boolean;
   email?: string;
-  profileImage?:string
+  profileImage?: string;
   constructor(displayName: string,
-    timestamp: Date | Timestamp,
-    commentBody: string,
-    approved: boolean,
-    email?: string,
-    profileImage?:string
+              timestamp: Date | Timestamp,
+              commentBody: string,
+              approved: boolean,
+              email?: string,
+              profileImage?: string
     ){
-      this["displayName"]= displayName
-      this["email"]= email ?? null
-      this["timestamp"]= timestamp
-      this["commentBody"]= commentBody
-      this["approved"]= approved ?? false
-      this["profileImage"]=profileImage ?? null
+      this.displayName = displayName;
+      this.email = email ?? null;
+      this.timestamp = timestamp;
+      this.commentBody = commentBody;
+      this.approved = approved ?? false;
+      this.profileImage = profileImage ?? null;
     }
 
 }

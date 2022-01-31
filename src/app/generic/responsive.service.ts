@@ -8,21 +8,24 @@ import { IWindowSize } from '../generics/window-size';
 })
 export class ResponsiveService {
 
-  resizeWindowSize$: Observable<IWindowSize>
+  resizeWindowSize$: Observable<IWindowSize>;
 
   /**
    * The `resizeWindowSize$` observable emits a new object with the width and height of the window
    * every time the window is resized.
    */
   constructor() {
+
     this.resizeWindowSize$ = fromEvent(window, 'resize').pipe(
       distinctUntilChanged(),
       debounceTime(100),
-      map( event =>  ({width: event["target"]["innerWidth"],
-                     height: event["target"]["innerHeight"]})
+      //@ts-ignore - unable to type event => window
+      map( event =>  ({width: event.target.innerWidth,
+      //@ts-ignore
+                     height: event.target.innerHeight})
 
           )
-      )
+      );
   }
 
   /**

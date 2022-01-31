@@ -13,19 +13,19 @@ import { IBlogPost } from 'src/app/models/blogPost';
 export class BlogTaggedComponent implements OnInit {
 
   constructor(private blog: BlogService,
-    private route: ActivatedRoute,
-    private router: Router) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
   posts: IBlogPost[];
   tag: string;
-  loading: boolean = true;
-  TWO_SECONDS_IN_MS=2000
+  loading = true;
+  TWO_SECONDS_IN_MS = 2000;
   ngOnInit(): void {
     this.route.params.subscribe(
       snap => {
         this.tag = snap.tag;
-        this.getPosts()
+        this.getPosts();
       }
-    )
+    );
   }
 
 
@@ -33,17 +33,17 @@ export class BlogTaggedComponent implements OnInit {
     this.blog.tagged(
       decodeURI(this.tag)
     ).subscribe(blogPosts => {
-      this.posts = blogPosts
-      if (this.posts.length<1){
-        this.returnToBlog()
+      this.posts = blogPosts;
+      if (this.posts.length < 1){
+        this.returnToBlog();
       }
-      this.loading = false
+      this.loading = false;
     }
-    )
+    );
   }
 
   returnToBlog(){
     of([]).pipe(delay(this.TWO_SECONDS_IN_MS),
-    tap(_=>this.router.navigateByUrl('blog'))).subscribe()
+    tap(_ => this.router.navigateByUrl('blog'))).subscribe();
   }
 }

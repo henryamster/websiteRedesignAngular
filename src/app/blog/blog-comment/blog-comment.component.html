@@ -12,7 +12,7 @@
     </span><h4>
 
       <strong class="font-sans">{{comment.displayName }}</strong>
-      {{comment.email!='Posting Anonymously'? '🔑' : ''}}<em><span *ngIf="comment.email" class="font-sans"><{{comment.email}}></span></em>
+      {{comment.email!=='Posting Anonymously'? '🔑' : ''}}<em><span *ngIf="comment.email" class="font-sans"><{{comment.email}}></span></em>
     </h4>
     <p class="commentMetadata">
       posted on {{comment.timestamp | date:'medium'}}

@@ -11,32 +11,31 @@ import { IScrobblerTrack } from './scrobbler-track';
 export class ScrobblerService {
 
   protected readonly API_KEY: string = environment.AUDIOSCROBBLER_API_KEY;
-  private userName = 'henryamster'
+  private userName = 'henryamster';
   SCROBBLER_URL: string;
   tracks$: BehaviorSubject<IScrobblerTrack[]> = new BehaviorSubject([]);
 
   constructor(
     private http: HttpClient
   ) {
-    this["getTracks"]()["subscribe"]()
-    const UPDATE_INTERVAL = 1000 * 60 * 5
-    interval(UPDATE_INTERVAL)["pipe"](
-      tap(_=> this["getTracks"]()["subscribe"]())
-    )
+    this.getTracks().subscribe();
+    const UPDATE_INTERVAL = 1000 * 60 * 5;
+    interval(UPDATE_INTERVAL).pipe(
+      tap(_ => this.getTracks().subscribe())
+    );
 
   }
 
   private generateURL(resultNumber: number = 12): void {
-    this["SCROBBLER_URL"] = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${this["userName"]}&api_key=${this["API_KEY"]}&format=json&limit=${resultNumber}`;
+    this.SCROBBLER_URL = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${this.userName}&api_key=${this.API_KEY}&format=json&limit=${resultNumber}`;
   }
 
   getTracks(numberOfTracks: number = 12): Observable<void> {
-    this["generateURL"](numberOfTracks)
-    return this["http"]["get"](this["SCROBBLER_URL"])
-    ["pipe"](map((res: { recenttracks: { track: IScrobblerTrack[] } }) => {
-      this["tracks$"]["next"](res["recenttracks"]["track"])
+    this.generateURL(numberOfTracks);
+    return this.http.get(this.SCROBBLER_URL).pipe(map((res: { recenttracks: { track: IScrobblerTrack[] } }) => {
+      this.tracks$.next(res.recenttracks.track);
     })
-    )
+    );
 
     /**
      * Holding onto this if I ever get XSRF figured out with AS
@@ -51,8 +50,8 @@ export class ScrobblerService {
   }
 
   tracks(): Observable<IScrobblerTrack[]>{
-    this["getTracks"]()["subscribe"]()
-    return this["tracks$"]["asObservable"]()
+    this.getTracks().subscribe();
+    return this.tracks$.asObservable();
   }
 
 }

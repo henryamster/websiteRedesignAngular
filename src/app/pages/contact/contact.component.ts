@@ -15,15 +15,25 @@ export class ContactComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private inquiry: InquiryService,
-   private router: Router
+    private router: Router
   ) { }
-  personDetailsGroup: FormGroup
-  contactDetailsGroup: FormGroup
-  messageDetailsGroup: FormGroup
+  personDetailsGroup: FormGroup;
+  contactDetailsGroup: FormGroup;
+  messageDetailsGroup: FormGroup;
 
-  submittedValues:IPostContactModel;
+  submittedValues: IPostContactModel;
 
-  submitted:boolean=false;
+  submitted = false;
+
+
+  contactTypes = [
+    { val: ContactType.PERSONAL, text: ContactType.PERSONAL },
+    { val: ContactType.BUSINESS, text: ContactType.BUSINESS },
+    { val: ContactType.REQUEST_FOR_USE, text: ContactType.REQUEST_FOR_USE },
+    { val: ContactType.SERVICE, text: ContactType.SERVICE },
+    { val: ContactType.BILLING, text: ContactType.BILLING },
+    { val: ContactType.TESTIMONIAL, text: ContactType.TESTIMONIAL}
+  ];
 
   ngOnInit(): void {
     this.createForms();
@@ -40,36 +50,35 @@ export class ContactComponent implements OnInit {
       !this.messageDetailsGroup.valid
     )
     {
-      this["personDetailsGroup"].markAllAsTouched()
-      this["contactDetailsGroup"].markAllAsTouched()
-      this["messageDetailsGroup"].markAllAsTouched()
-      return
+      this.personDetailsGroup.markAllAsTouched();
+      this.contactDetailsGroup.markAllAsTouched();
+      this.messageDetailsGroup.markAllAsTouched();
+      return;
     }
 
-    this.attemptFormSubmission()
-    ["pipe"](
+    this.attemptFormSubmission().pipe(
       tap(
       response => {
-        if (!!response["success"]){
-        this["submitted"]=true
+        if (!!response.success){
+        this.submitted = true;
         }
       }),
       delay(1600),
-      tap(_=>this["router"]["navigateByUrl"]('blog')
+      tap(_ => this.router.navigateByUrl('blog')
       )
-    )["subscribe"]();
+    ).subscribe();
 
   }
 
   private attemptFormSubmission() {
     return this.inquiry.submitContact(
       new PostContactModel(
-        this["personDetailsGroup"]["get"]('name')["value"],
-        this["personDetailsGroup"]["get"]('email')["value"],
-        this["contactDetailsGroup"]["get"]('contactType')["value"],
-        this["contactDetailsGroup"]["get"]('followUp')["value"],
-        this["messageDetailsGroup"]["get"]('message')["value"],
-        this["personDetailsGroup"]["get"]('phone')["value"]
+        this.personDetailsGroup.get('name').value,
+        this.personDetailsGroup.get('email').value,
+        this.contactDetailsGroup.get('contactType').value,
+        this.contactDetailsGroup.get('followUp').value,
+        this.messageDetailsGroup.get('message').value,
+        this.personDetailsGroup.get('phone').value
 
       )
     );
@@ -79,43 +88,33 @@ export class ContactComponent implements OnInit {
  * Clear the form.
  */
   public clear(){
-    this["resetFormGroups"]();
+    this.resetFormGroups();
   }
-
-
-  contactTypes = [
-    { val: ContactType.PERSONAL, text: ContactType.PERSONAL },
-    { val: ContactType.BUSINESS, text: ContactType.BUSINESS },
-    { val: ContactType.REQUEST_FOR_USE, text: ContactType.REQUEST_FOR_USE },
-    { val: ContactType.SERVICE, text: ContactType.SERVICE },
-    { val: ContactType.BILLING, text: ContactType.BILLING },
-    { val: ContactType.TESTIMONIAL, text: ContactType.TESTIMONIAL}
-  ]
 
 
 /**
  * Reset the form groups.
  */
   private resetFormGroups() {
-    this["personDetailsGroup"]["reset"]();
-    this["contactDetailsGroup"]["reset"]();
-    this["messageDetailsGroup"]["reset"]();
+    this.personDetailsGroup.reset();
+    this.contactDetailsGroup.reset();
+    this.messageDetailsGroup.reset();
   }
 
   private createForms() {
-    this["personDetailsGroup"] = this.fb.group({
+    this.personDetailsGroup = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required]]
+      phone: ['']
     }
     );
 
-    this["contactDetailsGroup"] = this.fb.group({
+    this.contactDetailsGroup = this.fb.group({
       contactType: ['', [Validators.required]],
       followUp: [false]
     });
 
-    this["messageDetailsGroup"] = this.fb.group({
+    this.messageDetailsGroup = this.fb.group({
       message: ['', [Validators.minLength(25)]]
     });
   }

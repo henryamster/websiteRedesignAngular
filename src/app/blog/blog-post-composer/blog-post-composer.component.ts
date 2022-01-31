@@ -13,18 +13,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class BlogPostComposerComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
-    private blog: BlogService,
-    private alert: MatSnackBar
+              private blog: BlogService,
+              private alert: MatSnackBar
   ) { }
   blogPost: IBlogPost;
   blogPostForm: FormGroup;
   blogPostInitialized = false;
-  removable: boolean = true;
-  hideComposer: boolean = true;
-  @Input('editableBlogPost') editableBlogPost?: IBlogPost;
-  editMode: boolean = false;
+  removable = true;
+  hideComposer = true;
+  @Input() editableBlogPost?: IBlogPost;
+  editMode = false;
   // for chip-lists
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  postTypes = [
+    { val: PostType.EXPIRING, text: PostType.EXPIRING },
+    { val: PostType.FULL_BLOG_POST, text: PostType.FULL_BLOG_POST },
+    { val: PostType.SHORT_POST, text: PostType.SHORT_POST },
+    { val: PostType.SOCIAL_MEDIA, text: PostType.SOCIAL_MEDIA },
+    { val: PostType.UNCATEGORIZED, text: PostType.UNCATEGORIZED }
+  ];
  /**
   * Add a new tag to the list of tags.
   * @param {MatChipInputEvent} event - MatChipInputEvent
@@ -35,9 +42,9 @@ export class BlogPostComposerComponent implements OnInit {
 
 
     if (value) {
-      //this.blogPostForm.controls.tags.setValue([...this.blogPostForm.controls.tags.value, value]);
-      this.blogPostForm.controls[formControl].value.push(value)
-      this.blogPostForm.controls[formControl].updateValueAndValidity()
+      // this.blogPostForm.controls.tags.setValue([...this.blogPostForm.controls.tags.value, value]);
+      this.blogPostForm.controls[formControl].value.push(value);
+      this.blogPostForm.controls[formControl].updateValueAndValidity();
     }
 
     // Clear the input value
@@ -57,34 +64,27 @@ export class BlogPostComposerComponent implements OnInit {
       this.blogPostForm.controls[formControl].value.splice(index, 1);
     }
 
-    this.blogPostForm.controls[formControl].updateValueAndValidity()
+    this.blogPostForm.controls[formControl].updateValueAndValidity();
   }
 
   ngOnInit(): void {
 
     if (!!this.editableBlogPost) {
       this.fillFormWithEditablePost();
-      this.editMode = true
+      this.editMode = true;
     }
     else {
       this.fillFormWithEmptyPost();
     }
 
-    this.previewPost()
+    this.previewPost();
     this.blogPostInitialized = true;
 
-    this.blogPostForm.valueChanges.subscribe(x => this.previewPost())
+    this.blogPostForm.valueChanges.subscribe(x => this.previewPost());
 
 
 
   }
-  postTypes = [
-    { val: PostType.EXPIRING, text: PostType.EXPIRING },
-    { val: PostType.FULL_BLOG_POST, text: PostType.FULL_BLOG_POST },
-    { val: PostType.SHORT_POST, text: PostType.SHORT_POST },
-    { val: PostType.SOCIAL_MEDIA, text: PostType.SOCIAL_MEDIA },
-    { val: PostType.UNCATEGORIZED, text: PostType.UNCATEGORIZED }
-  ]
 
  /**
   * gen empty post
@@ -132,12 +132,12 @@ export class BlogPostComposerComponent implements OnInit {
   */
   public submitBlogPost() {
     if (this.blogPostForm.valid && !this.editMode) {
-      this.blog.post(this.blogPost)
+      this.blog.post(this.blogPost);
       this.displaySuccessMesageAndCloseAndResetComposer();
     }
 
     if (this.blogPostForm.valid && this.editMode) {
-      this.blog.update(this.blogPost)
+      this.blog.update(this.blogPost);
       this.displaySuccessMesageAndCloseAndResetComposer();
     }
 

@@ -9,9 +9,9 @@ import { IBlogComment } from './../../models/blogPost';
 export class BlogCommentListComponent implements OnInit {
 
   constructor() { }
-  @Input('comments') comments : IBlogComment[];
-  @Input('showComments') showComments:boolean=false;
-  @Input('blogPostRef') blogPostRef?:string;
+  @Input() comments: IBlogComment[];
+  @Input() showComments = false;
+  @Input() blogPostRef?: string;
   ngOnInit(): void {
   }
 

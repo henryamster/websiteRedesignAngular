@@ -96,14 +96,14 @@ export const submitInquiry = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     // Check that method is POST,
     // If not, return 400
-    if (req["method"] != "POST") {
+    if (req.method !== "POST") {
       res.status(400)
           .send(responseFactory(
               new FunctionResponse(
                   false,
                   "Wrong HTTP Method: Should be POST",
                   null,
-                  new Error(`${req["method"]}
+                  new Error(`${req.method}
                 HTTP verb was used instead of POST`)
               )
           )).end();
@@ -175,14 +175,14 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     // Check that method is POST,
     // If not, return 400
-    if (req["method"] != "POST") {
+    if (req.method !== "POST") {
       res.status(400)
           .send(responseFactory(
               new FunctionResponse(
                   false,
                   "Wrong HTTP Method: Should be POST",
                   null,
-                  new Error(`${req["method"]}
+                  new Error(`${req.method}
                 HTTP verb was used instead of POST`)
               )
           )
@@ -250,7 +250,7 @@ export const submitBugReport = functions.https.onRequest((req, res) => {
 export function logRequest(req: functions.https.Request,
     message = "Something went wrong."): void {
   functions.logger.log(`${message}
-  ${JSON.stringify([req["ip"], req["header"], req["body"]], null, 4)}`);
+  ${JSON.stringify([req.ip, req.header, req.body], null, 4)}`);
 }
 
 

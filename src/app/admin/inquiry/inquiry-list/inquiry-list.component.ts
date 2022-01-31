@@ -9,27 +9,27 @@ import { IContactModel } from 'src/app/models/contact';
 })
 export class InquiryListComponent implements OnInit {
 
-  constructor(private inquiryService:InquiryService) { }
+  constructor(private inquiryService: InquiryService) { }
   inquiries: IContactModel[];
-  loading: boolean=true;
+  loading = true;
   ngOnInit(): void {
     this.grabInquiries();
   }
 
-  private grabInquiries() {
+  private grabInquiries() :void{
     this.inquiryService.grabInquiries()
       .subscribe(inquiries =>
-        {this["inquiries"] = inquiries
+        {this.inquiries = inquiries;
       })
-      .add(_ => this["loading"] = false);
+      .add(_ => this.loading = false);
   }
 
   /**
    * Delete an event from the database.
    * @param {boolean} [reload=true] - boolean = true
    */
-  deleteEvent(reload:boolean=true){
-    if (reload) this.grabInquiries();
+  deleteEvent(reload: boolean= true) : void{
+    if (reload) { this.grabInquiries(); }
   }
 
 }

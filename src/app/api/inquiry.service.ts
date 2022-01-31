@@ -33,8 +33,8 @@ export class InquiryService {
    * @returns The response from the server.
    */
   public submitContact(contact: PostContactModel): Observable<FunctionResponse> {
-    return this.sendRequest(contact)["pipe"](
-      tap(_response => this["checkForSuccessFromServer"](_response)),
+    return this.sendRequest(contact).pipe(
+      tap(_response => this.checkForSuccessFromServer(_response)),
     );
   }
 
@@ -52,22 +52,22 @@ export class InquiryService {
   }
  /* Extracting the data from the result object and mapping it to a new object with the id as the key
  and the data as the value. */
-  extractData = (result) => result.map(x=>{ return {id:x.id, ...x.data}})
+  extractData = (result) => result.map(x => ({id: x.id, ...x.data}));
 
-  grabInquiries() :Observable<IContactModel[]>{
-    return this.retrieveInquiries().pipe(map(x=>this.extractData(x) as IContactModel[]))
+  grabInquiries(): Observable<IContactModel[]>{
+    return this.retrieveInquiries().pipe(map(x => this.extractData(x) as IContactModel[]));
   }
 
 
-  private retrieveInquiries(){
+  private retrieveInquiries() : Observable<any>{
     return this.angularFire.collection(QUERY_PATHS.INQUIRY).get()
     .pipe(map(
-      x=>x.docs.map(y=>{
+      x => x.docs.map(y => {
         const data = y.data() as IPostContactModel;
         const id = y.id;
         return {id, ...data} as IContactModel;
       }
-    )))
+    )));
   }
 
 /**
@@ -75,8 +75,8 @@ export class InquiryService {
  * @param {string} id - string - The id of the inquiry to be removed.
  * @returns The function is returning the observable.
  */
-  dismissInquiry(id:string){
-    return this.removeInquiry(id)
+  dismissInquiry(id: string): Observable<any> {
+    return this.removeInquiry(id);
   }
 
  /**
@@ -85,8 +85,8 @@ export class InquiryService {
   * @param {string} id - string - The id of the inquiry to be deleted.
   * @returns The observable of the deleted inquiry.
   */
-  private removeInquiry(id:string){
-    return of(this.deleteInquiry(id))
+  private removeInquiry(id: string): Observable<any> {
+    return of(this.deleteInquiry(id));
   }
 
  /**
@@ -94,7 +94,7 @@ export class InquiryService {
   * @param {string} id - string - The id of the inquiry to delete.
   * @returns The result of the delete operation.
   */
-  private deleteInquiry(id:string){
+  private deleteInquiry(id: string): any {
     return this.angularFire.doc(QUERY_PATHS.INQUIRY + `/${id}`).delete()
     .then(result => result
       )
@@ -113,11 +113,11 @@ export class InquiryService {
  * @returns The result of the server call.
  */
   private checkForSuccessFromServer(result: any): void {
-    if (!result["success"]) {
-      this["throwServerError"](result);
+    if (!result.success) {
+      this.throwServerError(result);
       return;
     }
-    this["showSuccessSnackbar"]()
+    this.showSuccessSnackbar();
   }
 
  /**
@@ -140,13 +140,13 @@ export class InquiryService {
  * @param {any} result - the result of the HTTP request
  */
   private throwServerError(result: any): void {
-    const serverMessage = result
+    const serverMessage = result;
     this.logger.logError(
       new Error('HTTP Error'),
-      this["auth"]["user"](),
+      this.auth.user(),
       EEventType.Server,
       { serverMessage }
-    )
+    );
 
   }
 }

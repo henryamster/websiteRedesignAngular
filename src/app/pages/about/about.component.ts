@@ -8,14 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class AboutComponent implements OnInit {
 
   constructor() { }
-  workExperiences: workExperience[]
-  expandSocialAndBio:boolean=false;
+  workExperiences: workExperience[];
+  expandSocialAndBio = false;
 
-  ngOnInit(): void {
-    this["workExperiences"]= this["WORK_EXPERIENCE_ARRAY"]
-  }
-
-  COURSE_LIST =[
+  COURSE_LIST = [
 [
     'Project Management',
     'Business Programming',
@@ -24,7 +20,7 @@ export class AboutComponent implements OnInit {
     'Management',
     'Accounting',
     'Business Law',
-    'Microeconomics','Macroeconomics',
+    'Microeconomics', 'Macroeconomics',
     'Statistics',
     'Managerial Reporting',
     'Data Mining',
@@ -50,31 +46,31 @@ export class AboutComponent implements OnInit {
     'Asian Philosophy',
 
   ]
-  ]
+  ];
 
-  INTERESTS:string[]=[
-    "Web Design",
-    "Web Development",
-    "3D Motion Graphics",
-     "3D Parametric Modeling",
-     "Automation",
-     "Machine Learning in Computer Graphics",
-     "Graphic Design",
-     "Procedural & Generative Art",
-      "Computer Vision",
-      "Data Analytics", "Systems Design",
-      "Database Modeling", "Javascript",
-      "TypeScript", "Python",
-       "A/V Production/Engineering",
-       "Pen Testing", "Data Scraping",
+  INTERESTS: string[] = [
+    'Web Design',
+    'Web Development',
+    '3D Motion Graphics',
+     '3D Parametric Modeling',
+     'Automation',
+     'Machine Learning in Computer Graphics',
+     'Graphic Design',
+     'Procedural & Generative Art',
+      'Computer Vision',
+      'Data Analytics', 'Systems Design',
+      'Database Modeling', 'Javascript',
+      'TypeScript', 'Python',
+       'A/V Production/Engineering',
+       'Pen Testing', 'Data Scraping',
 
-  ]
+  ];
 
   WORK_EXPERIENCE_ARRAY: workExperience[] = [
     {
       logo: './../../assets/TRClogo.png',
       organization: `EKU Training Resource Center`,
-      positions: [`Software Architect`,`Sr. Programmer Analyst`],
+      positions: [`Software Architect`, `Sr. Programmer Analyst`, `Javascript Developer`],
       employmentDurations: [`November 2019- Current`],
       responsibilities: [
         'Systems Design',
@@ -90,7 +86,7 @@ export class AboutComponent implements OnInit {
         'Monitoring and Managing Virtual Infrastructure',
         'Training Videos',
         'Mockup Creation',
-        
+
       ],
       techStack: [
         'Angular',
@@ -146,7 +142,7 @@ export class AboutComponent implements OnInit {
       techStack: ['PHP'
         , 'Wordpress',
         'SCSS',
-        "_underscores",
+        '_underscores',
         'Javascript',
         'mysql',
         'DNS',
@@ -160,10 +156,14 @@ export class AboutComponent implements OnInit {
       positions: ['Freelance Systems Consulting', 'Freelance Web Design', 'Motion Graphics Artist', 'Freelance Graphic Design',
         'Audio/Video Editing'],
       responsibilities: ['Do whatever I feel!'],
-      techStack: ["Blender", "Adobe Creative Suite", "p5js", "ml5js", "python", "collab", "TypeScript",
-        "FireBase", "Vue", "Angular", "THREEjs", "Azure", "AWS", "Nest", "Bash", "Powershell"]
+      techStack: ['Blender', 'Adobe Creative Suite', 'p5js', 'ml5js', 'python', 'collab', 'TypeScript',
+        'FireBase', 'Vue', 'Angular', 'THREEjs', 'Azure', 'AWS', 'Nest', 'Bash', 'Powershell']
     }
-  ]
+  ];
+
+  ngOnInit(): void {
+    this.workExperiences = this.WORK_EXPERIENCE_ARRAY;
+  }
 
 }
 
@@ -173,5 +173,5 @@ interface workExperience {
   employmentDurations?: string[];
   responsibilities?: string[];
   techStack: string[];
-  logo?:string;
+  logo?: string;
 }

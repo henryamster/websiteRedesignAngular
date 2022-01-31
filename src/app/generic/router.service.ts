@@ -11,7 +11,7 @@ export class RouterService {
 
   routerEvents$: Observable<Event>;
   constructor(private router: Router,
-    private activated: ActivatedRoute) {
+              private activated: ActivatedRoute) {
     this.setUpRouterObservable();
   }
 
@@ -20,9 +20,9 @@ export class RouterService {
    * @param {string} [pre] - string - the prefix to the current url
    * @returns The current url of the application.
    */
-  getCurrentUrl(pre?:string): string {
-    return pre ? <string>(environment.location) + <string>(pre.substr(1))
-    : <string>(environment.location) + <string>(this.router.url.substr(1));
+  getCurrentUrl(pre?: string): string {
+    return pre ? ((environment.location) as string) + ((pre.substr(1)) as string)
+    : ((environment.location) as string) + ((this.router.url.substr(1)) as string);
   }
 
   private setUpRouterObservable() {

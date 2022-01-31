@@ -4,7 +4,7 @@ export interface IShortLink {
 }
 
 export class ShortLink {
-  id:string;
+  id: string;
   url: string;
   constructor(id, url){
     this.id = id;

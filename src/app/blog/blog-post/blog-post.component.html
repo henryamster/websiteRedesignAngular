@@ -1,5 +1,12 @@
 
-
+<div class="expired" *ngIf="!hasNotReachedExpiryDate()">
+  <h1>
+    This post has expired.
+  </h1>
+  <p>
+    It expired on {{(blogPost.expiryDate.seconds)*1000 | date:'medium' }}
+  </p>
+</div>
 <div *ngIf="hasNotReachedExpiryDate()" class="expiryCheck">
 
 <mat-card class="blogPostContainer">
@@ -84,14 +91,7 @@
       </app-blog-comment-composer>
 
 
-    <div class="expired" *ngIf="!hasNotReachedExpiryDate()">
-      <h1>
-        This post has expired.
-      </h1>
-      <p>
-        It expired on {{(blogPost.expiryDate.seconds)*1000 | date:'medium' }}
-      </p>
-    </div>
+
     </mat-card-content>
   </div>
 

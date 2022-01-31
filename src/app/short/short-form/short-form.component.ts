@@ -12,16 +12,16 @@ import { ShortLink } from 'src/app/generics/short-link';
 export class ShortFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
-    private short: ShortService) { }
+              private short: ShortService) { }
   shortLinkForm: FormGroup;
-  showForm:boolean=false;
-  @Output() newShortLink:EventEmitter<boolean> = new EventEmitter();
+  showForm = false;
+  @Output() newShortLink: EventEmitter<boolean> = new EventEmitter();
 
   ngOnInit(): void {
     this.shortLinkForm = this.fb.group({
-      id:['', Validators.required],
-      url:['', Validators.required]
-    })
+      id: ['', Validators.required],
+      url: ['', Validators.required]
+    });
   }
 
 

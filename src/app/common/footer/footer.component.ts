@@ -11,7 +11,7 @@ import { IWindowSize } from 'src/app/generics/window-size';
 export class FooterComponent implements OnInit, OnDestroy {
 
   constructor(private resize: ResponsiveService) { }
-  size: IWindowSize
+  size: IWindowSize;
   resize$: Subscription;
 
   ngOnInit(): void {
@@ -28,6 +28,6 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-  this.resize$.unsubscribe()
+  this.resize$.unsubscribe();
   }
 }

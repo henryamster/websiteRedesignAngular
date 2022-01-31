@@ -12,7 +12,7 @@ import { ResponsiveService } from '../generic/responsive.service';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private responsive:ResponsiveService) { }
+  constructor(private responsive: ResponsiveService) { }
   @ViewChild('snav') snav: MatSidenav;
   resize$: Subscription;
   ngOnInit(): void {
@@ -21,17 +21,17 @@ export class MainComponent implements OnInit {
       .pipe(
         debounceTime(20),
         pluck('width'),
-        map(x=>x>600? this.toggle('close') : false)
+        map(x => x > 600 ? this.toggle('close') : false)
         )
-      .subscribe()
+      .subscribe();
 
   }
 
 
   toggle($event){
-    $event == 'close'?
-    this.snav.toggle(false):
-    this.snav.toggle()
+    $event == 'close' ?
+    this.snav.toggle(false) :
+    this.snav.toggle();
   }
 
 

@@ -11,9 +11,9 @@ import { IContactModel } from 'src/app/models/contact';
 export class InquiryItemComponent implements OnInit {
 
   constructor(private inquiryService: InquiryService,
-    private sanitizer: DomSanitizer) { }
-  @Input('inquiry') inquiry:IContactModel;
-  @Output('deleteEvent') deleteEvent: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+              private sanitizer: DomSanitizer) { }
+  @Input() inquiry: IContactModel;
+  @Output() deleteEvent: EventEmitter<boolean> = new EventEmitter<boolean>(false);
   ngOnInit(): void {
 
   }
@@ -21,7 +21,7 @@ export class InquiryItemComponent implements OnInit {
   * *Dismiss an inquiry by its id.*
   * @param {string} id - string - The id of the inquiry to dismiss.
   */
-  dismissInquiry(id:string){
+  dismissInquiry(id: string){
     this.dismiss(id);
   }
   /**
@@ -31,8 +31,8 @@ export class InquiryItemComponent implements OnInit {
    * service.
    * @param {string} id - string - The id of the inquiry to dismiss.
    */
-  private dismiss(id:string){
-    this.inquiryService.dismissInquiry(id).subscribe(_=>this.deleteEvent.emit(true))
+  private dismiss(id: string){
+    this.inquiryService.dismissInquiry(id).subscribe(_ => this.deleteEvent.emit(true));
   }
 
  /**

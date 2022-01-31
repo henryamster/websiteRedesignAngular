@@ -16,17 +16,17 @@ import { BugReportComponent } from '../../dialog/bug-report/bug-report.component
 export class LogTemplateComponent implements OnInit, OnDestroy {
   public get eventType() {
     return EEventType;
-  };
+  }
   constructor(@Inject(MAT_SNACK_BAR_DATA) public logItem: ILogItem,
               private dialog: MatDialog,
               private resize: ResponsiveService
   ) { }
-  LogItem: ILogItem
-  bugReportModal: MatDialogRef<BugReportComponent>
+  LogItem: ILogItem;
+  bugReportModal: MatDialogRef<BugReportComponent>;
   windowSize: IWindowSize;
 
   ngOnInit(): void {
-    this["windowSize"]= this["resize"]["initialSize"]()
+    this.windowSize = this.resize.initialSize();
   }
 
   ngOnDestroy(): void {
@@ -34,19 +34,19 @@ export class LogTemplateComponent implements OnInit, OnDestroy {
   }
 
   openBugReport(){
-    this["bugReportModal"] = this["dialog"]["open"](
+    this.bugReportModal = this.dialog.open(
       BugReportComponent,
       {
         autoFocus: true,
-        maxHeight:'800px',
-        backdropClass:['glassBlur'],
-        data: this["logItem"],
+        maxHeight: '800px',
+        backdropClass: ['glassBlur'],
+        data: this.logItem,
       }
-    )
+    );
   }
 
 
   private mobile() {
-    return this["windowSize"]["width"] < 600;
+    return this.windowSize.width < 600;
   }
 }

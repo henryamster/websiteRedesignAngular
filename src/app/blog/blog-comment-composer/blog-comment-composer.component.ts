@@ -1,7 +1,7 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { from, Observable } from 'rxjs';
+import { from, Observable, Observer } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 import { BlogService } from 'src/app/api/blog.service';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -16,14 +16,14 @@ import { BlogComment, IBlogPost } from 'src/app/models/blogPost';
 export class BlogCommentComposerComponent implements OnInit {
 
   constructor(private blog: BlogService,
-    private auth:AuthService,
-    private fb:FormBuilder,
-    private scroller:ViewportScroller,
+              private auth: AuthService,
+              private fb: FormBuilder,
+              private scroller: ViewportScroller,
 
     ) { }
   commentForm: FormGroup;
-  displayCommentForm:boolean=true;
-  @Input('blogPost') blogPost:IBlogPost
+  displayCommentForm = true;
+  @Input() blogPost: IBlogPost;
   ngOnInit(): void {
     this.createForm();
   }
@@ -31,7 +31,7 @@ export class BlogCommentComposerComponent implements OnInit {
 /**
  * *Submit the comment to the database and then hide the form and reset it.*
  */
-  submitComment(){
+  submitComment() : void {
 
     this.addBlogComment();
     this.hideAndResetForm();
@@ -40,7 +40,7 @@ export class BlogCommentComposerComponent implements OnInit {
  /**
   * Hide the form and reset it.
   */
-  private hideAndResetForm() {
+  private hideAndResetForm() : void {
     this.displayCommentForm = false;
     this.commentForm.reset();
   }
@@ -48,49 +48,59 @@ export class BlogCommentComposerComponent implements OnInit {
  * Open the composer and focus on the subject line.
  */
 
-  openComposer(){
-    this.openComposerAndFocus()
+  openComposer(): void {
+    this.openComposerAndFocus();
   }
 
   /**
    * *Open the comment form and focus the composer.*
    */
-  private openComposerAndFocus(){
-    this["displayCommentForm"]=!this["displayCommentForm"]
-    from([true]).pipe(delay(1000),tap(_=>this.focusComposer())).subscribe()
+  private openComposerAndFocus(): void {
+    this.displayCommentForm = !this.displayCommentForm;
+    from([true]).pipe(delay(1000), tap(_ => this.focusComposer())).subscribe();
   }
 
   /**
    * `scrollToAnchor` scrolls the scroller to the anchor with the given id.
    */
-  private focusComposer() {
-    this["scroller"]["scrollToAnchor"](`${this.blogPost.id}+'_composer'`);
+  private focusComposer(): void {
+    this.scroller.scrollToAnchor(`${this.blogPost.id}+'_composer'`);
   }
 
   /**
    * Create a form group with a comment form control.
    */
-  private createForm() {
-    this["commentForm"] = this["fb"]["group"]({
+  private createForm(): void {
+    this.commentForm = this.fb.group({
       comment: ['', Validators.required]
     });
   }
 
 
+  private refreshAfterComment :Observer<void> =
+  {
+    next: () => {this.refreshBlogPost()},
+    error: (err: any) => {console.log(err)},
+    complete: () => {this.refreshBlogPost()}
+  };
   /**
    * If the user is logged in, add the comment to the blog post. If the user is not logged in, add the
    * comment to the blog post as an anonymous user.
    */
   private addBlogComment() {
-    if(this.auth.user() != null){
+    if (this.auth.user() != null){
     this.blog.addComment(this.blogPost, new BlogComment(
       this.auth.user().displayName,
       new Date(),
-      this["commentForm"].controls.comment.value,
+      this.commentForm.controls.comment.value,
       false,
       this.auth.user().email,
       this.auth.user().photoURL),
-      ).subscribe(_=>this.refreshBlogPost())
+      )
+      .subscribe(this.refreshAfterComment);
+
+
+      //.subscribe(this.refreshAfterComment)
     }
     else {
       this.blog.addComment(
@@ -98,18 +108,18 @@ export class BlogCommentComposerComponent implements OnInit {
         new BlogComment(
           'Anonymous User',
           new Date(),
-          this["commentForm"].controls.comment.value,
+          this.commentForm.controls.comment.value,
           false,
           'Posting Anonymously',
           null
         )
-      ).subscribe(_=>this.refreshBlogPost())
+      ).subscribe(this.refreshAfterComment);
     }
   }
 
   private refreshBlogPost() {
     this.blog.getPost(this.blogPost.slug).subscribe(
-      blogPost => this["blogPost"] = blogPost[0]
+      blogPost => this.blogPost = blogPost[0]
     );
 
   }

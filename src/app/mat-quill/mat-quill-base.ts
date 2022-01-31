@@ -12,17 +12,17 @@ import {
   PLATFORM_ID,
   Renderer2,
   Self
-} from '@angular/core'
-import { DOCUMENT } from '@angular/common'
+} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import {
   ControlValueAccessor,
   FormGroupDirective,
   NgControl,
   NgForm,
   Validator
-} from '@angular/forms'
-import { DomSanitizer } from '@angular/platform-browser'
-import { coerceBooleanProperty } from '@angular/cdk/coercion'
+} from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   CanDisable,
   CanDisableCtor,
@@ -31,12 +31,12 @@ import {
   ErrorStateMatcher,
   mixinDisabled,
   mixinErrorState
-} from '@angular/material/core'
-import { HasErrorState } from '@angular/material/core/common-behaviors/error-state'
-import { MatFormFieldControl } from '@angular/material/form-field'
-import { QuillEditorBase, QuillService } from 'ngx-quill'
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
-import { Subscription } from 'rxjs'
+} from '@angular/material/core';
+import { HasErrorState } from '@angular/material/core/common-behaviors/error-state';
+import { MatFormFieldControl } from '@angular/material/form-field';
+import { QuillEditorBase, QuillService } from 'ngx-quill';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 // Boilerplate for applying mixins to _MatQuillBase
 class MatQuillBase extends QuillEditorBase
@@ -57,12 +57,12 @@ class MatQuillBase extends QuillEditorBase
     super(
       elementRef, domSanitizer, doc, platformId,
       renderer, zone, service
-    )
+    );
   }
 }
 
 const _MatQuillMixinBase: CanUpdateErrorStateCtor & CanDisableCtor & typeof MatQuillBase =
-  mixinErrorState(mixinDisabled(MatQuillBase))
+  mixinErrorState(mixinDisabled(MatQuillBase));
 
 @Directive()
 export abstract class _MatQuillBase
@@ -72,12 +72,6 @@ export abstract class _MatQuillBase
     MatFormFieldControl<any>, OnChanges,
     OnDestroy, Validator
 {
-  abstract controlType: string
-  focused = false
-  abstract id: string
-  private contentChangedSubscription: Subscription
-  private blurSubscription: Subscription
-  private focusSubscription: Subscription
 
   constructor(
     defaultErrorStateMatcher: ErrorStateMatcher,
@@ -95,70 +89,81 @@ export abstract class _MatQuillBase
     super(
       defaultErrorStateMatcher, parentForm, parentFormGroup, ngControl,
       elementRef, domSanitizer, doc, platformId, renderer, zone, service
-    )
+    );
 
     if (!!this.ngControl) {
-      this.ngControl.valueAccessor = this
+      this.ngControl.valueAccessor = this;
     }
 
     this.contentChangedSubscription = this.onContentChanged.pipe(debounceTime(300), distinctUntilChanged()).subscribe(() => {
-      this.updateErrorState()
-      this.stateChanges.next()
-    })
+      this.updateErrorState();
+      this.stateChanges.next();
+    });
 
     this.blurSubscription = this.onBlur.subscribe(() => {
-      this.focused = false
+      this.focused = false;
       if (!!this.ngControl && !this.ngControl.control.touched) {
         this.ngControl.control.markAsTouched();
       }
-      this.stateChanges.next()
-    })
+      this.stateChanges.next();
+    });
 
     this.focusSubscription = this.onFocus.subscribe(() => {
-      this.focused = true
-      this.stateChanges.next()
-    })
+      this.focused = true;
+      this.stateChanges.next();
+    });
   }
-
-  ngOnDestroy() {
-    this.contentChangedSubscription.unsubscribe()
-    this.blurSubscription.unsubscribe()
-    this.focusSubscription.unsubscribe()
-    super.ngOnDestroy()
-  }
-  /*
-   * GETTERS & SETTERS
-   */
-
-  @Input()
-  disabled = false
 
   get empty() {
-    return coerceBooleanProperty(this.value)
+    return coerceBooleanProperty(this.value);
   }
-
-  @Input()
-  placeholder: string
-
-  @Input()
-  required = false
 
   @HostBinding('class.floating')
   get shouldLabelFloat() {
-    return this.focused || !this.empty
+    return this.focused || !this.empty;
   }
 
   get value(): any
   {
     try {
-      return this.valueGetter(this.quillEditor, this.editorElem!)
+      return this.valueGetter(this.quillEditor, this.editorElem!);
     } catch (e) {
-      return
+      return;
     }
   }
   set value(value: any) {
-    this.writeValue(value)
-    this.stateChanges.next()
+    this.writeValue(value);
+    this.stateChanges.next();
+  }
+
+  static ngAcceptInputType_disabled: boolean | string | null | undefined;
+  static ngAcceptInputType_required: boolean | string | null | undefined;
+  abstract controlType: string;
+  focused = false;
+  abstract id: string;
+  private contentChangedSubscription: Subscription;
+  private blurSubscription: Subscription;
+  private focusSubscription: Subscription;
+  /*
+   * GETTERS & SETTERS
+   */
+
+  @Input()
+  disabled = false;
+
+  @Input()
+  placeholder: string;
+
+  @Input()
+  required = false;
+
+  @HostBinding('attr.aria-describedby') _describedBy = '';
+
+  ngOnDestroy() {
+    this.contentChangedSubscription.unsubscribe();
+    this.blurSubscription.unsubscribe();
+    this.focusSubscription.unsubscribe();
+    super.ngOnDestroy();
   }
 
   /*
@@ -166,25 +171,20 @@ export abstract class _MatQuillBase
    */
 
   blur() {
-    (this.editorElem.childNodes as NodeListOf<HTMLElement>)[0]['blur']()
+    (this.editorElem.childNodes as NodeListOf<HTMLElement>)[0].blur();
   }
 
   focus() {
-    this.quillEditor.focus()
+    this.quillEditor.focus();
   }
-
-  @HostBinding('attr.aria-describedby') _describedBy = ''
   setDescribedByIds(ids: string[]) {
-    this._describedBy = ids.join(' ')
+    this._describedBy = ids.join(' ');
   }
 
   onContainerClick(event: MouseEvent)
   {
     if (!this.focused) {
-      this.quillEditor.focus()
+      this.quillEditor.focus();
     }
   }
-
-  static ngAcceptInputType_disabled: boolean | string | null | undefined
-  static ngAcceptInputType_required: boolean | string | null | undefined
 }

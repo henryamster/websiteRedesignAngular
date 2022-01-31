@@ -1,9 +1,17 @@
+
 <div class="componentLoadInAnimation">
   <app-page-header
   title="Blog"
   subtitle=""
   >
   </app-page-header>
+  <mat-toolbar align='center' class="paginationLinks">
+    <button mat-button (click)="previous()">Previous
+    </button>
+
+    <button mat-button (click)="next()">Next
+    </button>
+  </mat-toolbar>
   <div class="loading placeCenter huge" *ngIf="loading">
     <h1 >Loading...</h1>
   <mat-progress-bar
@@ -19,6 +27,9 @@
   <div class="postContainer">
 
   <app-blog-post-list [blogPosts]="posts" [showComments]="false" [displayCommentComposer]="false"></app-blog-post-list>
+
+
+
 
   </div>
 </div>

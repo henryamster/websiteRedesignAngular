@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { debug } from 'console';
@@ -12,51 +12,27 @@ import { BlogComment, IBlogComment, IBlogPost } from 'src/app/models/blogPost';
   templateUrl: './blog-comment.component.html',
   styleUrls: ['./blog-comment.component.scss']
 })
-export class BlogCommentComponent implements OnInit {
+export class BlogCommentComponent  {
 
   constructor(private sanitizer: DomSanitizer,
-    private size:ResponsiveService,
-    private auth:AuthService,
-    private blog:BlogService,
-    private snackbar: MatSnackBar
+              private size: ResponsiveService,
+              private auth: AuthService,
+              private blog: BlogService,
+              private snackbar: MatSnackBar
     ) { }
 
-  @Input('comment') comment: IBlogComment;
-  @Input('blogPostRef') blogPostRef?:string;
-  CONTENT_PAD_SIZE=30
-
-  ngOnInit(): void {
-  }
-
-  /**
-   * Returns true if the current user is an administrator.
-   * @returns The function isAdmin() is returning a boolean value.
-   */
-  isAdmin(){
-    return this.checkAdmin()
-  }
+  @Input() comment: IBlogComment;
+  @Input() blogPostRef?: string;
+  CONTENT_PAD_SIZE = 30;
 
   // public commentBodySanitized(){
   //  return this.sanitizer.bypassSecurityTrustHtml(this.comment.commentBody)
   // }
 
-  maxWidth:number=this.size.initialSize().width - this.CONTENT_PAD_SIZE ;
-  maxHeight:number= this.size.initialSize().height- this.CONTENT_PAD_SIZE;
+  maxWidth: number = this.size.initialSize().width - this.CONTENT_PAD_SIZE ;
+  maxHeight: number = this.size.initialSize().height - this.CONTENT_PAD_SIZE;
 
-  private checkAdmin() {
-    return this.auth.IS_ADMIN();
-  }
-
- /**
-  * * Combine the style sheet and the comment body into one string.
-  * @returns The sanitized html.
-  */
-  public commentBodySanitized(){
-
-    return this.sanitizer.bypassSecurityTrustHtml(this.combineStyleSheetAndCommentBody())
-  }
-
-  styleSheet= `
+  styleSheet = `
   <style>
   .body img{
     max-width:${this.maxWidth}px;
@@ -69,7 +45,30 @@ export class BlogCommentComponent implements OnInit {
     padding:2em;
   }
   </style>
-  `
+  `;
+
+
+
+  /**
+   * Returns true if the current user is an administrator.
+   * @returns The function isAdmin() is returning a boolean value.
+   */
+  isAdmin(){
+    return this.checkAdmin();
+  }
+
+  private checkAdmin() {
+    return this.auth.IS_ADMIN();
+  }
+
+ /**
+  * * Combine the style sheet and the comment body into one string.
+  * @returns The sanitized html.
+  */
+  public commentBodySanitized(){
+
+    return this.sanitizer.bypassSecurityTrustHtml(this.combineStyleSheetAndCommentBody());
+  }
 
   /**
    * Combine the comment body and the style sheet.
@@ -81,18 +80,18 @@ export class BlogCommentComponent implements OnInit {
 
   approveComment(){
     this.blog.approveComment(this.blogPostRef, this.comment)
-      .subscribe(_=>{this.comment.approved=true;
-        debugger
-      this.snackbar.open(`Approved comment by ${this.comment.displayName}!`)
-      })
+      .subscribe(_ => {this.comment.approved = true;
+
+                       this.snackbar.open(`Approved comment by ${this.comment.displayName}!`, 'ok', {duration: 2000});
+      });
   }
 
   deleteComment(){
     this.blog.deleteComment(this.blogPostRef, this.comment)
-    .subscribe(_=> {
-      this.comment = new BlogComment('Deleted', new Date(), 'Comment deleted.', true, 'deleted', )
-      this.snackbar.open(`Deleted comment by ${this.comment.displayName}!`)
-    })
+    .subscribe(_ => {
+      this.comment = new BlogComment('Deleted', new Date(), 'Comment deleted.', true, 'deleted', );
+      this.snackbar.open(`Deleted comment by ${this.comment.displayName}!`, 'ok', {duration: 2000});
+    });
   }
 
 }

@@ -19,15 +19,15 @@ import { IWindowSize } from 'src/app/generics/window-size';
 export class HeaderComponent implements OnInit {
 
   constructor(private resize: ResponsiveService,
-    private navbar:NavBarLinkService, private auth:AuthService) { }
-  @Output() sideNavToggle:EventEmitter<boolean> = new EventEmitter();
-  resize$: Subscription
-  size:IWindowSize;
+              private navbar: NavBarLinkService, private auth: AuthService) { }
+  @Output() sideNavToggle: EventEmitter<boolean> = new EventEmitter();
+  resize$: Subscription;
+  size: IWindowSize;
   navList: NavBarLink[] = [];
   ngOnInit(): void {
-    this["setResponsiveBehavior"]();
-    this["refreshNavList"]()
-    this["watchAuthEvents"]()
+    this.setResponsiveBehavior();
+    this.refreshNavList();
+    this.watchAuthEvents();
   }
 
 
@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
  * *This function toggles the side navigation panel.*
  */
   public togglePanel(){
-    this["sideNavToggle"]["emit"](true)
+    this.sideNavToggle.emit(true);
   }
 
 
@@ -47,10 +47,10 @@ export class HeaderComponent implements OnInit {
    * * Set the size of the component to the window size.
    */
   private setResponsiveBehavior() {
-    this["size"] = this["resize"]["initialSize"]();
-    this["resize$"] = this["resize"]["resizeWindowSize$"]
+    this.size = this.resize.initialSize();
+    this.resize$ = this.resize.resizeWindowSize$
       .subscribe(windowSize => {
-        this["size"] = windowSize;
+        this.size = windowSize;
       });
   }
 
@@ -58,7 +58,7 @@ export class HeaderComponent implements OnInit {
    * Refresh the navList property with the navbar's links.
    */
   private refreshNavList() {
-    this["navList"] = this["navbar"]["links"]();
+    this.navList = this.navbar.links();
 
   }
 
@@ -67,16 +67,15 @@ export class HeaderComponent implements OnInit {
    * receives a new event.
    */
   private watchAuthEvents() {
-    this["auth"]["authEvent"]["pipe"](
-      tap(_ => this["refreshNavList"]())
-    )
-    ["subscribe"](x=>
-{})
+    this.auth.authEvent.pipe(
+      tap(_ => this.refreshNavList())
+    ).subscribe(x =>
+{});
   }
 
 
   ngOnDestroy() {
-    this["resize$"]["unsubscribe"]()
+    this.resize$.unsubscribe();
 
   }
 

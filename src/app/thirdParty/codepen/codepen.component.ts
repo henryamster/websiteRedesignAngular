@@ -14,26 +14,26 @@ import { environment } from 'src/environments/environment';
 export class CodepenComponent implements OnInit {
 
   constructor(private sanitizer: DomSanitizer, private size: ResponsiveService) { }
-  @Input('slug') slug: string;
+  @Input() slug: string;
   CODEPEN_USERNAME: string = environment.CODEPEN_USERNAME;
   iframeSrc: SafeResourceUrl;
   height: string;
-  size$: Subscription
+  size$: Subscription;
   ngOnInit(): void {
 
-    this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl("https://codepen.io/"
-      + this["CODEPEN_USERNAME"]
-      + "/embed/" + this["slug"]
-      + `/?height=${`${this.size.initialSize().height}px`}&theme-id=dark&default-tab=result&embed-version=2`)
+    this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl('https://codepen.io/'
+      + this.CODEPEN_USERNAME
+      + '/embed/' + this.slug
+      + `/?height=${`${this.size.initialSize().height}px`}&theme-id=dark&default-tab=result&embed-version=2`);
 
     this.size$ = this.size.resizeWindowSize$.pipe(map(size =>
-      this["height"] = `${size.height}px`
+      this.height = `${size.height}px`
     )
-    ).subscribe()
+    ).subscribe();
 
   }
   ngOnDestroy(): void {
-    this.size$.unsubscribe()
+    this.size$.unsubscribe();
   }
 }
 

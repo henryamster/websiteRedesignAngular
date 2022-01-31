@@ -9,10 +9,10 @@ import { IBugReport, ILogItem } from 'src/app/generics/log-item';
 })
 export class BugReportItemComponent implements OnInit {
 
-  constructor(private bugReportService:BugReportService) { }
+  constructor(private bugReportService: BugReportService) { }
 
-  @Input('bugReport') bugReport: IBugReport
-  @Output('deleteEvent') deleteEvent: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Input() bugReport: IBugReport;
+  @Output() deleteEvent: EventEmitter<boolean> = new EventEmitter<boolean>(false);
   ngOnInit(): void {
   }
 
@@ -20,7 +20,7 @@ export class BugReportItemComponent implements OnInit {
  * *Dismiss a bug report by id.*
  * @param {string} id - string - The id of the bug report to dismiss.
  */
-  dismissBugReport(id:string){
+  dismissBugReport(id: string){
     this.dismiss(id);
   }
 
@@ -34,6 +34,6 @@ export class BugReportItemComponent implements OnInit {
   * @param {string} id - string - The id of the bug report to dismiss.
   */
   private dismiss(id: string) {
-    this.bugReportService.dismissBugReport(id).subscribe(_=> this.deleteEvent.emit(true))
+    this.bugReportService.dismissBugReport(id).subscribe(_ => this.deleteEvent.emit(true));
   }
 }

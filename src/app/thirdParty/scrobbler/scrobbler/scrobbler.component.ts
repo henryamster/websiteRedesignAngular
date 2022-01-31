@@ -14,15 +14,15 @@ export class ScrobblerComponent implements OnInit {
   tracks: IScrobblerTrack[];
 
   ngOnInit(): void {
-    this["scrobbler"]["tracks$"]["pipe"](
+    this.scrobbler.tracks$.pipe(
       map(
-        tracks=> this["tracks"] = tracks
+        tracks => this.tracks = tracks
       )
-    )["subscribe"]()
+    ).subscribe();
   }
 
   public trackPlaying(track: IScrobblerTrack){
-    return !!track['@attr']?.nowplaying
+    return !!track['@attr']?.nowplaying;
   }
 
 

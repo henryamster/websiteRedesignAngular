@@ -1,19 +1,19 @@
 export interface IScrobblerTrack {
-  "@attr"?:{
+  '@attr'?: {
     nowplaying?: string;
   };
-  album:{
+  album: {
     mbid: string;
-    "#text": string;
+    '#text': string;
   };
   artist: {
     mbid: string;
-    "#text":string;
+    '#text': string;
   };
   image?: {
     size: string;
-    "#text": string;
-  }
+    '#text': string;
+  };
   mbid: string;
   name: string;
   streamable?: string;

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { from, Observable, Subscription } from 'rxjs';
 import { IBlogComment, IBlogPost } from '../models/blogPost';
-import { QUERY_PATHS } from './api-helpers'
+import { QUERY_PATHS } from './api-helpers';
 import { first, map, mergeMap, switchMap, take, tap } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import { LoggerService } from '../generic/logger.service';
@@ -16,7 +16,7 @@ export class BlogService {
   blogPosts: IBlogPost[];
   blogPosts$: Subscription;
 
-  lastVisibleDoc
+  lastVisibleDoc;
  /**
   * Get all the blogs from the database and store them in the blogs variable.
   * @param {AngularFirestore} firestore - AngularFirestore - This is the Firestore service that we
@@ -24,24 +24,24 @@ export class BlogService {
   * @param {LoggerService} logger - LoggerService
   */
   constructor(private firestore: AngularFirestore,
-    private logger:LoggerService
+              private logger: LoggerService
     // private functions: AngularFireFunctions
     ) {
-    this.getPaginatedBlogs()
+    this.getPaginatedBlogs();
   }
 
  /**
   * Clear the last document that was visible in the current tab.
   */
-  public clearLastDoc(){
+  public clearLastDoc() :void{
     this.nullifyLastVisibleDoc();
   }
 
 /**
  * *Nullify the last visible document.*
  */
-  private nullifyLastVisibleDoc() {
-    this["lastVisibleDoc"] = null;
+  private nullifyLastVisibleDoc() :void{
+    this.lastVisibleDoc = null;
   }
 
 /**
@@ -50,8 +50,8 @@ export class BlogService {
  * @returns An observable that emits the next page of blog posts.
  */
 public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
-    if (!this["lastVisibleDoc"]) { return this["init"](numberOfPosts) }
-    return this["next"](numberOfPosts)
+    if (!this.lastVisibleDoc) { return this.init(numberOfPosts); }
+    return this.next(numberOfPosts);
   }
 
 /**
@@ -65,9 +65,9 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
   * @param {number} [numberOfPosts=6] - number = 6
   * @returns An observable of the blog posts.
   */
-  public backwards(numberOfPosts: number = 6):Observable<any>{
-    this.lastVisibleDoc= this.blogPosts[0].id
-   return this["back"](numberOfPosts)
+  public backwards(numberOfPosts: number = 6): Observable<any>{
+    this.lastVisibleDoc = this.blogPosts[0].id;
+    return this.back(numberOfPosts);
   }
 
  /**
@@ -75,8 +75,8 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
   * @param {string} slug - string - the slug of the post you want to get
   * @returns An array of blog posts.
   */
-  public getPost(slug:string) : Observable<IBlogPost[]>{
-    return this.getThePostWithSlug(slug)
+  public getPost(slug: string): Observable<IBlogPost[]>{
+    return this.getThePostWithSlug(slug);
   }
 
 /**
@@ -84,7 +84,7 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
  * @param {string} tag - string - the tag to filter by
  * @returns An array of blog posts.
  */
-  public tagged(tag:string) : Observable<IBlogPost[]>{
+  public tagged(tag: string): Observable<IBlogPost[]>{
     return this.getPostsTagged(tag);
   }
 
@@ -93,36 +93,36 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
  * @param {IBlogPost} blogPost - IBlogPost
  * @returns The blog post object.
  */
-  public post(blogPost:IBlogPost): IBlogPost | void{
+  public post(blogPost: IBlogPost): IBlogPost | void{
     return this.submitBlogPost({...blogPost});
   }
 
 /**
- * Cannot generate summary
+ * submit blog post
  * @param {IBlogPost} blogPost - IBlogPost - The blog post to be submitted.
  * @returns The blog post that was submitted.
  */
-  private submitBlogPost(blogPost: IBlogPost) :IBlogPost | void {
+  private submitBlogPost(blogPost: IBlogPost): IBlogPost | void {
     let submittedBlogPost: IBlogPost;
     from(this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPost.slug}`)
-      .set(blogPost)).pipe(map(_=>{
+      .set(blogPost)).pipe(map(_ => {
         this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPost.slug}`).get().pipe(
-          map(_=>submittedBlogPost = _.data() as IBlogPost)
-        )
-      })).subscribe()
-      return submittedBlogPost;
+          map(_ => submittedBlogPost = _.data() as IBlogPost)
+        );
+      })).subscribe();
+    return submittedBlogPost;
   }
 
 /**
- * Cannot generate summary
+ * update post
  * @param {IBlogPost} blogPost - IBlogPost - The blog post to update
  * @returns The blog post object.
  */
-  public update(blogPost:IBlogPost){
-    let updatedBlogPost:IBlogPost
+  public update(blogPost: IBlogPost) : Observable<IBlogPost> | Promise<void>{
+    let updatedBlogPost: IBlogPost;
     return this.firestore.collection(QUERY_PATHS.BLOG)
     .doc(blogPost.id).set(washType(blogPost))
-    .catch((err?: Error) => this.logger.logError(err ?? new Error('Error updating post'), null, EEventType.Server))
+    .catch((err?: Error) => this.logger.logError(err ?? new Error('Error updating post'), null, EEventType.Server));
   }
 
 /**
@@ -130,9 +130,9 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
  * @param {IBlogPost} blogPost - IBlogPost
  * @returns A promise that resolves to a void value.
  */
-  public delete(blogPost:IBlogPost) : Observable<void>{
-    debugger
-    return from(this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPost.slug}`).delete())
+  public delete(blogPost: IBlogPost): Observable<void>{
+
+    return from(this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPost.slug}`).delete());
   }
 
 /**
@@ -141,11 +141,11 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
  * @param {IBlogComment} comment - IBlogComment
  * @returns A promise that resolves to the updated blog post.
  */
-  public addComment(blogPost:IBlogPost, comment:IBlogComment){
+  public addComment(blogPost: IBlogPost, comment: IBlogComment) : Observable<IBlogPost | void>{
     blogPost.comments.push(comment);
-    return from(this.firestore.doc<IBlogPost>(QUERY_PATHS.BLOG+ '/' +blogPost.id)
+    return from(this.firestore.doc<IBlogPost>(QUERY_PATHS.BLOG + '/' + blogPost.id)
       .update(washType(blogPost))
-    )
+    );
   }
 
   /**
@@ -154,16 +154,16 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
    * @param {IBlogComment} comment - IBlogComment
    * @returns The blog post with the updated comment.
    */
-  public approveComment(blogPostRef:string, comment:IBlogComment)  {
+  public approveComment(blogPostRef: string, comment: IBlogComment) : Observable<IBlogPost | void>{
 
      return this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPostRef}`)
       .get()
-      .pipe(mergeMap(snap=>{
-        let blogPost = snap.data() as IBlogPost
-        (blogPost.comments.find(x=>x.commentBody==comment.commentBody)).approved=true;
+      .pipe(mergeMap(snap => {
+        const blogPost = snap.data() as IBlogPost;
+        (blogPost.comments.find(x => x.commentBody == comment.commentBody)).approved = true;
         return this.firestore.doc<IBlogPost>(`${QUERY_PATHS.BLOG}/${blogPost.id}`)
-        .update(washType(blogPost))
-      }))
+        .update(washType(blogPost));
+      }));
 
   }
 
@@ -173,15 +173,15 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
  * @param {IBlogComment} comment - IBlogComment
  * @returns The blog post.
  */
-  public deleteComment(blogPostRef: string, comment:IBlogComment){
+  public deleteComment(blogPostRef: string, comment: IBlogComment) : Observable<IBlogPost | void>{
     return this.firestore.doc(`${QUERY_PATHS.BLOG}/${blogPostRef}`)
     .get()
-    .pipe(mergeMap(snap=>{
-      let blogPost = snap.data() as IBlogPost
-      blogPost.comments.splice(blogPost.comments.findIndex(x=>x===comment),1);
+    .pipe(mergeMap(snap => {
+      const blogPost = snap.data() as IBlogPost;
+      blogPost.comments.splice(blogPost.comments.findIndex(x => x === comment), 1);
       return this.firestore.doc<IBlogPost>(`${QUERY_PATHS.BLOG}/${blogPost.id}`)
-      .update(washType(blogPost))
-    }))
+      .update(washType(blogPost));
+    }));
   }
 
  /**
@@ -189,7 +189,7 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
   * @param {string} tag - string - the tag to search for
   * @returns A collection of blog posts.
   */
-  private getPostsTagged(tag: string) {
+  private getPostsTagged(tag: string) : Observable<IBlogPost[]>{
     return this.firestore.collection(QUERY_PATHS.BLOG,
       ref => ref.where('tags', 'array-contains', tag))
       .get().pipe(
@@ -202,7 +202,7 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
  * @param {string} slug - string - the slug of the post you want to retrieve
  * @returns An array of blog posts.
  */
-  private getThePostWithSlug(slug: string) {
+  private getThePostWithSlug(slug: string) : Observable<IBlogPost[]>{
     return this.firestore.collection(QUERY_PATHS.BLOG,
       ref => ref.where('slug', '==', slug))
       .get().pipe(
@@ -211,67 +211,61 @@ public getPaginatedBlogs(numberOfPosts: number = 6): Observable<any> {
       );
   }
 
-
-
-
-
 /**
  * Get the last 6 blog posts from the Firestore database.
  * @param {number} [numberOfPosts=6] - number=6
  * @returns A list of blog posts.
  */
-
-  private init(numberOfPosts: number=6) {
+  private init(numberOfPosts: number= 6): Observable<IBlogPost[]> {
      return this.firestore.collection(
       QUERY_PATHS.BLOG,
-      ref => ref.orderBy('timestamp','desc').limit(numberOfPosts)
+      ref => ref.orderBy('timestamp', 'desc').limit(numberOfPosts)
     ).get().pipe(
-      tap(snap => this["lastVisibleDoc"] = snap.docs[snap.docs.length - 1]),
+      tap(snap => this.lastVisibleDoc = snap.docs[snap.docs.length - 1]),
       map(snap => snap.docs.map(doc => this.injectIdIntoData(doc))) ,
-    )
-    // .subscribe(
-    //   (blogPosts: IBlogPost[]) => this.blogPosts = blogPosts
-    // )
+    );
   }
+
 /**
- * Cannot generate summary
+ *  inject id into data
  * @param doc - the document that was just created
  * @returns The id of the document.
  */
-
   private injectIdIntoData(doc): any {
-    return Object.assign(doc["data"](), {id:doc["id"]});
+    return Object.assign(doc.data(), {id: doc.id});
   }
-/**
- * `next` returns a stream of blog posts that are ordered by timestamp and start after the last visible
- * document.
- * @param {number} [numberOfPosts=6] - number=6
- * @returns A list of posts.
- */
 
-  private next(numberOfPosts: number=6) {
+
+  /**
+   * Get the next batch of posts from the Firestore database
+   * @param {number} [numberOfPosts=6] - number= 6
+   * @returns An observable of blog posts.
+   */
+  public next(numberOfPosts: number= 6): Observable<IBlogPost[]> {
     return this.firestore.collection(
       QUERY_PATHS.BLOG,
       ref => ref.orderBy('timestamp', 'desc')
-        .startAfter(this["lastVisibleDoc"])
+        .startAfter(this.lastVisibleDoc)
         .limit(numberOfPosts)
     ).get().pipe(
-      map(snap => snap.docs.map(doc =>this.injectIdIntoData(doc))) ,
-    )
+      map(snap => snap.docs.map(doc => this.injectIdIntoData(doc))) ,
+    );
   }
 
-  private back(numberOfPosts: number =6){
+/**
+ * Get the last 6 blog posts from the Firestore database
+ * @param {number} [numberOfPosts=6] - The number of posts to return.
+ * @returns An Observable of BlogPosts.
+ */
+  public back(numberOfPosts: number = 6): Observable<IBlogPost[]> {
    return this.firestore.collection(
       QUERY_PATHS.BLOG,
-      ref=> ref.orderBy('timestamp', 'desc')
-      .endBefore(this["lastVisibleDoc"])
+      ref => ref.orderBy('timestamp', 'desc')
+      .endBefore(this.lastVisibleDoc)
       .limit(numberOfPosts)
     ).get().pipe(
       map(snap => snap.docs.map(doc => this.injectIdIntoData(doc))) ,
-    )
-    // .subscribe(
-    //   (blogPosts: IBlogPost[]) => this.blogPosts = blogPosts
-    // )
+    );
   }
 
 }

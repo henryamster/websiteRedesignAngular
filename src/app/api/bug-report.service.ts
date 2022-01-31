@@ -19,7 +19,7 @@ export class BugReportService {
   constructor(
     private snackbar: MatSnackBar,
     private functions: AngularFireFunctions,
-    private angularFire:AngularFirestore,
+    private angularFire: AngularFirestore,
     private loggerService: LoggerService,
     private authService: AuthService) {
   }
@@ -29,9 +29,9 @@ export class BugReportService {
  * @param {IPostBugReport} bugReport - IPostBugReport
  * @returns The response from the server.
  */
-  submitBugReport(bugReport:IPostBugReport): Observable<FunctionResponse> {
-    return this.sendRequest(bugReport)["pipe"](
-      tap(_response => this["checkForSuccessFromServer"](_response)),
+  submitBugReport(bugReport: IPostBugReport): Observable<FunctionResponse> {
+    return this.sendRequest(bugReport).pipe(
+      tap(_response => this.checkForSuccessFromServer(_response)),
     );
   }
 
@@ -40,20 +40,20 @@ export class BugReportService {
   * @param {string} id - string
   * @returns The function is returning the bug report that was removed.
   */
-  dismissBugReport(id:string){
-    return this.removeBugReport(id)
+  dismissBugReport(id: string) : Observable<Promise<void>>{
+    return this.removeBugReport(id);
   }
 
  /* Extracting the data from the result object and mapping it to a new object with the id as the key
  and the data as the value. */
-  extractData = (result) => result.map(x=>{ return {id:x.id, ...x.data}})
+  extractData = (result) => result.map(x => ({id: x.id, ...x.data}));
 
 /**
  * Cannot generate summary
  * @returns The entire array of bug reports.
  */
-  grabBugReport() : Observable<IBugReport[]>{
-    return this.retrieveBugReports().pipe(map(x=>this.extractData(x) as IBugReport[]))
+  grabBugReport(): Observable<IBugReport[]>{
+    return this.retrieveBugReports().pipe(map(x => this.extractData(x) as IBugReport[]));
   }
 
  /**
@@ -73,17 +73,17 @@ export class BugReportService {
   * Cannot generate summary
   * @returns The map function is returning an array of objects. Each object is a bug report.
   */
-  private retrieveBugReports(){
+  private retrieveBugReports() : Observable<any>{
    return this.angularFire.collection(QUERY_PATHS.BUG_REPORT).get()
    .pipe(
      map(
-       x=>x.docs.map(y=>
+       x => x.docs.map(y =>
         {
         const data = y.data() as IPostBugReport;
         const id = y.id;
         return { id, ...data } as IBugReport;
         }
-    )))
+    )));
   }
 
 /**
@@ -91,7 +91,7 @@ export class BugReportService {
  * @param {string} id - string - The id of the bug report to delete.
  * @returns The observable of the bug report.
  */
-  private removeBugReport(id:string){
+  private removeBugReport(id: string) : Observable<Promise<void>>{
     return of(this.deleteBugReport(id));
 
   }
@@ -103,7 +103,7 @@ export class BugReportService {
  * @param {string} id - string - The id of the bug report to dismiss.
  * @returns The result of the delete operation.
  */
-  private deleteBugReport(id: string) {
+  private deleteBugReport(id: string) : Promise<void> {
     return this.angularFire.doc(QUERY_PATHS.BUG_REPORT + `/${id}`).delete()
     .then(result => result
       )
@@ -124,12 +124,12 @@ export class BugReportService {
  * @returns The result of the server call.
  */
   private checkForSuccessFromServer(result: any): void {
-    debugger
-    if (!result["success"]) {
-      this["showErrorSnackbar"](`Something went wrong.`);
+
+    if (!result.success) {
+      this.showErrorSnackbar(`Something went wrong.`);
       return;
     }
-    this["showSuccessSnackbar"]()
+    this.showSuccessSnackbar();
 
 
   }
@@ -154,7 +154,7 @@ export class BugReportService {
   * `showErrorSnackbar` is a function that displays a snackbar with a message.
   * @param {string} message - string - The message to display in the snackbar.
   */
-  private showErrorSnackbar(message:string): void {
+  private showErrorSnackbar(message: string): void {
     this.snackbar.open(
       `There was an error: ${message}`,
       'Okay!',

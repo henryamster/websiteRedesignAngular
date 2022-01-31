@@ -11,25 +11,25 @@ import { ResponsiveService } from 'src/app/generic/responsive.service';
 })
 export class YoutubeComponent implements OnInit {
 
-  constructor(private sanitizer:DomSanitizer,
-    private size:ResponsiveService) { }
-  @Input('videoID') videoId :string;
+  constructor(private sanitizer: DomSanitizer,
+              private size: ResponsiveService) { }
+  @Input() videoId: string;
   iframeSrc: SafeResourceUrl;
-  height:string;
-  size$:Subscription;
+  height: string;
+  size$: Subscription;
   ngOnInit(): void {
 
     this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
-      "https://www.youtube.com/embed/" + this["videoId"]
-    )
-    this["height"] = `${this.size.initialSize().height}px`;
+      'https://www.youtube.com/embed/' + this.videoId
+    );
+    this.height = `${this.size.initialSize().height}px`;
 
     this.size$ = this.size.resizeWindowSize$.pipe(map(size =>
-      this["height"] = `${size.height}px`
-    )).subscribe()
+      this.height = `${size.height}px`
+    )).subscribe();
   }
   ngOnDestroy(): void {
-   this.size$.unsubscribe()
+   this.size$.unsubscribe();
   }
 
 }

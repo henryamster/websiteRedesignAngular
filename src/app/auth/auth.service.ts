@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { from, Observable, pipe, Subject, Subscription, throwError } from 'rxjs';
 import { ILogin } from '../generics/login';
-import { IdTokenResult, User, UserCredential } from '@firebase/auth-types'
+import { IdTokenResult, User, UserCredential } from '@firebase/auth-types';
 import { catchError, map, tap } from 'rxjs/operators';
 import firebase from 'firebase/app';
 import { LoggerService } from '../generic/logger.service';
@@ -15,10 +15,10 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 
 
-  private _user: User | null
-  private _isAdmin: boolean = false
-  public authEvent: Subject<boolean>
-  private _claims: IdTokenResult["claims"]
+  private _user: User | null;
+  private _isAdmin = false;
+  public authEvent: Subject<boolean>;
+  private _claims: IdTokenResult['claims'];
 
   /**
    * init auth service
@@ -27,8 +27,8 @@ export class AuthService {
    * @param {Router} router - Router
    */
   constructor(private auth: AngularFireAuth,
-    private logger: LoggerService,
-    private router: Router) {
+              private logger: LoggerService,
+              private router: Router) {
 
       // Trying to work around https://github.com/angular/angularfire/issues/2656
 
@@ -39,36 +39,34 @@ export class AuthService {
       //   this.auth.useEmulator(emu)
       // }
 
-    this["authEvent"] = new Subject();
-    this["getCurrentUser"](auth)
-    ["pipe"](
+    this.authEvent = new Subject();
+    this.getCurrentUser(auth).pipe(
       tap((user: User) => {
-        <Observable<IdTokenResult>>this["gatherClaims"](user)
+        this.gatherClaims(user) as Observable<IdTokenResult>;
       }
       ),
       catchError(err => {
-        throw 'Could not retrieve user.' + err;
+        throw new Error('Could not retrieve user.' + err);
       }),
-    )
-    ["subscribe"](
-      user=> this["_user"]=user
-    )
+    ).subscribe(
+      user => this._user = user
+    );
 
-    this["auth"]["authState"]["pipe"](tap(user => <void>this["triggerAuthEvent"](!user?.["email"] === null)))
-      .subscribe()
-    this["watchAuthEvents"](auth);
+    this.auth.authState.pipe(tap(user => this.triggerAuthEvent(!user?.email === null) as void))
+      .subscribe();
+    this.watchAuthEvents(auth);
 
     this.auth.onAuthStateChanged(user => {
 
-      this["_user"] = user;
-      this["gatherClaims"](user).subscribe(_=>{
-        this["_isAdmin"] = _.claims.admin;
-        this["_claims"] = _.claims;
-        this["triggerAuthEvent"](true)
+      this._user = user;
+      this.gatherClaims(user).subscribe(_ => {
+        this._isAdmin = _.claims.admin;
+        this._claims = _.claims;
+        this.triggerAuthEvent(true);
 
 
-      })
-    })
+      });
+    });
 
   }
 
@@ -79,7 +77,7 @@ export class AuthService {
    * @param {ILogin} cred - ILogin
    */
   public login(cred: ILogin): void {
-    this["attemptLogin"](cred)
+    this.attemptLogin(cred);
   }
 
 
@@ -92,14 +90,14 @@ export class AuthService {
   */
   public logout(): Observable<void> {
     return from(
-      this["auth"]["signOut"]()
-    )["pipe"](tap(_ => {
-      this["triggerAuthEvent"](false)
-      this["vacateUser"]()
-      this["redirectToLogin"]()
+      this.auth.signOut()
+    ).pipe(tap(_ => {
+      this.triggerAuthEvent(false);
+      this.vacateUser();
+      this.redirectToLogin();
     }
     )
-    )
+    );
   }
 
 
@@ -114,7 +112,7 @@ export class AuthService {
     const WHEN_IMPLEMENTED = false;
 
     WHEN_IMPLEMENTED ? this.getThirdPartyUserCredential(provider) :
-     this["logger"]["logError"](
+     this.logger.logError(
        new Error('Third Party Authentication has not yet been enabled.'),
        this._user, EEventType.Auth);
   }
@@ -124,14 +122,14 @@ export class AuthService {
  * @param {AUTH_PROVIDERS} provider - AUTH_PROVIDERS
  * @returns A UserCredential object.
  */
-  private getThirdPartyUserCredential(provider: AUTH_PROVIDERS) : Observable<UserCredential>{
-    return from(this["auth"]["signInWithPopup"](this.selectProvider(provider)))["pipe"](tap((userCred: UserCredential) => {
-      this["_user"] = userCred.user;
-      this["gatherClaims"](this["_user"])["subscribe"]();
-      this["triggerAuthEvent"](true);
-      //this["redirectToBlog"]();
+  private getThirdPartyUserCredential(provider: AUTH_PROVIDERS): Observable<UserCredential>{
+    return from(this.auth.signInWithPopup(this.selectProvider(provider))).pipe(tap((userCred: UserCredential) => {
+      this._user = userCred.user;
+      this.gatherClaims(this._user).subscribe();
+      this.triggerAuthEvent(true);
+      // this["redirectToBlog"]();
     },
-      err => this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
+      err => this.logger.logError(new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
     ));
   }
 
@@ -141,8 +139,8 @@ export class AuthService {
  * @returns The provider object.
  */
   private selectProvider(provider: AUTH_PROVIDERS): firebase.auth.AuthProvider {
-    return (provider == AUTH_PROVIDERS["GOOGLE"].toString()) ? new firebase.auth.GoogleAuthProvider() :
-      (provider == AUTH_PROVIDERS["FACEBOOK"].toString()) ? new firebase.auth.FacebookAuthProvider() :
+    return (provider == AUTH_PROVIDERS.GOOGLE.toString()) ? new firebase.auth.GoogleAuthProvider() :
+      (provider == AUTH_PROVIDERS.FACEBOOK.toString()) ? new firebase.auth.FacebookAuthProvider() :
         new firebase.auth.TwitterAuthProvider();
   }
 
@@ -150,8 +148,8 @@ export class AuthService {
    * `claims` returns the claims of the token.
    * @returns The claims object.
    */
-  public claims(): IdTokenResult["claims"] {
-    return this["_claims"]
+  public claims(): IdTokenResult['claims'] {
+    return this._claims;
 
   }
 
@@ -160,7 +158,7 @@ export class AuthService {
   * @returns The user object.
   */
   public user(): User {
-    return this["_user"] ?? null
+    return this._user ?? null;
 
   }
 
@@ -169,48 +167,48 @@ export class AuthService {
   * @returns The value of the private variable _isAdmin.
   */
   public IS_ADMIN(): boolean {
-   return this["_isAdmin"]
+   return this._isAdmin;
 
   }
 
-  private makeAdmin() {
-    this["auth"]
-    this["getUserTokenResult"](this._user).subscribe(
+  private makeAdmin() : void {
+    this.auth;
+    this.getUserTokenResult(this._user).subscribe(
       token => token.claims
-    )
+    );
 
   }
 
  /**
   * `redirectToBlog` is a function that redirects the user to the blog page.
   */
-  private redirectToBlog() {
-    this["router"]["navigateByUrl"]('/blog');
+  private redirectToBlog(): void {
+    this.router.navigateByUrl('/blog');
   }
 
 /**
  * Redirects the user to the login page.
  */
-  private redirectToLogin() {
-    this["router"]["navigateByUrl"]('/login');
+  private redirectToLogin() : void {
+    this.router.navigateByUrl('/login');
   }
 
 
   private attemptLogin(cred: ILogin): Subscription {
 
-    return from(this["auth"]["signInWithEmailAndPassword"](cred["email"], cred["password"])).subscribe(
+    return from(this.auth.signInWithEmailAndPassword(cred.email, cred.password)).subscribe(
       userCred => {
-        this["_user"] = userCred.user;
-        this["gatherClaims"](this["_user"]).subscribe(_=>{
-          this["triggerAuthEvent"](true)
-          this["redirectToBlog"]()
-          return userCred
+        this._user = userCred.user;
+        this.gatherClaims(this._user).subscribe(_ => {
+          this.triggerAuthEvent(true);
+          this.redirectToBlog();
+          return userCred;
         }
-          )
+          );
 
       },
-      err => this["logger"]["logError"](new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
-    )
+      err => this.logger.logError(new Error(`Unsuccessful Login Attempt: ${err}`), null, EEventType.Auth)
+    );
   }
 
 
@@ -219,30 +217,30 @@ export class AuthService {
   * @param {User} user - User
   * @returns A token.
   */
-  private gatherClaims(user: User) {
-    return this["getUserTokenResult"](user)
+  private gatherClaims(user: User) : Observable<IdTokenResult> {
+    return this.getUserTokenResult(user)
       .pipe(
         tap(token => {
 
-          this["_isAdmin"] = this["checkAdminRoleInClaims"](token)
-          this["_claims"] = this["getClaims"](token)
-          this["_user"] = user
+          this._isAdmin = this.checkAdminRoleInClaims(token);
+          this._claims = this.getClaims(token);
+          this._user = user;
 
         }
         ),
         catchError(err => {
-          throw 'Could not retrieve claims.' + err;
+          throw new Error('Could not retrieve claims.' + err);
         }),
-      )
+      );
   }
 
-  private watchAuthEvents(auth: AngularFireAuth) {
-    this["authEvent"]["pipe"](
+  private watchAuthEvents(auth: AngularFireAuth) : void {
+    this.authEvent.pipe(
       tap(
         loggedIn => loggedIn ?
-          this["getCurrentUser"](auth)
-            .pipe(tap((user: User) => this["gatherClaims"](user))) :
-          [this["_user"], this["_claims"], this["_isAdmin"]] = [null, [], false]
+          this.getCurrentUser(auth)
+            .pipe(tap((user: User) => this.gatherClaims(user))) :
+          [this._user, this._claims, this._isAdmin] = [null, [], false]
       )
     );
   }
@@ -252,7 +250,7 @@ export class AuthService {
   * @param {boolean} loggedIn - boolean
   */
   private triggerAuthEvent(loggedIn: boolean): void {
-    this["authEvent"]["next"](loggedIn);
+    this.authEvent.next(loggedIn);
   }
 
  /**
@@ -279,7 +277,7 @@ export class AuthService {
   * @returns The boolean value of the checkRoleInClaims function.
   */
   private checkAdminRoleInClaims(token: IdTokenResult): boolean {
-    return this["checkRoleInClaims"]('admin', token);
+    return this.checkRoleInClaims('admin', token);
   }
 
 /**
@@ -289,7 +287,7 @@ export class AuthService {
  * @returns The boolean value of the claim.
  */
   private checkRoleInClaims(claim: string, token: IdTokenResult): boolean {
-    return (!!token["claims"][claim])
+    return (!!token.claims[claim]);
   }
 
 
@@ -298,8 +296,8 @@ export class AuthService {
  * @param {IdTokenResult} token - The token to parse.
  * @returns The claims of the token.
  */
-  private getClaims(token: IdTokenResult): IdTokenResult["claims"][] {
-    return [token["claims"]]
+  private getClaims(token: IdTokenResult): IdTokenResult['claims'][] {
+    return [token.claims];
   }
 
 /**
@@ -308,16 +306,16 @@ export class AuthService {
  * The `vacateUser` function is used to remove the current user from the `_user` and `_claims`
  * properties.
  */
-  private vacateUser() {
-    [this["IS_ADMIN"], this["_user"], this["_claims"]] =
-      [() => false, null, null]
+  private vacateUser() : void {
+    [this.IS_ADMIN, this._user, this._claims] =
+      [() => false, null, null];
   }
 }
 
 
 /* Defining a type for the authentication providers */
 export enum AUTH_PROVIDERS{
-  FACEBOOK="facebook",
-  GOOGLE="google",
-  TWITTER="twitter"
+  FACEBOOK= 'facebook',
+  GOOGLE= 'google',
+  TWITTER= 'twitter'
 }

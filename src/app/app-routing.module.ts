@@ -20,41 +20,41 @@ import { ShortComponent } from './pages/short/short.component';
 import { BlogTaggedComponent } from './blog/blog-tagged/blog-tagged.component';
 import { LandingComponent } from './pages/landing/landing.component';
 
-const unauthorizedRedirect = () => redirectUnauthorizedTo(['login'])
-const adminAccess = () => hasCustomClaim('admin')
+const unauthorizedRedirect = () => redirectUnauthorizedTo(['login']);
+const adminAccess = () => hasCustomClaim('admin');
 // const loginRedirect = () => redirectLoggedInTo(['about']);
 
 
 const routes: Routes = [
-{path:'', component: LoginComponent,
+{path: '', component: LoginComponent,
 
 },
-  {path:'login',
+  {path: 'login',
   component: LoginComponent,
   // canActivate:[AngularFireAuthGuard],
   // data: {authGuardPipe: loginRedirect}
 },
   {
-    path:'about', component:AboutComponent
+    path: 'about', component: AboutComponent
 
   },
-  {path:'dashboard', component: DashboardComponent,
+  {path: 'dashboard', component: DashboardComponent,
   // ...canActivate(adminAccess), ...unauthorizedRedirect()
   canActivate: [AngularFireAuthGuard],
   data: {authGuardPipe: adminAccess && unauthorizedRedirect}
 
   },
   {
-    path:'contact', component: ContactComponent
+    path: 'contact', component: ContactComponent
   },
   {
-    path:'blog', component: BlogComponent
+    path: 'blog', component: BlogComponent
   },
   {
-    path:'post/:slug', component: BlogPostSingleComponent
+    path: 'post/:slug', component: BlogPostSingleComponent
   },
   {
-    path:'gallery', component: GalleryComponent
+    path: 'gallery', component: GalleryComponent
   },
   {
     path: 'short/:slug', component: ShortComponent
@@ -65,7 +65,7 @@ const routes: Routes = [
   {
     path: 'landing', component: LandingComponent
   },
-  {path:'**', component: NotFoundComponent},
+  {path: '**', component: NotFoundComponent},
 
 ];
 
